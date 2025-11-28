@@ -1,6 +1,11 @@
 "use client";
 import Image from "next/image";
-import { MagnifyingGlassIcon, UserIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
+import {
+  MagnifyingGlassIcon,
+  UserIcon,
+  ShoppingCartIcon,
+} from "@heroicons/react/24/outline";
+import Link from "next/link";
 const Navbar = () => {
   return (
     <nav className="w-full bg-white shadow-md px-4 md:px-8 py-3">
@@ -16,14 +21,16 @@ const Navbar = () => {
         </div>
         {/* Logo */}
         <div className="flex-shrink-0">
-          <Image
-            src="https://res.cloudinary.com/dusp1j4e0/image/upload/v1764309061/Al-Safi/logos/logo_2_gsvks8.png"
-            alt="logo"
-            width={150}
-            height={50}
-            priority
-            className="object-contain"
-          />
+          <Link href={"/"}>
+            <Image
+              src="https://res.cloudinary.com/dusp1j4e0/image/upload/v1764309061/Al-Safi/logos/logo_2_gsvks8.png"
+              alt="logo"
+              width={150}
+              height={50}
+              priority
+              className="object-contain"
+            />
+          </Link>
         </div>
         {/* Account & Cart */}
         <div className="flex items-center gap-4">
