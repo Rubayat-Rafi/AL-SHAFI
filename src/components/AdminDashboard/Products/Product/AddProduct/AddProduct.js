@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const AddProduct = ({ setAddFlag }) => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     productName: "",
     thumbnail: "",
@@ -121,6 +123,7 @@ const AddProduct = ({ setAddFlag }) => {
       const res = await axios.post("/pages/api/products/product", formData);
       if (res.data.success) {
         toast.success("Product Added Successfully!");
+        router.refresh();
         setFormData({
           productName: "",
           thumbnail: "",
