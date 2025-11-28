@@ -7,7 +7,6 @@ export default function Home() {
       <Banner/>
       <div className=" max-w-[1440px] mx-auto px-5">
         <div>
-          
           <Products />
         </div>
       </div>
