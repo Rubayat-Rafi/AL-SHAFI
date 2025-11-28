@@ -1,5 +1,3 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { slice } from "./slices/slice";
-export const store = configureStore(
-    slice
-);
+import { Slice } from "./slices/slice";
+export const store = configureStore( Slice );

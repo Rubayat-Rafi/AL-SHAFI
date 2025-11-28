@@ -1,9 +1,6 @@
 export const dynamic = "force-dynamic";
-
-import Categories from "@/components/Categories/Categories";
-import Navbar from "@/components/Navbar/Navbar";
 import SideBar from "@/components/Products/Collections/SideBar/SideBar";
-import Topbar from "@/components/Topbar/Topbar";
+import ProductSeenHistories from "@/components/Products/ProductSeenHistories/ProductSeenHistories";
 const Layout = async ({ children, params }) => {
   const { slug } = await params;
   return (
@@ -14,16 +11,16 @@ const Layout = async ({ children, params }) => {
         </div>
         <div className="max-w-[1400px] py-5 mx-auto px-5">
           <div className="  flex flex-col md:flex-row  ">
-            {/* Sidebar */}
             <aside className="w-full  md:w-64 p-4">
               <div className=" overflow-y-scroll">
                 <SideBar slug={slug} />
               </div>
             </aside>
-
-            {/* Main Content */}
             <main className=" flex-1 ">
               <div className=" overflow-y-scroll ">{children}</div>
+              <div>
+                <ProductSeenHistories />
+              </div>
             </main>
           </div>
         </div>

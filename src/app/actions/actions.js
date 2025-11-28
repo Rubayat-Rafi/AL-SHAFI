@@ -32,6 +32,21 @@ export async function CategoryWiseProducts(slug) {
     throw new Error(error?.message);
   }
 }
+export async function FindProductBySlug(slug) {
+  try {
+    await dbConnect();
+    const product = await Product.findOne({ slug }).lean();
+    const formattedProduct = {
+      ...product,
+      _id: product._id.toString(),
+      createdAt: product.createdAt?.toString(),
+      updatedAt: product.updatedAt?.toString(),
+    };
+    return formattedProduct;
+  } catch (error) {
+    throw new Error(error?.message);
+  }
+}
 export async function FindAProduct(slug) {
   try {
     await dbConnect();
