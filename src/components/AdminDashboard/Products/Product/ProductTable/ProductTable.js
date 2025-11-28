@@ -1,12 +1,12 @@
-import ProductEditNDelBtn from '@/components/Ui/Products/product/ProductEditNDelBtn/ProductEditNDelBtn'
-import Image from 'next/image'
-import React from 'react'
+import ProductEditNDelBtn from "@/components/Ui/Products/Product/ProductEditNDelBtn/ProductEditNDelBtn";
+import Image from "next/image";
+import React from "react";
 
-const ProductTable = ({product}) => {
-    const formattedProducts = JSON.parse(product)
+const ProductTable = ({ product }) => {
+  const formattedProducts = JSON.parse(product);
   return (
     <div>
-              <div className="overflow-x-auto">
+      <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-200 rounded-lg overflow-hidden">
           <thead className="bg-gray-100">
             <tr>
@@ -79,7 +79,7 @@ const ProductTable = ({product}) => {
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductTable
+export default ProductTable;
