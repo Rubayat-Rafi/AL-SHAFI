@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Image from "next/image";
 
@@ -10,6 +10,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
   const router = useRouter();
   const prod = typeof product === "string" ? JSON.parse(product) : product;
 
+  const [categories, setCategories] = useState([]);
   const [editFlag, setEditFlag] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -26,12 +27,20 @@ const ProductEditNDelBtn = ({ type, product }) => {
     shipping_fee: prod?.shipping_fee || "free",
   });
 
-  const [thumbnailType, setThumbnailType] = useState(editData.thumbnail ? "url" : "upload");
-  const [thumbnailPreview, setThumbnailPreview] = useState(editData.thumbnail || "");
+  const [thumbnailType, setThumbnailType] = useState(
+    editData.thumbnail ? "url" : "upload"
+  );
+  const [thumbnailPreview, setThumbnailPreview] = useState(
+    editData.thumbnail || ""
+  );
 
   const [imageFields, setImageFields] = useState(
     editData.images.length > 0
-      ? editData.images.map((img) => ({ type: "url", value: img || "", preview: img || "" }))
+      ? editData.images.map((img) => ({
+          type: "url",
+          value: img || "",
+          preview: img || "",
+        }))
       : [{ type: "upload", value: "", preview: "" }]
   );
 
@@ -65,34 +74,53 @@ const ProductEditNDelBtn = ({ type, product }) => {
         const result = reader.result || "";
         fields[index] = { ...fields[index], value: result, preview: result };
         setImageFields(fields);
-        setEditData((prev) => ({ ...prev, images: fields.map((f) => f.value).filter(Boolean) }));
+        setEditData((prev) => ({
+          ...prev,
+          images: fields.map((f) => f.value).filter(Boolean),
+        }));
       };
       reader.readAsDataURL(value);
     } else {
-      fields[index] = { ...fields[index], value: value || "", preview: value || "" };
+      fields[index] = {
+        ...fields[index],
+        value: value || "",
+        preview: value || "",
+      };
       setImageFields(fields);
-      setEditData((prev) => ({ ...prev, images: fields.map((f) => f.value).filter(Boolean) }));
+      setEditData((prev) => ({
+        ...prev,
+        images: fields.map((f) => f.value).filter(Boolean),
+      }));
     }
   };
 
   const addImageField = () => {
-    setImageFields([...imageFields, { type: "upload", value: "", preview: "" }]);
+    setImageFields([
+      ...imageFields,
+      { type: "upload", value: "", preview: "" },
+    ]);
   };
 
   const removeImageField = (index) => {
     const fields = imageFields.filter((_, i) => i !== index);
     setImageFields(fields);
-    setEditData((prev) => ({ ...prev, images: fields.map((f) => f.value).filter(Boolean) }));
+    setEditData((prev) => ({
+      ...prev,
+      images: fields.map((f) => f.value).filter(Boolean),
+    }));
   };
 
   // ----------------------------- DELETE HANDLER -----------------------------
   const deleteHandler = async () => {
     if (!prod?._id) return;
-    if (!window.confirm("Are you sure you want to delete this product?")) return;
+    if (!window.confirm("Are you sure you want to delete this product?"))
+      return;
 
     setLoading(true);
     try {
-      const { data } = await axios.delete(`/pages/api/products/product/${prod._id}`);
+      const { data } = await axios.delete(
+        `/pages/api/products/product/${prod._id}`
+      );
       if (data?.success) {
         toast.success(data?.message);
         router.refresh();
@@ -109,13 +137,17 @@ const ProductEditNDelBtn = ({ type, product }) => {
   // ----------------------------- EDIT HANDLER -----------------------------
   const editHandler = async (e) => {
     e.preventDefault();
-    if (!editData.productName.trim()) return toast.warning("Product name is required!");
+    if (!editData.productName.trim())
+      return toast.warning("Product name is required!");
     if (!editData.thumbnail) return toast.warning("Thumbnail is required!");
 
     setLoading(true);
     try {
       const payload = { ...editData };
-      const { data } = await axios.patch(`/pages/api/products/product/${prod._id}`, payload);
+      const { data } = await axios.patch(
+        `/pages/api/products/product/${prod._id}`,
+        payload
+      );
 
       if (data?.success) {
         toast.success(data?.message);
@@ -131,6 +163,21 @@ const ProductEditNDelBtn = ({ type, product }) => {
     }
   };
 
+  // ----------------------------- FETCH CATEGORIES -----------------------------
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data } = await axios.get("/pages/api/products/category");
+        if (data?.success) {
+          setCategories(data.categories.filter((cat) => cat.status));
+        }
+      } catch (error) {
+        toast.error("Failed to load categories");
+      }
+    };
+    fetchCategories();
+  }, []);
+
   const baseBtn =
     "px-4 py-1 text-sm font-medium rounded-md shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed";
   const styles =
@@ -140,14 +187,23 @@ const ProductEditNDelBtn = ({ type, product }) => {
 
   return (
     <div>
-      <button onClick={type === "Delete" ? deleteHandler : () => setEditFlag(true)} className={styles} disabled={loading}>
+      <button
+        onClick={type === "Delete" ? deleteHandler : () => setEditFlag(true)}
+        className={styles}
+        disabled={loading}
+      >
         {loading && type === "Delete" ? "Processing..." : type}
       </button>
 
       {type === "Edit" && editFlag && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-          <form onSubmit={editHandler} className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg relative space-y-4 overflow-y-auto max-h-screen">
-            <h3 className="text-lg font-semibold text-gray-800">Edit Product</h3>
+          <form
+            onSubmit={editHandler}
+            className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg relative space-y-4 overflow-y-auto max-h-screen"
+          >
+            <h3 className="text-lg font-semibold text-gray-800">
+              Edit Product
+            </h3>
 
             {/* Product Name */}
             <input
@@ -161,18 +217,30 @@ const ProductEditNDelBtn = ({ type, product }) => {
             />
 
             {/* Category */}
-            <input
-              type="text"
-              name="category"
-              placeholder="Category"
-              value={editData.category || ""}
-              onChange={handleChange}
-              className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Category
+              </label>
+              <select
+                name="category"
+                value={editData.category}
+                onChange={handleChange}
+                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              >
+                <option value="">Select Category</option>
+                {categories.map((cat) => (
+                  <option key={cat._id} value={cat.slug}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             {/* Thumbnail */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Thumbnail</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Thumbnail
+              </label>
               <div className="flex gap-2 mb-2">
                 <label className="flex items-center gap-1 cursor-pointer">
                   <input
@@ -234,9 +302,14 @@ const ProductEditNDelBtn = ({ type, product }) => {
 
             {/* Additional Images */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Additional Images</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Additional Images
+              </label>
               {imageFields.map((img, i) => (
-                <div key={`${i}-${img.type}`} className="mb-2 border p-2 rounded space-y-1">
+                <div
+                  key={`${i}-${img.type}`}
+                  className="mb-2 border p-2 rounded space-y-1"
+                >
                   <div className="flex gap-2">
                     <label className="flex items-center gap-1">
                       <input
@@ -244,7 +317,11 @@ const ProductEditNDelBtn = ({ type, product }) => {
                         checked={img.type === "upload"}
                         onChange={() => {
                           const fields = [...imageFields];
-                          fields[i] = { type: "upload", value: "", preview: "" };
+                          fields[i] = {
+                            type: "upload",
+                            value: "",
+                            preview: "",
+                          };
                           setImageFields(fields);
                         }}
                       />
@@ -269,7 +346,9 @@ const ProductEditNDelBtn = ({ type, product }) => {
                       key={`upload-${i}`}
                       type="file"
                       accept="image/*"
-                      onChange={(e) => handleImageChange(i, "upload", e.target.files[0])}
+                      onChange={(e) =>
+                        handleImageChange(i, "upload", e.target.files[0])
+                      }
                       className="w-full p-1 border rounded"
                     />
                   ) : (
@@ -278,7 +357,9 @@ const ProductEditNDelBtn = ({ type, product }) => {
                       type="text"
                       placeholder="Image URL"
                       value={img.value || ""}
-                      onChange={(e) => handleImageChange(i, "url", e.target.value)}
+                      onChange={(e) =>
+                        handleImageChange(i, "url", e.target.value)
+                      }
                       className="w-full p-1 border rounded"
                     />
                   )}
@@ -305,7 +386,11 @@ const ProductEditNDelBtn = ({ type, product }) => {
                 </div>
               ))}
 
-              <button type="button" onClick={addImageField} className="py-1 px-3 bg-green-600 text-white rounded hover:bg-green-700">
+              <button
+                type="button"
+                onClick={addImageField}
+                className="py-1 px-3 bg-green-600 text-white rounded hover:bg-green-700"
+              >
                 Add Image
               </button>
             </div>
@@ -328,6 +413,21 @@ const ProductEditNDelBtn = ({ type, product }) => {
                 onChange={handleChange}
                 className="w-1/2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               />
+            </div>
+
+            {/* Product Description */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Product Description
+              </label>
+              <textarea
+                name="descriptions"
+                value={editData.descriptions}
+                onChange={handleChange}
+                rows={4}
+                placeholder="Enter full product description..."
+                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              ></textarea>
             </div>
 
             {/* Stock */}
@@ -368,7 +468,9 @@ const ProductEditNDelBtn = ({ type, product }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`px-4 py-2 rounded-md text-white font-medium transition-all duration-200 ${loading ? "bg-green-300" : "bg-green-600 hover:bg-green-700"}`}
+                className={`px-4 py-2 rounded-md text-white font-medium transition-all duration-200 ${
+                  loading ? "bg-green-300" : "bg-green-600 hover:bg-green-700"
+                }`}
               >
                 {loading ? "Saving..." : "Save"}
               </button>
