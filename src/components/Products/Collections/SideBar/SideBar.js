@@ -1,23 +1,15 @@
 export const dynamic = "force-dynamic";
-
-import dbConnect from "@/lib/dbConnect/dbConnect";
-import category from "@/models/products/category/category";
+import { AllCategories } from "@/app/actions/actions";
 import Link from "next/link";
 const SideBar = async ({ slug }) => {
-  await dbConnect();
-  const categories = await category.find().sort({ createdAt: -1 }).lean();
-  const formattedCategories = categories.map((cat) => ({
-    ...cat,
-    _id: cat._id.toString(),
-  }));
-
+  const categories = await AllCategories();
   return (
     <div className="">
       <h2 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">
         Categories
       </h2>
       <div className="flex flex-col space-y-2">
-        {formattedCategories?.map((cat) => (
+        {categories?.map((cat) => (
           <Link
             key={cat._id}
             href={`/collections/${cat.slug}`}
