@@ -24,7 +24,7 @@ export async function POST(req) {
     if (!isThumbnailUrl && thumbnail) {
       const uploaded = await uploadToCloudinary({
         img: thumbnail,
-        path: "Al-Safi/products/thumbnail",
+        path: "Al-Safi/products/thumbnails",
       });
       finalThumbnail = {
         secure_url: uploaded.secure_url,
@@ -41,7 +41,10 @@ export async function POST(req) {
             img,
             path: "Al-Safi/products/images",
           });
-          return { secure_url: uploaded.secure_url, public_id: uploaded.public_id };
+          return {
+            secure_url: uploaded.secure_url,
+            public_id: uploaded.public_id,
+          };
         } else if (isUrl) {
           return { secure_url: img, public_id: "" };
         }

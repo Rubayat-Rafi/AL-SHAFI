@@ -5,7 +5,6 @@ import {
   uploadToCloudinary,
   deleteFromCloudinary,
 } from "@/utils/cloudinary/cloudinary";
-
 export async function PATCH(req, { params }) {
   try {
     const { id } = await params;
@@ -31,7 +30,6 @@ export async function PATCH(req, { params }) {
         success: false,
       });
     }
-
     let finalThumbnail = existing.thumbnail;
     if (thumbnail && thumbnail !== existing.thumbnail?.secure_url) {
       const isUrl =
@@ -49,27 +47,41 @@ export async function PATCH(req, { params }) {
           public_id: uploaded.public_id,
         };
       } else {
-        finalThumbnail = { secure_url: thumbnail };
+        finalThumbnail = { secure_url: thumbnail, public_id: "external" };
+      }
+    }
+    let finalImages = [];
+    const existingMap = {};
+    existing.images.forEach((img) => {
+      existingMap[img.secure_url] = img;
+    });
+
+    for (const img of images) {
+      const isUrl = img.startsWith("http://") || img.startsWith("https://");
+
+      if (!isUrl) {
+        const uploaded = await uploadToCloudinary({
+          img,
+          path: "Al-Safi/products/images",
+        });
+        finalImages.push({
+          secure_url: uploaded.secure_url,
+          public_id: uploaded.public_id,
+        });
+      } else {
+        if (existingMap[img]) {
+          finalImages.push(existingMap[img]);
+          delete existingMap[img];
+        } else {
+          finalImages.push({ secure_url: img, public_id: "external" });
+        }
       }
     }
 
-    let finalImages = existing.images || [];
-    if (images && images.length) {
-      finalImages = [];
-      for (const img of images) {
-        const isUrl = img.startsWith("http://") || img.startsWith("https://");
-        if (!isUrl) {
-          const uploaded = await uploadToCloudinary({
-            img,
-            path: "Al-Safi/products/images",
-          });
-          finalImages.push({
-            secure_url: uploaded.secure_url,
-            public_id: uploaded.public_id,
-          });
-        } else {
-          finalImages.push({ secure_url: img });
-        }
+    for (const url in existingMap) {
+      const img = existingMap[url];
+      if (img.public_id && img.public_id !== "external") {
+        await deleteFromCloudinary(img.public_id);
       }
     }
 
