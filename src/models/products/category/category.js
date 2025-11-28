@@ -12,16 +12,17 @@ const CategorySchema = new mongoose.Schema(
     slug: {
       type: String,
       unique: true,
+      index: true,
     },
 
     image: {
-        secure_url:{type:String,default:null},
-        public_id:{type:String,default:null},
+      secure_url: { type: String, default: null },
+      public_id: { type: String, default: null },
     },
 
     status: {
       type: Boolean,
-      default: true, 
+      default: true,
     },
   },
   { timestamps: true }
@@ -33,4 +34,5 @@ CategorySchema.pre("save", async function () {
   }
 });
 
-export default mongoose.models.categories || mongoose.model("categories", CategorySchema);
+export default mongoose.models.categories ||
+  mongoose.model("categories", CategorySchema);

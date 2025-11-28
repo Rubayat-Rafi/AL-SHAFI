@@ -6,7 +6,7 @@ const Collections = async ({ params }) => {
   const products = await CategoryWiseProducts(slug);
   if (!products || products.length === 0) {
     return (
-      <div className=" flex items-center justify-center text-xl ">
+      <div className=" h-[50vh] flex items-center justify-center text-xl ">
         No products found in this category.
       </div>
     );

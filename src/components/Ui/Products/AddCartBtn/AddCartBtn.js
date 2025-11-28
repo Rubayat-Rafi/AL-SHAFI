@@ -1,11 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-const AddCartBtn = ({ product }) => {
+const AddCartBtn = ({ product, styles }) => {
+  const parseProduct = JSON.parse(product);
+  const cartHandler = async () => {
+    try {
+      toast.success("Cart added");
+    } catch (error) {
+      throw new Error(error?.messsage);
+    } finally {
+    }
+  };
   return (
-    <button
-      className=" w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all duration-200"
-    >
+    <button onClick={cartHandler} className={styles}>
       Add to Cart
     </button>
   );
