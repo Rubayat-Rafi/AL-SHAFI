@@ -1,12 +1,8 @@
 export const dynamic = "force-dynamic";
-
 import ProductCard from "@/components/Products/ProductCard/ProductCard";
-import product from "@/models/products/product/product";
-import dbConnect from "@/lib/dbConnect/dbConnect";
+import { HomeProducts } from "@/app/actions/actions";
 const Products = async () => {
-  await dbConnect();
-  const products = await product.find().sort({ createdAt: -1 }).lean();
-
+const products = await HomeProducts()
   return (
     <div className="px-4 md:px-8 lg:px-16 py-8">
       <p className="text-center text-4xl font-bold mb-8">ALL PRODUCTS</p>

@@ -1,12 +1,10 @@
 export const dynamic = "force-dynamic";
-import dbConnect from "@/lib/dbConnect/dbConnect";
-import Product from "@/models/products/product/product";
 import GalleryImages from "@/components/Products/GalleryImages/GalleryImages";
 import RelatedProducts from "@/components/Products/RelatedProducts/RelatedProducts";
+import { FindAProduct } from "@/app/actions/actions";
 const Collections = async ({ params }) => {
-  await dbConnect();
   const { slug } = await params;
-  const product = await Product.findOne({ slug }).lean();
+  const product = await FindAProduct(slug);
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center text-xl font-semibold">
@@ -14,44 +12,37 @@ const Collections = async ({ params }) => {
       </div>
     );
   }
-  const formattedProduct = {
-    ...product,
-    _id: product._id.toString(),
-    createdAt: product.createdAt?.toString(),
-    updatedAt: product.updatedAt?.toString(),
-  };
-
   return (
     <div className="container mx-auto px-5 py-10">
       <div className="grid md:grid-cols-2 gap-10">
         {/* LEFT – PRODUCT GALLERY */}
         <div className="w-full">
           <GalleryImages
-            thumbnail={JSON.stringify(formattedProduct?.thumbnail.secure_url)}
-            images={JSON.stringify(formattedProduct?.images)}
+            thumbnail={JSON.stringify(product?.thumbnail.secure_url)}
+            images={JSON.stringify(product?.images)}
           />
         </div>
 
         {/* RIGHT – PRODUCT INFO */}
         <div className="space-y-6">
-          <h1 className="text-3xl font-bold">{formattedProduct.productName}</h1>
+          <h1 className="text-3xl font-bold">{product.productName}</h1>
 
-          <p className="text-gray-500">Category: {formattedProduct.category}</p>
+          <p className="text-gray-500">Category: {product.category}</p>
 
           <div className="flex items-center gap-4">
             <span className="text-2xl font-semibold text-green-600">
-              ৳{formattedProduct.offerPrice}
+              ৳{product.offerPrice}
             </span>
             <span className="text-xl line-through text-gray-400">
-              ৳{formattedProduct.regularPrice}
+              ৳{product.regularPrice}
             </span>
           </div>
 
           <p className="text-sm text-gray-500">
             Stock:{" "}
-            {formattedProduct.stock > 0 ? (
+            {product.stock > 0 ? (
               <span className="text-green-600 font-semibold">
-                Available ({formattedProduct.stock})
+                Available ({product.stock})
               </span>
             ) : (
               <span className="text-red-600 font-semibold">Out of Stock</span>
@@ -62,7 +53,7 @@ const Collections = async ({ params }) => {
             Shipping:
             <span className="font-semibold capitalize">
               {" "}
-              {formattedProduct.shipping_fee}
+              {product.shipping_fee}
             </span>
           </p>
 
@@ -73,9 +64,7 @@ const Collections = async ({ params }) => {
       </div>
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-2">Description</h2>
-        <p className="text-gray-700 leading-relaxed">
-          {formattedProduct.descriptions}
-        </p>
+        <p className="text-gray-700 leading-relaxed">{product.descriptions}</p>
       </div>
       <div>
         <RelatedProducts slug={product?.category} />
