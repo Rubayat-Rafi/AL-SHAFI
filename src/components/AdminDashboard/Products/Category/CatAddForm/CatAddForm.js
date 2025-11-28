@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 
 const CatAddForm = ({ setAddFlag }) => {
   const router = useRouter();
+
   const [name, setName] = useState("");
   const [status, setStatus] = useState(true);
   const [image, setImage] = useState("");
@@ -15,9 +16,16 @@ const CatAddForm = ({ setAddFlag }) => {
   const [loading, setLoading] = useState(false);
   const [inputType, setInputType] = useState("upload");
   const [urlInput, setUrlInput] = useState("");
+
+  const [resetKey, setResetKey] = useState(Date.now()); // FIX FILE INPUT RESET
+
+  // -----------------------------
+  // FILE HANDLING
+  // -----------------------------
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
     const reader = new FileReader();
     reader.onloadend = () => {
       setImage(reader.result);
@@ -25,6 +33,10 @@ const CatAddForm = ({ setAddFlag }) => {
     };
     reader.readAsDataURL(file);
   };
+
+  // -----------------------------
+  // URL HANDLING
+  // -----------------------------
   const handleUrlChange = (e) => {
     const value = e.target.value || "";
     setUrlInput(value);
@@ -32,27 +44,34 @@ const CatAddForm = ({ setAddFlag }) => {
     setPreview(value || null);
   };
 
+  // -----------------------------
+  // SUBMIT DATA
+  // -----------------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name) return toast.warning("Category name is required!");
+
+    if (!name.trim()) return toast.warning("Category name is required!");
     if (!image) return toast.warning("Category image is required!");
 
     setLoading(true);
+
     try {
       const payload = { name, image, status };
       const { data } = await axios.post("/pages/api/products/category", payload);
+
       if (data?.success) {
-        toast.success(data?.message);
+        toast.success(data.message);
         setName("");
         setStatus(true);
         setImage("");
         setPreview(null);
         setUrlInput("");
         setInputType("upload");
+        setResetKey(Date.now());
         router.refresh();
         setAddFlag(false);
       } else {
-        toast.warning(data?.message);
+        toast.warning(data.message);
       }
     } catch (err) {
       toast.error(err?.message || "Something went wrong!");
@@ -84,7 +103,7 @@ const CatAddForm = ({ setAddFlag }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter category name"
-            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
@@ -94,7 +113,6 @@ const CatAddForm = ({ setAddFlag }) => {
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="radio"
-              name="imageType"
               value="upload"
               checked={inputType === "upload"}
               onChange={() => {
@@ -102,15 +120,15 @@ const CatAddForm = ({ setAddFlag }) => {
                 setImage("");
                 setPreview(null);
                 setUrlInput("");
+                setResetKey(Date.now());
               }}
-              className="h-4 w-4 text-blue-600"
             />
             Upload
           </label>
+
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="radio"
-              name="imageType"
               value="url"
               checked={inputType === "url"}
               onChange={() => {
@@ -119,24 +137,22 @@ const CatAddForm = ({ setAddFlag }) => {
                 setPreview(null);
                 setUrlInput("");
               }}
-              className="h-4 w-4 text-blue-600"
             />
             URL
           </label>
         </div>
 
-   
         {inputType === "upload" ? (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Category Image
             </label>
             <input
-              key={inputType} 
+              key={resetKey}
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="block w-full text-sm text-gray-600 border border-gray-300 rounded-lg p-2"
+              className="w-full text-sm border border-gray-300 rounded-lg p-2"
             />
           </div>
         ) : (
@@ -149,13 +165,12 @@ const CatAddForm = ({ setAddFlag }) => {
               value={urlInput}
               onChange={handleUrlChange}
               placeholder="Enter image URL"
-              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500"
             />
           </div>
         )}
-
         {preview && (
-          <div className="mt-3">
+          <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Preview
             </label>
@@ -165,22 +180,19 @@ const CatAddForm = ({ setAddFlag }) => {
           </div>
         )}
 
-
         <div className="flex items-center gap-3 mt-2">
           <input
             type="checkbox"
             checked={status}
             onChange={(e) => setStatus(e.target.checked)}
-            className="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
           />
-          <span className="text-gray-700 text-sm font-medium">Active</span>
+          <span className="text-gray-700">Active</span>
         </div>
-
 
         <button
           type="submit"
           disabled={loading}
-          className={`w-full py-3 px-4 rounded-lg text-white font-semibold transition-colors duration-200 ${
+          className={`w-full py-3 px-4 rounded-lg text-white font-semibold transition ${
             loading ? "bg-blue-300" : "bg-blue-600 hover:bg-blue-700"
           }`}
         >
