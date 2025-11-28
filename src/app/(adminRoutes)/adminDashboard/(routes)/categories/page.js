@@ -1,15 +1,8 @@
 export const dynamic = "force-dynamic";
-
 import category from "@/models/products/category/category";
 import dbConnect from "@/lib/dbConnect/dbConnect";
-import Image from "next/image";
-import CatEditNDelBtn from "@/components/Ui/Products/category/CatEditNDelBtn/CatEditNDelBtn";
-import CategoryPopup from "@/components/AdminDashboard/Products/Category/CategoryPopup/CategoryPopup";
-import Link from "next/link";
 import CategoryTable from "@/components/AdminDashboard/Products/Category/CategoryTable/CategoryTable";
-import CatAddForm from "@/components/AdminDashboard/Products/Category/CatAddForm/CatAddForm";
 import CategoryAddBtn from "@/components/Ui/Products/category/CategoryAddBtn/CategoryAddBtn";
-
 const Categories = async () => {
   await dbConnect();
   const categories = await category.find().sort({ createdAt: -1 }).lean();
