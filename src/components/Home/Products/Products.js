@@ -2,8 +2,9 @@ export const dynamic = "force-dynamic";
 
 import ProductCard from "@/components/Products/ProductCard/ProductCard";
 import product from "@/models/products/product/product";
-
+import dbConnect from "@/lib/dbConnect/dbConnect";
 const Products = async () => {
+  await dbConnect();
   const products = await product.find().sort({ createdAt: -1 }).lean();
 
   return (
