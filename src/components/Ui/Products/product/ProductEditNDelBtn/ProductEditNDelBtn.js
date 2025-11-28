@@ -9,8 +9,10 @@ import Image from "next/image";
 const ProductEditNDelBtn = ({ type, product }) => {
   const router = useRouter();
   const prod = typeof product === "string" ? JSON.parse(product) : product;
+
   const [editFlag, setEditFlag] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const [editData, setEditData] = useState({
     productName: prod?.productName || "",
     category: prod?.category || "",
@@ -19,42 +21,39 @@ const ProductEditNDelBtn = ({ type, product }) => {
     offerPrice: prod?.offerPrice || "",
     regularPrice: prod?.regularPrice || "",
     descriptions: prod?.descriptions || "",
-    stock: prod?.stock || 0,
+    stock: prod?.stock ?? 0,
     status: prod?.status || "regular",
     shipping_fee: prod?.shipping_fee || "free",
   });
 
-  const [thumbnailType, setThumbnailType] = useState(
-    editData.thumbnail ? "url" : "upload"
-  );
-  const [thumbnailPreview, setThumbnailPreview] = useState(
-    editData.thumbnail || null
-  );
+  const [thumbnailType, setThumbnailType] = useState(editData.thumbnail ? "url" : "upload");
+  const [thumbnailPreview, setThumbnailPreview] = useState(editData.thumbnail || "");
 
   const [imageFields, setImageFields] = useState(
     editData.images.length > 0
-      ? editData.images.map((img) => ({ type: "url", value: img, preview: img }))
-      : [{ type: "upload", value: "", preview: null }]
+      ? editData.images.map((img) => ({ type: "url", value: img || "", preview: img || "" }))
+      : [{ type: "upload", value: "", preview: "" }]
   );
 
   // ----------------------------- HANDLE FORM CHANGE -----------------------------
   const handleChange = (e) => {
-    setEditData({ ...editData, [e.target.name]: e.target.value });
+    setEditData({ ...editData, [e.target.name]: e.target.value || "" });
   };
 
   // ----------------------------- THUMBNAIL HANDLERS -----------------------------
   const handleThumbnailUpload = (file) => {
     const reader = new FileReader();
     reader.onloadend = () => {
-      setEditData((prev) => ({ ...prev, thumbnail: reader.result }));
-      setThumbnailPreview(reader.result);
+      const result = reader.result || "";
+      setEditData((prev) => ({ ...prev, thumbnail: result }));
+      setThumbnailPreview(result);
     };
     reader.readAsDataURL(file);
   };
 
   const handleThumbnailUrl = (url) => {
-    setEditData((prev) => ({ ...prev, thumbnail: url }));
-    setThumbnailPreview(url || null);
+    setEditData((prev) => ({ ...prev, thumbnail: url || "" }));
+    setThumbnailPreview(url || "");
   };
 
   // ----------------------------- ADDITIONAL IMAGES HANDLERS -----------------------------
@@ -63,36 +62,27 @@ const ProductEditNDelBtn = ({ type, product }) => {
     if (type === "upload") {
       const reader = new FileReader();
       reader.onloadend = () => {
-        fields[index].value = reader.result;
-        fields[index].preview = reader.result;
+        const result = reader.result || "";
+        fields[index] = { ...fields[index], value: result, preview: result };
         setImageFields(fields);
-        setEditData((prev) => ({
-          ...prev,
-          images: fields.map((f) => f.value).filter(Boolean),
-        }));
+        setEditData((prev) => ({ ...prev, images: fields.map((f) => f.value).filter(Boolean) }));
       };
       reader.readAsDataURL(value);
     } else {
-      fields[index].value = value;
-      fields[index].preview = value || null;
+      fields[index] = { ...fields[index], value: value || "", preview: value || "" };
       setImageFields(fields);
-      setEditData((prev) => ({
-        ...prev,
-        images: fields.map((f) => f.value).filter(Boolean),
-      }));
+      setEditData((prev) => ({ ...prev, images: fields.map((f) => f.value).filter(Boolean) }));
     }
   };
 
-  const addImageField = () =>
-    setImageFields([...imageFields, { type: "upload", value: "", preview: null }]);
+  const addImageField = () => {
+    setImageFields([...imageFields, { type: "upload", value: "", preview: "" }]);
+  };
 
   const removeImageField = (index) => {
     const fields = imageFields.filter((_, i) => i !== index);
     setImageFields(fields);
-    setEditData((prev) => ({
-      ...prev,
-      images: fields.map((f) => f.value).filter(Boolean),
-    }));
+    setEditData((prev) => ({ ...prev, images: fields.map((f) => f.value).filter(Boolean) }));
   };
 
   // ----------------------------- DELETE HANDLER -----------------------------
@@ -119,7 +109,6 @@ const ProductEditNDelBtn = ({ type, product }) => {
   // ----------------------------- EDIT HANDLER -----------------------------
   const editHandler = async (e) => {
     e.preventDefault();
-
     if (!editData.productName.trim()) return toast.warning("Product name is required!");
     if (!editData.thumbnail) return toast.warning("Thumbnail is required!");
 
@@ -150,22 +139,14 @@ const ProductEditNDelBtn = ({ type, product }) => {
       : `${baseBtn} bg-green-600 text-white hover:bg-green-700 border border-green-700 focus:ring-green-500`;
 
   return (
-    <div className="">
-      <button
-        onClick={type === "Delete" ? deleteHandler : () => setEditFlag(true) }
-        className={styles}
-        disabled={loading}
-      >
+    <div>
+      <button onClick={type === "Delete" ? deleteHandler : () => setEditFlag(true)} className={styles} disabled={loading}>
         {loading && type === "Delete" ? "Processing..." : type}
       </button>
 
-      {/* Edit Modal */}
       {type === "Edit" && editFlag && (
-        <div className="absolute top-0 right-0 left-0 bottom-0 inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-          <form
-            onSubmit={editHandler}
-            className="bg-white overflow-y-scroll  rounded-lg shadow-lg p-6 w-full max-w-lg relative space-y-4"
-          >
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+          <form onSubmit={editHandler} className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg relative space-y-4 overflow-y-auto max-h-screen">
             <h3 className="text-lg font-semibold text-gray-800">Edit Product</h3>
 
             {/* Product Name */}
@@ -173,7 +154,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
               type="text"
               name="productName"
               placeholder="Product Name"
-              value={editData.productName}
+              value={editData.productName || ""}
               onChange={handleChange}
               className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               required
@@ -184,7 +165,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
               type="text"
               name="category"
               placeholder="Category"
-              value={editData.category}
+              value={editData.category || ""}
               onChange={handleChange}
               className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -201,7 +182,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
                     onChange={() => {
                       setThumbnailType("upload");
                       setEditData((prev) => ({ ...prev, thumbnail: "" }));
-                      setThumbnailPreview(null);
+                      setThumbnailPreview("");
                     }}
                   />
                   Upload
@@ -214,7 +195,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
                     onChange={() => {
                       setThumbnailType("url");
                       setEditData((prev) => ({ ...prev, thumbnail: "" }));
-                      setThumbnailPreview(null);
+                      setThumbnailPreview("");
                     }}
                   />
                   URL
@@ -223,7 +204,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
 
               {thumbnailType === "upload" ? (
                 <input
-                  key={thumbnailType}
+                  key="thumbnail-upload"
                   type="file"
                   accept="image/*"
                   onChange={(e) => handleThumbnailUpload(e.target.files[0])}
@@ -231,8 +212,9 @@ const ProductEditNDelBtn = ({ type, product }) => {
                 />
               ) : (
                 <input
+                  key="thumbnail-url"
                   type="text"
-                  value={editData.thumbnail}
+                  value={editData.thumbnail || ""}
                   onChange={(e) => handleThumbnailUrl(e.target.value)}
                   placeholder="Thumbnail URL"
                   className="w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -252,11 +234,9 @@ const ProductEditNDelBtn = ({ type, product }) => {
 
             {/* Additional Images */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Additional Images
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Additional Images</label>
               {imageFields.map((img, i) => (
-                <div key={i} className="mb-2 border p-2 rounded space-y-1">
+                <div key={`${i}-${img.type}`} className="mb-2 border p-2 rounded space-y-1">
                   <div className="flex gap-2">
                     <label className="flex items-center gap-1">
                       <input
@@ -264,7 +244,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
                         checked={img.type === "upload"}
                         onChange={() => {
                           const fields = [...imageFields];
-                          fields[i] = { type: "upload", value: "", preview: null };
+                          fields[i] = { type: "upload", value: "", preview: "" };
                           setImageFields(fields);
                         }}
                       />
@@ -276,7 +256,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
                         checked={img.type === "url"}
                         onChange={() => {
                           const fields = [...imageFields];
-                          fields[i] = { type: "url", value: "", preview: null };
+                          fields[i] = { type: "url", value: "", preview: "" };
                           setImageFields(fields);
                         }}
                       />
@@ -286,6 +266,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
 
                   {img.type === "upload" ? (
                     <input
+                      key={`upload-${i}`}
                       type="file"
                       accept="image/*"
                       onChange={(e) => handleImageChange(i, "upload", e.target.files[0])}
@@ -293,9 +274,10 @@ const ProductEditNDelBtn = ({ type, product }) => {
                     />
                   ) : (
                     <input
+                      key={`url-${i}`}
                       type="text"
                       placeholder="Image URL"
-                      value={img.value}
+                      value={img.value || ""}
                       onChange={(e) => handleImageChange(i, "url", e.target.value)}
                       className="w-full p-1 border rounded"
                     />
@@ -323,11 +305,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
                 </div>
               ))}
 
-              <button
-                type="button"
-                onClick={addImageField}
-                className="py-1 px-3 bg-green-600 text-white rounded hover:bg-green-700"
-              >
+              <button type="button" onClick={addImageField} className="py-1 px-3 bg-green-600 text-white rounded hover:bg-green-700">
                 Add Image
               </button>
             </div>
@@ -338,7 +316,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
                 type="number"
                 name="offerPrice"
                 placeholder="Offer Price"
-                value={editData.offerPrice}
+                value={editData.offerPrice || ""}
                 onChange={handleChange}
                 className="w-1/2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               />
@@ -346,7 +324,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
                 type="number"
                 name="regularPrice"
                 placeholder="Regular Price"
-                value={editData.regularPrice}
+                value={editData.regularPrice || ""}
                 onChange={handleChange}
                 className="w-1/2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               />
@@ -357,7 +335,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
               type="number"
               name="stock"
               placeholder="Stock"
-              value={editData.stock}
+              value={editData.stock ?? 0}
               onChange={handleChange}
               className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -365,7 +343,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
             {/* Status */}
             <select
               name="status"
-              value={editData.status}
+              value={editData.status || "regular"}
               onChange={handleChange}
               className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             >
@@ -377,7 +355,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
             {/* Shipping Fee */}
             <select
               name="shipping_fee"
-              value={editData.shipping_fee}
+              value={editData.shipping_fee || "free"}
               onChange={handleChange}
               className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             >
@@ -390,9 +368,7 @@ const ProductEditNDelBtn = ({ type, product }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`px-4 py-2 rounded-md text-white font-medium transition-all duration-200 ${
-                  loading ? "bg-green-300" : "bg-green-600 hover:bg-green-700"
-                }`}
+                className={`px-4 py-2 rounded-md text-white font-medium transition-all duration-200 ${loading ? "bg-green-300" : "bg-green-600 hover:bg-green-700"}`}
               >
                 {loading ? "Saving..." : "Save"}
               </button>
