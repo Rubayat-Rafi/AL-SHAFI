@@ -12,12 +12,12 @@ const Layout = async ({ children, params }) => {
         <div className="max-w-[1400px] py-5 mx-auto px-5">
           <div className="  flex flex-col md:flex-row  ">
             <aside className="w-full  md:w-64 p-4">
-              <div className=" overflow-y-scroll">
+              <div className=" ">
                 <SideBar slug={slug} />
               </div>
             </aside>
             <main className=" flex-1 ">
-              <div className=" overflow-y-scroll ">{children}</div>
+              <div className="  ">{children}</div>
               <div>
                 <ProductSeenHistories />
               </div>

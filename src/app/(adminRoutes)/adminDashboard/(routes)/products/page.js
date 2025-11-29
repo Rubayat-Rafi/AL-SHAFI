@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-import product from "@/models/products/product/product";
+import product from "@/models/Products/Product/Product";
 import React from "react";
 import dbConnect from "@/lib/dbConnect/dbConnect";
 import ProductTable from "@/components/AdminDashboard/Products/Product/ProductTable/ProductTable";

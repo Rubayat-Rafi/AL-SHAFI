@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect/dbConnect";
-import category from "@/models/products/category/category";
-import Product from "@/models/products/product/product";
+import category from "@/models/Products/Category/Category";
+import Product from "@/models/Products/Product/Product";
 
 export async function AllCategories() {
   try {
