@@ -4,7 +4,6 @@ import ReduxProvider from "@/utils/redux/reduxProvider";
 import { ToastContainer } from "react-toastify";
 import Topbar from "@/components/Topbar/Topbar";
 import Navbar from "@/components/Navbar/Navbar";
-import Categories from "@/components/Categories/Categories";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +30,7 @@ export default function RootLayout({ children }) {
           <div>
             <Topbar />
             <Navbar />
-            <Categories />
+            {/* <Categories /> */}
           </div>
           {children}
         </ReduxProvider>
