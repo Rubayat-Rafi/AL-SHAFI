@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-import category from "@/models/products/category/category";
+import category from "@/models/Products/Category/Category";
 import dbConnect from "@/lib/dbConnect/dbConnect";
 import CategoryTable from "@/components/AdminDashboard/Products/Category/CategoryTable/CategoryTable";
 import CategoryAddBtn from "@/components/Ui/Products/Category/CategoryAddBtn/CategoryAddBtn";

@@ -34,10 +34,10 @@ const Navbar = () => {
         </div>
         {/* Account & Cart */}
         <div className="flex items-center gap-4">
-          <button className="flex items-center gap-1 text-gray-700 hover:text-gray-900">
+          <Link href={"/login"} className="flex items-center gap-1 text-gray-700 hover:text-gray-900">
             <UserIcon className="h-6 w-6" />
             <span className="hidden md:inline">Account</span>
-          </button>
+          </Link>
           <button className="flex items-center gap-1 text-gray-700 hover:text-gray-900">
             <ShoppingCartIcon className="h-6 w-6" />
             <span className="hidden md:inline">Cart</span>
