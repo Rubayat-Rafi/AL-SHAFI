@@ -78,7 +78,7 @@ const ProductSeenHistories = () => {
         {products.map((prod) => (
           <SwiperSlide key={prod._id}>
             <div className="bg-white shadow rounded-lg p-2 hover:shadow-lg transition cursor-pointer">
-              <Link href={`/product-details/${prod?.slug}`}>
+              <Link href={`/product/product-details/${prod?.slug}`}>
                 <Image
                   src={prod.thumbnail.secure_url}
                   alt={prod.productName}

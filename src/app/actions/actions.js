@@ -47,6 +47,7 @@ export async function FindProductBySlug(slug) {
     throw new Error(error?.message);
   }
 }
+
 export async function FindAProduct(slug) {
   try {
     await dbConnect();
@@ -58,6 +59,20 @@ export async function FindAProduct(slug) {
       updatedAt: product.updatedAt?.toString(),
     };
     return formattedProduct;
+  } catch (error) {
+    throw new Error(error?.message);
+  }
+}
+
+export async function FindProducstBySlugs(slugs) {
+  try {
+    await dbConnect();
+    const products = await Product.find({ slug: { $in: slugs } }).lean();
+    const formattedProducts = products.map((p) => ({
+      ...p,
+      _id: p._id.toString(),
+    }));
+    return formattedProducts;
   } catch (error) {
     throw new Error(error?.message);
   }
