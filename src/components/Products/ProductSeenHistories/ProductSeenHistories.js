@@ -27,13 +27,20 @@ const ProductSeenHistories = () => {
       try {
         const responses = await Promise.all(
           slugs.map((slug) =>
-            axios.get(`/pages/api/products/product/findProducts/${slug}`)
+            axios.get(`/pages/api/products/product/findProducts/${slug}`, {
+              headers: { "x-request-source": "12Hirock@" },
+            })
           )
         );
-        const productsData = responses
-          .map((res) => res.data?.product)
-          .filter(Boolean);
-        setProducts(productsData);
+        console.log(responses);
+        if (!responses) {
+          return;
+        } else {
+          const productsData = responses
+            .map((res) => res.data?.product)
+            .filter(Boolean);
+          setProducts(productsData);
+        }
       } catch (err) {
         console.error("Failed to fetch products", err);
         setProducts([]);

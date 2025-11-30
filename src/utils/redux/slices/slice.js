@@ -13,6 +13,6 @@ export const Slice = createSlice({
   },
 });
 
-export const {  addActiveFlag } = Slice.actions;
+export const { addActiveFlag } = Slice.actions;
 
 export default Slice.reducer;
