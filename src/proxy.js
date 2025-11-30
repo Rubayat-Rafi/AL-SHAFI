@@ -14,6 +14,7 @@ const userAgent = req.headers.get("user-agent") || "";
 const secFetchMode = req.headers.get("sec-fetch-mode") || "";
 const secFetchSite = req.headers.get("sec-fetch-site") || "";
 const method = req.method;
+const frontendSource = req.headers.get("x-request-source") === "12Hirock@";
 const isHTMLRequest = accept.includes("text/html");
 const isNavigation = secFetchMode === "navigate";
 const isCrossSite = secFetchSite && secFetchSite !== "same-origin";
@@ -24,7 +25,7 @@ const isBrowserUA =
 const isNotJSON = !accept.includes("application/json");
 const isSuspiciousGET = method === "GET";
 if (
-  pathname.startsWith("/pages/api") &&
+  pathname.startsWith("/pages/api") && !frontendSource && 
   (
     isHTMLRequest ||
     isNavigation ||

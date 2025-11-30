@@ -167,7 +167,9 @@ const ProductEditNDelBtn = ({ type, product }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get("/pages/api/products/category");
+        const { data } = await axios.get("/pages/api/products/category",{
+              headers: { "x-request-source": "12Hirock@" },
+            });
         if (data?.success) {
           setCategories(data.categories.filter((cat) => cat.status));
         }
