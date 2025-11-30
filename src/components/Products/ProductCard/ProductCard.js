@@ -30,7 +30,7 @@ const ProductCard = ({ product }) => {
       <div className="w-full h-64 relative mb-4">
         <Link
           onClick={viewHistoryHandler}
-          href={`/product-details/${parseProduct?.slug}`}
+          href={`/product/product-details/${parseProduct?.slug}`}
         >
           <Image
             src={parseProduct?.thumbnail?.secure_url || "/placeholder.png"}
@@ -61,7 +61,7 @@ const ProductCard = ({ product }) => {
       {/* Add to Cart Button */}
       <div className="w-full">
         <AddCartBtn
-          product={JSON.stringify(product)}
+          product={product}
           styles={
             " w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all duration-200"
           }
