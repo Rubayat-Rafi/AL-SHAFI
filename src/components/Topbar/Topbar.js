@@ -1,5 +1,3 @@
-import React from "react";
-
 const Topbar = () => {
   return (
     <div className=" bg-yellow-600 text-white text-center py-2">
