@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Link from "next/link";
 const ProductSeenHistories = () => {
-  const { activeFlag } = useSelector((state) => state);
+  const { activeFlag } = useSelector((state) => state?.slice);
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchViewedProducts = async () => {

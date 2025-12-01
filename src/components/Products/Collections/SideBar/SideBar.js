@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-import { AllCategories } from "@/app/actions/actions";
+import { AllCategories } from "@/actions/actions";
 import Link from "next/link";
 const SideBar = async ({ slug }) => {
   const categories = await AllCategories();
