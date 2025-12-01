@@ -8,6 +8,8 @@ const CartProducts = () => {
   const { carts } = useCart();
   const [products, setProducts] = useState([]);
   const totalPrice = products.reduce((sum, p) => sum + p.offerPrice, 0);
+
+
   useEffect(() => {
     const handler = async () => {
       try {
@@ -27,6 +29,8 @@ const CartProducts = () => {
     };
     handler();
   }, [carts]);
+
+  
   return (
     <div>
       <div className="min-h-screen bg-gray-50 py-12">
@@ -39,7 +43,7 @@ const CartProducts = () => {
                   className="p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 hover:bg-gray-50 transition-colors"
                 >
                   {/* Product Image */}
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <div className="w-32 h-32 bg-gray-100 rounded-xl overflow-hidden border border-gray-200">
                       <Image
                         src={product.thumbnail.secure_url}

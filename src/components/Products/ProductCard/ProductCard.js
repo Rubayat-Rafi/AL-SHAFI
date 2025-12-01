@@ -25,9 +25,9 @@ const ProductCard = ({ product }) => {
     dispatch(addActiveFlag(!activeFlag));
   };
   return (
-    <div className="flex flex-col justify-between items-center p-4 border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 bg-white">
+    <div className="flex flex-col justify-between items-center p-4 border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 bg-white">
       {/* Product Image */}
-      <div className="w-full h-64 relative mb-4">
+      <div className="w-full h-40 relative mb-4">
         <Link
           onClick={viewHistoryHandler}
           href={`/product/product-details/${parseProduct?.slug}`}
