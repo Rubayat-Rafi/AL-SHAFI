@@ -8,7 +8,6 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
-
 const menuItems = [
   {
     title: "Dashboard",
