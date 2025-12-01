@@ -11,7 +11,7 @@ const Categories = async () => {
           {categories?.map((categ) => (
             <Link
               key={categ._id}
-              href={`/collections/${categ.slug}`}
+              href={`/product/collections/${categ.slug}`}
               className="block bg-white hover:bg-green-50 border border-gray-200  shadow-sm py-2 text-center transition transform hover:scale-105 duration-200"
             >
               <p className="text-gray-700 font-medium">{categ?.name}</p>
