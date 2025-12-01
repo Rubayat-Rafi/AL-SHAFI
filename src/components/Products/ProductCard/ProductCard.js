@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
-  const { activeFlag } = useSelector((state) => state);
+  const { activeFlag } = useSelector((state) => state?.slice);
   const parseProduct =
     typeof product === "string" ? JSON.parse(product) : product;
   const viewHistoryHandler = () => {

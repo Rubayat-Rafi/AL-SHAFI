@@ -3,7 +3,7 @@ import { addActiveFlag } from "@/utils/redux/slices/slice";
 import { useDispatch, useSelector } from "react-redux";
 const RemoveCart = ({ prod }) => {
   const dispatch = useDispatch();
-  const { activeFlag } = useSelector((state) => state);
+  const { activeFlag } = useSelector((state) => state?.slice);
   const product = JSON.parse(prod);
   const handleRemove = () => {
     const stored = localStorage.getItem("carts");
