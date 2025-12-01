@@ -33,7 +33,6 @@ const menuItems = [
 
 const SideBar = () => {
   const pathname = usePathname();
-
   return (
     <div className="w-64 h-screen border-r bg-white flex flex-col py-6 px-4">
       {/* Logo */}
