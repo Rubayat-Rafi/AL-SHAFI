@@ -12,7 +12,7 @@ const SideBar = async ({ slug }) => {
         {categories?.map((cat) => (
           <Link
             key={cat._id}
-            href={`/collections/${cat.slug}`}
+            href={`/product/collections/${cat.slug}`}
             className={`text-gray-700 ${
               cat?.slug !== slug && "hover:bg-slate-300/50"
             }  ${
