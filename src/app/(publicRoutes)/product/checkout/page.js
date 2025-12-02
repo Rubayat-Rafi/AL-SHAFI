@@ -5,6 +5,7 @@ import { useCart } from "@/hooks/carts/useCart";
 import { useFetchCarts } from "@/hooks/carts/useFetchcarts";
 import Image from "next/image";
 import AreaSelections from "@/components/AreaSelections/AreaSelections";
+import Container from "@/components/Container/Container";
 
 const Checkout = () => {
   const { carts } = useCart();
@@ -55,9 +56,9 @@ const Checkout = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const division = selectDta?.division
-const district = selectDta?.district
-const upazila = selectDta?.upazila
+    const division = selectDta?.division;
+    const district = selectDta?.district;
+    const upazila = selectDta?.upazila;
 
     const payload = {
       ...formData,
@@ -71,8 +72,8 @@ const upazila = selectDta?.upazila
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12 px-4">
-      <div className="max-w-5xl mx-auto">
+    <Container>
+      <div className=" py-10">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Checkout</h1>
           <p className="text-gray-600">
@@ -318,7 +319,7 @@ const upazila = selectDta?.upazila
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 
