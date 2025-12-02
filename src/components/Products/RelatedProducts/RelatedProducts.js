@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-import { CategoryWiseProducts } from "@/app/actions/actions";
+import { CategoryWiseProducts } from "@/actions/actions";
 import ProductCard from "../ProductCard/ProductCard";
 const RelatedProducts = async ({ slug }) => {
 const products = await CategoryWiseProducts(slug)

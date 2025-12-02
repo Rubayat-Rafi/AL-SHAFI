@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 import ProductCard from "@/components/Products/ProductCard/ProductCard";
-import { HomeProducts } from "@/app/actions/actions";
+import { HomeProducts } from "@/actions/actions";
 const Products = async () => {
 const products = await HomeProducts()
   return (

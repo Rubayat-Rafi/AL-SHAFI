@@ -14,14 +14,14 @@ const Navbar = () => {
   const { carts } = useCart();
 
   return (
-    <nav className="sticky top-0 w-full bg-white shadow-md px-4 md:px-8 py-3">
+    <nav className="sticky top-0 w-full shadow-md px-4 md:px-8 py-3 bg-background">
       <Container>
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-6">
             <Link href="/">
               <Image
-                src="https://res.cloudinary.com/dusp1j4e0/image/upload/v1764309061/Al-Safi/logos/logo_2_gsvks8.png"
+                src="/logo.png"
                 alt="logo"
                 width={150}
                 height={50}
