@@ -10,7 +10,6 @@ const Categories = async () => {
     ...cat,
     _id: cat._id.toString(),
   }));
-
   return (
     <div className="p-6 relative h-screen">
       <div className=" flex items-center justify-between">
