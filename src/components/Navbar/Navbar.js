@@ -6,6 +6,7 @@ import {
   UserIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
+
 import Link from "next/link";
 import { useCart } from "@/hooks/carts/useCart";
 import Container from "../Container/Container";
@@ -14,7 +15,7 @@ const Navbar = () => {
   const { carts } = useCart();
 
   return (
-    <nav className="sticky top-0 w-full shadow-md px-4 md:px-8 py-3 bg-background">
+    <nav className="sticky top-0 w-full shadow-md px-4 md:px-8 py-3 bg-background z-50">
       <Container>
         <div className="flex items-center justify-between">
           {/* Logo */}

@@ -4,6 +4,7 @@ import ReduxProvider from "@/utils/redux/reduxProvider";
 import { ToastContainer } from "react-toastify";
 import Topbar from "@/components/Topbar/Topbar";
 import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -25,7 +26,9 @@ export default function RootLayout({ children }) {
             <Topbar />
             <Navbar />
           </>
-          {children}
+          <main className="min-h-[calc(100vh-388px)]">{children}</main>
+
+          <Footer />
         </ReduxProvider>
         <ToastContainer position="top-center" />
       </body>
