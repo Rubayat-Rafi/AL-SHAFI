@@ -16,10 +16,12 @@ export const useCart = () => {
   const addToCart = useCallback(
     (slug) => {
       if (!slug) return;
-      if (carts.includes({ slug })) {
+      if (carts.some(item => item.slug === slug)) {
         toast.warning("You already added this item!");
         return;
       }
+   
+
       const payload = {
         slug: slug,
         qty: 1,
