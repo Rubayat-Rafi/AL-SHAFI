@@ -1,22 +1,25 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect/dbConnect";
-import Product from "@/models/Products/Product/Product";
+import Product from "../../../../../models/products/product/product.js";
 export async function GET(req) {
   try {
     const url = new URL(req.url);
-    const slugsQuery = url.searchParams.get("slugs"); 
+    const slugsQuery = url.searchParams.get("slugs");
     if (!slugsQuery) {
-      return NextResponse.json(
-        { message: "No slugs provided", success: false },
-      );
+      return NextResponse.json({
+        message: "No slugs provided",
+        success: false,
+      });
     }
     const slugs = slugsQuery.split(",");
     await dbConnect();
     const products = await Product.find({ slug: { $in: slugs } }).lean();
     if (!products || products.length === 0) {
-      return NextResponse.json(
-        { message: "No products found", success: false, products: [] },
-      );
+      return NextResponse.json({
+        message: "No products found",
+        success: false,
+        products: [],
+      });
     }
     const formattedProducts = products.map((p) => ({
       ...p,

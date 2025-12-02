@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 export const useCart = () => {
-  const { activeFlag } = useSelector((state) => state);
+  const { activeFlag } = useSelector((state) => state?.slice);
   const [carts, setCarts] = useState([]);
   useEffect(() => {
     const handler = () => {

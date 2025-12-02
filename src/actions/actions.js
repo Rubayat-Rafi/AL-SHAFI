@@ -1,12 +1,12 @@
 import dbConnect from "@/lib/dbConnect/dbConnect";
-import category from "../../models/products/category/category.js";
-import Product from "../../models/products/product/product.js";
+import Category from "../models/products/category/category.js";
+import Product from "../models/products/product/product.js";
 
 
 export async function AllCategories() {
   try {
     await dbConnect();
-    const categories = await category.find().sort({ createdAt: -1 }).lean();
+    const categories = await Category.find().sort({ createdAt: -1 }).lean();
     const formattedCategories = categories.map((cat) => ({
       ...cat,
       _id: cat._id.toString(),
