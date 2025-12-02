@@ -18,9 +18,9 @@ const Banner = () => {
 
   return (
     <div className="max-w-[1440px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4 py-6">
-      <div className="flex items-center justify-center w-full space-x-4 space-y-4 lg:space-y-0 lg:flex-row flex-col h-[400px]">
+      <div className="grid grid-cols-10 gap-4 w-full h-[400px] md:h-[450px]">
         {/* Main Banner */}
-        <div className="relative w-full h-full lg:w-4/6">
+        <div className="relative w-full h-full lg:col-span-8 col-span-10 overflow-hidden">
           {slides.map((src, i) => (
             <Image
               key={i}
@@ -50,7 +50,7 @@ const Banner = () => {
         </div>
 
         {/* Side Banners */}
-        <div className="w-full h-full lg:w-2/6 flex flex-row lg:flex-col space-x-4 lg:space-x-0 lg:space-y-4">
+        <div className="w-full  md:h-full  col-span-10 lg:col-span-2 flex flex-row lg:flex-col space-x-4 lg:space-x-0 lg:space-y-4">
           {/* Small Image 1 */}
           <div className="relative w-full lg:h-1/2 h-full">
             <Image
@@ -64,7 +64,7 @@ const Banner = () => {
           {/* Small Image 2 */}
           <div className="relative w-full lg:h-1/2 h-full">
             <Image
-              src="/post1.jpg"
+              src="/post2.webp"
               alt="post2"
               fill
               className="rounded-md object-cover"
