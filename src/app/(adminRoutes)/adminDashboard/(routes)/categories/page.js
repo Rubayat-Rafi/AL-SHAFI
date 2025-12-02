@@ -1,8 +1,8 @@
 export const dynamic = "force-dynamic";
-import category from "@/models/Products/Category/Category";
+import category from "../../../../../models/products/category/category.js";
 import dbConnect from "@/lib/dbConnect/dbConnect";
 import CategoryTable from "@/components/AdminDashboard/Products/Category/CategoryTable/CategoryTable";
-import CategoryAddBtn from "@/components/Ui/Products/Category/CategoryAddBtn/CategoryAddBtn";
+import CategoryAddBtn from "../../../../../components/Ui/Products/category/CategoryAddBtn/CategoryAddBtn.js";
 const Categories = async () => {
   await dbConnect();
   const categories = await category.find().sort({ createdAt: -1 }).lean();

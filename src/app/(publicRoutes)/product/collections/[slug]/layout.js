@@ -3,6 +3,9 @@ import SideBar from "@/components/Products/Collections/SideBar/SideBar";
 import ProductSeenHistories from "@/components/Products/ProductSeenHistories/ProductSeenHistories";
 const Layout = async ({ children, params }) => {
   const { slug } = await params;
+
+
+
   return (
     <div className="">
       <div>

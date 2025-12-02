@@ -3,6 +3,7 @@ import { AllCategories } from "@/actions/actions";
 import Link from "next/link";
 import Container from "../Container/Container";
 const Categories = async () => {
+
   const categories = await AllCategories();
   return (
     <div className="py-6">
