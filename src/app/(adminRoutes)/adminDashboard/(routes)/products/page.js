@@ -1,12 +1,12 @@
 export const dynamic = "force-dynamic";
-import product from "../../../../../models/products/product/product.js";
+import Product from "@/models/Products/Product/Product";
 import React from "react";
 import dbConnect from "@/lib/dbConnect/dbConnect";
 import ProductTable from "@/components/AdminDashboard/Products/Product/ProductTable/ProductTable";
-import ProductAddBtn from "../../../../../components/Ui/Products/product/ProductAddBtn/ProductAddBtn.js";
+import ProductAddBtn from "@/components/Ui/Products/Product/ProductAddBtn/ProductAddBtn.js";
 const Products = async () => {
   await dbConnect();
-  const products = await product.find().sort({ createdAt: -1 }).lean();
+  const products = await Product.find().sort({ createdAt: -1 }).lean();
   const formattedProducts = products.map((product) => ({
     ...product,
     _id: product._id.toString(),

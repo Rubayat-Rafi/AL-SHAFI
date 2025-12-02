@@ -8,7 +8,7 @@ const RemoveCart = ({ prod }) => {
   const handleRemove = () => {
     const stored = localStorage.getItem("carts");
     const storedCarts = JSON.parse(stored);
-    const updated = storedCarts.filter((item) => item !== product.slug);
+    const updated = storedCarts.filter((item) => item?.slug !== product.slug);
     localStorage.setItem("carts", JSON.stringify(updated));
     dispatch(addActiveFlag(!activeFlag));
   };
