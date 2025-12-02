@@ -17,7 +17,7 @@ const Banner = () => {
   }, [slides.length]);
 
   return (
-    <div className="max-w-[1440px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4 py-6">
+    <div className="max-w-[1440px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4 py-6 ">
       <div className="grid grid-cols-10 gap-4 w-full h-[400px] md:h-[450px]">
         {/* Main Banner */}
         <div className="relative w-full h-full lg:col-span-8 col-span-10 overflow-hidden">
