@@ -16,11 +16,15 @@ export const useCart = () => {
   const addToCart = useCallback(
     (slug) => {
       if (!slug) return;
-      if (carts.includes(slug)) {
+      if (carts.includes({ slug })) {
         toast.warning("You already added this item!");
         return;
       }
-      const updated = [slug, ...carts];
+      const payload = {
+        slug: slug,
+        qty: 1,
+      };
+      const updated = [payload, ...carts];
       setCarts(updated);
       localStorage.setItem("carts", JSON.stringify(updated));
       toast.success("Cart added");
