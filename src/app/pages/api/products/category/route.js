@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect/dbConnect";
-import category from "../../../../../models/products/category/category.js";
+import Category from "@/models/Products/Category/Category";
 import { uploadToCloudinary } from "@/utils/cloudinary/cloudinary";
 export async function POST(req) {
   try {
@@ -20,7 +20,7 @@ export async function POST(req) {
       };
     }
 
-    const newCategory = new category({
+    const newCategory = new Category({
       name,
       image: finalImage,
       status
@@ -49,7 +49,7 @@ export async function POST(req) {
 export async function GET() {
   try {
     await dbConnect();
-    const finddAllCategory = await category.find();
+    const finddAllCategory = await Category.find();
     return NextResponse.json({
       message: "Category founded!",
       success: true,
