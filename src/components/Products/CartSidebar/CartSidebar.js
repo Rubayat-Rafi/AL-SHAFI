@@ -151,9 +151,14 @@ const CartSidebar = () => {
                   Proceed to Checkout
                 </Link>
               </button>
-              <p className="text-xs text-gray-500 text-center mt-3">
-                Shipping & taxes calculated at checkout
-              </p>
+              <Link
+                onClick={() => {
+                  dispatch(addCartFlag(!cartFlag));
+                }}
+                href={"/product/carts"}
+              >
+                <p className=" text-gray-500 text-center mt-3">View All</p>
+              </Link>
             </div>
           )}
         </div>
