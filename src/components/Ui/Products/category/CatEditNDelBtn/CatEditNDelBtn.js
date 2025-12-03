@@ -11,29 +11,52 @@ const CatEditNDelBtn = ({ type, cat }) => {
   const category = typeof cat === "string" ? JSON.parse(cat) : cat;
 
   const [editFlag, setEditFlag] = useState(false);
+
   const [editName, setEditName] = useState(category?.name || "");
-  const [editStatus, setEditStatus] = useState(category?.status || true);
-  const [editImage, setEditImage] = useState(category?.image?.secure_url || ""); // URL or base64
-  const [preview, setPreview] = useState(category?.image?.secure_url || null);
+  const [editStatus, setEditStatus] = useState(
+    typeof category?.status === "boolean" ? category.status : true
+  );
+
+  const [editImage, setEditImage] = useState(
+    category?.image?.secure_url || ""
+  ); // URL or base64
+
+  const [preview, setPreview] = useState(
+    category?.image?.secure_url || null
+  );
+
+  // ⭐ NEW: image alt text
+  const [editImageAlt, setEditImageAlt] = useState(
+    category?.image?.alt || category?.name || ""
+  );
+
   const [loading, setLoading] = useState(false);
-  const [inputType, setInputType] = useState(editImage ? "url" : "upload");
+  const [inputType, setInputType] = useState(
+    editImage ? "url" : "upload"
+  );
   const [urlInput, setUrlInput] = useState(
     editImage && inputType === "url" ? editImage : ""
   );
 
-  // Handle file selection
+  // -----------------------------
+  // FILE HANDLING
+  // -----------------------------
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
     const reader = new FileReader();
     reader.onloadend = () => {
-      setEditImage(reader.result);
-      setPreview(reader.result);
+      const result = reader.result;
+      setEditImage(result);
+      setPreview(result);
     };
     reader.readAsDataURL(file);
   };
 
-  // Handle URL input
+  // -----------------------------
+  // URL HANDLING
+  // -----------------------------
   const handleUrlChange = (e) => {
     const value = e.target.value || "";
     setUrlInput(value);
@@ -41,8 +64,12 @@ const CatEditNDelBtn = ({ type, cat }) => {
     setPreview(value || null);
   };
 
+  // -----------------------------
+  // DELETE HANDLER
+  // -----------------------------
   const deleteHandler = async () => {
     if (!category?._id) return;
+
     if (!window.confirm("Are you sure you want to delete this category?"))
       return;
 
@@ -51,6 +78,7 @@ const CatEditNDelBtn = ({ type, cat }) => {
       const { data } = await axios.delete(
         `/pages/api/products/category/${category._id}`
       );
+
       if (data?.success) {
         toast.success(data?.message);
         router.refresh();
@@ -64,14 +92,32 @@ const CatEditNDelBtn = ({ type, cat }) => {
     }
   };
 
+  // -----------------------------
+  // EDIT HANDLER
+  // -----------------------------
   const editHandler = async (e) => {
     e.preventDefault();
-    if (!editName.trim()) return toast.warning("Name cannot be empty!");
-    if (!editImage) return toast.warning("Image is required!");
+
+    if (!editName.trim()) {
+      toast.warning("Name cannot be empty!");
+      return;
+    }
+
+    if (!editImage) {
+      toast.warning("Image is required!");
+      return;
+    }
 
     setLoading(true);
+
     try {
-      const payload = { name: editName, status: editStatus, image: editImage };
+      const payload = {
+        name: editName,
+        status: editStatus,
+        image: editImage,
+        imageAlt: editImageAlt, // send alt to API
+      };
+
       const { data } = await axios.patch(
         `/pages/api/products/category/${category._id}`,
         payload
@@ -91,8 +137,12 @@ const CatEditNDelBtn = ({ type, cat }) => {
     }
   };
 
+  // -----------------------------
+  // BUTTON STYLES
+  // -----------------------------
   const base =
     "px-4 py-1 text-sm font-medium rounded-md shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed";
+
   const styles =
     type === "Delete"
       ? `${base} bg-red-600 text-white hover:bg-red-700 border border-red-700 focus:ring-red-500`
@@ -198,6 +248,20 @@ const CatEditNDelBtn = ({ type, cat }) => {
               </div>
             )}
 
+            {/* Image Alt Text */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Image Alt Text
+              </label>
+              <input
+                type="text"
+                value={editImageAlt}
+                onChange={(e) => setEditImageAlt(e.target.value)}
+                placeholder="Describe the category image (for SEO & accessibility)"
+                className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+            </div>
+
             {/* Preview */}
             {preview && (
               <div className="mb-4">
@@ -206,7 +270,7 @@ const CatEditNDelBtn = ({ type, cat }) => {
                 </label>
                 <Image
                   src={preview}
-                  alt="Preview"
+                  alt={editImageAlt || "Preview"}
                   width={500}
                   height={500}
                   className="w-32 h-32 object-cover rounded-md border"
@@ -224,7 +288,6 @@ const CatEditNDelBtn = ({ type, cat }) => {
               />
               <span className="text-gray-700 text-sm font-medium">Active</span>
             </div>
-
             {/* Buttons */}
             <div className="flex justify-between gap-3">
               <button

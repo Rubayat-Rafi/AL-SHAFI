@@ -16,8 +16,8 @@ const CatAddForm = ({ setAddFlag }) => {
   const [loading, setLoading] = useState(false);
   const [inputType, setInputType] = useState("upload");
   const [urlInput, setUrlInput] = useState("");
-
-  const [resetKey, setResetKey] = useState(Date.now()); // FIX FILE INPUT RESET
+  const [imageAlt, setImageAlt] = useState("");   
+  const [resetKey, setResetKey] = useState(Date.now());
 
   // -----------------------------
   // FILE HANDLING
@@ -28,8 +28,9 @@ const CatAddForm = ({ setAddFlag }) => {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImage(reader.result);
-      setPreview(reader.result);
+      const result = reader.result;
+      setImage(result);
+      setPreview(result);
     };
     reader.readAsDataURL(file);
   };
@@ -50,24 +51,44 @@ const CatAddForm = ({ setAddFlag }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name.trim()) return toast.warning("Category name is required!");
-    if (!image) return toast.warning("Category image is required!");
+    if (!name.trim()) {
+      toast.warning("Category name is required!");
+      return;
+    }
+
+    if (!image) {
+      toast.warning("Category image is required!");
+      return;
+    }
 
     setLoading(true);
 
     try {
-      const payload = { name, image, status };
-      const { data } = await axios.post("/pages/api/products/category", payload);
+      const payload = {
+        name,
+        image,
+        status,
+        imageAlt: imageAlt || name, 
+      };
+
+      const { data } = await axios.post(
+        "/pages/api/products/category",
+        payload
+      );
 
       if (data?.success) {
         toast.success(data.message);
+
+        // reset
         setName("");
         setStatus(true);
         setImage("");
         setPreview(null);
         setUrlInput("");
+        setImageAlt("");              
         setInputType("upload");
         setResetKey(Date.now());
+
         router.refresh();
         setAddFlag(false);
       } else {
@@ -94,6 +115,7 @@ const CatAddForm = ({ setAddFlag }) => {
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Category Name */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Category Name
@@ -108,7 +130,7 @@ const CatAddForm = ({ setAddFlag }) => {
           />
         </div>
 
-
+        {/* Upload vs URL */}
         <div className="flex gap-6 items-center">
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -136,12 +158,14 @@ const CatAddForm = ({ setAddFlag }) => {
                 setImage("");
                 setPreview(null);
                 setUrlInput("");
+                setResetKey(Date.now());
               }}
             />
             URL
           </label>
         </div>
 
+        {/* Image Input */}
         {inputType === "upload" ? (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -169,17 +193,38 @@ const CatAddForm = ({ setAddFlag }) => {
             />
           </div>
         )}
+
+        {/* Preview + Alt */}
         {preview && (
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Preview
             </label>
             <div className="w-32 h-32 relative border rounded-lg overflow-hidden">
-              <Image src={preview} alt="Preview" fill className="object-cover" />
+              <Image
+                src={preview}
+                alt={imageAlt || name || "Category preview"}
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Image Alt Text
+              </label>
+              <input
+                type="text"
+                value={imageAlt}
+                onChange={(e) => setImageAlt(e.target.value)}
+                placeholder="Describe this image (for SEO & accessibility)"
+                className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+              />
             </div>
           </div>
         )}
 
+        {/* Status */}
         <div className="flex items-center gap-3 mt-2">
           <input
             type="checkbox"
@@ -189,6 +234,7 @@ const CatAddForm = ({ setAddFlag }) => {
           <span className="text-gray-700">Active</span>
         </div>
 
+        {/* Submit */}
         <button
           type="submit"
           disabled={loading}

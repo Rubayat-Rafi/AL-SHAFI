@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import { X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,18 +7,14 @@ import { useCart } from "@/hooks/carts/useCart";
 import { useFetchCarts } from "@/hooks/carts/useFetchcarts";
 import QtyBtn from "@/components/Ui/Products/QtyBtn/QtyBtn";
 import Link from "next/link";
-
 const CartSidebar = () => {
   const dispatch = useDispatch();
   const { cartFlag } = useSelector((state) => state.slice);
   const { carts } = useCart();
   const { fetchCarts: products, loading } = useFetchCarts(carts);
-
   const isOpen = cartFlag;
   const hasItems = products && products.length > 0;
-
   const closeCart = () => dispatch(addCartFlag(false));
-
   // Calculate subtotal
   const subtotal = products?.reduce((total, product) => {
     const cartItem = carts.find((item) => item.slug === product.slug);
@@ -27,7 +22,7 @@ const CartSidebar = () => {
     const price = product.offerPrice || product.regularPrice;
     return total + price * qty;
   }, 0);
-
+  
   return (
     <>
       {/* Backdrop */}

@@ -4,6 +4,7 @@ import RelatedProducts from "@/components/Products/RelatedProducts/RelatedProduc
 import { FindAProduct } from "@/actions/actions";
 import AddCartBtn from "@/components/Ui/Products/AddCartBtn/AddCartBtn";
 import ProductSeenHistories from "@/components/Products/ProductSeenHistories/ProductSeenHistories";
+import ConverterToHtml from "@/components/ConverterToHtml/ConverterToHtml";
 const Collections = async ({ params }) => {
   const { slug } = await params;
   const product = await FindAProduct(slug);
@@ -19,7 +20,7 @@ const Collections = async ({ params }) => {
       <div className="grid md:grid-cols-2 gap-10">
         <div className="w-full">
           <GalleryImages
-            thumbnail={JSON.stringify(product?.thumbnail.secure_url)}
+            thumbnail={JSON.stringify(product?.thumbnail)}
             images={JSON.stringify(product?.images)}
           />
         </div>
@@ -62,7 +63,9 @@ const Collections = async ({ params }) => {
       </div>
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-2">Description</h2>
-        <p className="text-gray-700 leading-relaxed">{product.descriptions}</p>
+        <div className="text-gray-700 leading-relaxed">
+          {<ConverterToHtml html={product.descriptions} className={""} />}
+        </div>
       </div>
       <div>
         <RelatedProducts slug={product?.category} />

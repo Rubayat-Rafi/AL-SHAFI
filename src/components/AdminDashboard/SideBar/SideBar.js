@@ -10,6 +10,11 @@ import {
 } from "lucide-react";
 const menuItems = [
   {
+    title: "Home",
+    href: "/",
+    icon: <LayoutDashboard size={20} />,
+  },
+  {
     title: "Dashboard",
     href: "/adminDashboard",
     icon: <LayoutDashboard size={20} />,
