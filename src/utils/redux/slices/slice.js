@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   activeFlag: false,
+  cartFlag: false,
 };
 
 export const Slice = createSlice({
@@ -10,9 +11,12 @@ export const Slice = createSlice({
     addActiveFlag: (state, action) => {
       state.activeFlag = action.payload;
     },
+    addCartFlag: (state, action) => {
+      state.cartFlag = action.payload;
+    },
   },
 });
 
-export const { addActiveFlag } = Slice.actions;
+export const { addActiveFlag,addCartFlag } = Slice.actions;
 
 export default Slice.reducer;

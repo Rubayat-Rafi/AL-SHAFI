@@ -3,8 +3,14 @@ import React, { useState, useEffect } from "react";
 import { Plus, Minus } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addActiveFlag } from "@/utils/redux/slices/slice";
+import RemoveCart from "../RemoveCart/RemoveCart";
 
-const QtyBtn = ({ slug, initialQty = 1, maxQty, productPrice }) => {
+const QtyBtn = ({ prod }) => {
+  const product = JSON.parse(prod);
+  const initialQty = 1;
+  const slug = product?.slug;
+  const maxQty = product?.stock;
+  const productPrice = product?.offerPrice;
   const dispatch = useDispatch();
   const { activeFlag } = useSelector((state) => state?.slice);
   const [quantity, setQuantity] = useState(initialQty);
@@ -49,10 +55,8 @@ const QtyBtn = ({ slug, initialQty = 1, maxQty, productPrice }) => {
   };
 
   return (
-    <div className="">
-      <p className="text-2xl sm:text-3xl font-bold text-red-600">
-        ${(productPrice * quantity).toFixed(2)}
-      </p>
+    <div className=" flex items-center justify-between gap-5">
+      <p className=" font-bold ">${(productPrice * quantity).toFixed(2)}</p>
 
       <div className="inline-flex items-center bg-white border-2 border-gray-300 rounded-lg overflow-hidden shadow-sm hover:border-blue-400 transition-all duration-200">
         {/* Minus */}
@@ -86,6 +90,7 @@ const QtyBtn = ({ slug, initialQty = 1, maxQty, productPrice }) => {
           <Plus className="w-4 h-4 text-gray-700" />
         </button>
       </div>
+      <RemoveCart prod={prod} />
     </div>
   );
 };

@@ -11,6 +11,7 @@ const Checkout = () => {
   const { carts } = useCart();
   const { fetchCarts: products, loading } = useFetchCarts(carts);
   const [selectDta, setSelectDta] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("cod");
   const quantityMap = useMemo(() => {
     const map = {};
     carts.forEach((item) => {
@@ -71,6 +72,7 @@ const Checkout = () => {
     console.log(payload);
   };
 
+  console.log(paymentMethod)
   return (
     <Container>
       <div className=" py-10">
@@ -276,44 +278,88 @@ const Checkout = () => {
                 ))}
               </div>
 
-              <div className="mt-6 pt-4 border-t space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span>Subtotal</span>
-                  <span>৳ {subtotal}</span>
-                </div>
+              {/* ---------------- PAYMENT METHOD SECTION ---------------- */}
+              <div className="mt-6">
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  Payment Method
+                </label>
 
-                <div className="flex justify-between">
-                  <span>Shipping Fee</span>
-                  <span>
-                    {shippingTotal === 0 ? "Free" : `৳ ${shippingTotal}`}
-                  </span>
-                </div>
-
-                <div className="flex justify-between font-bold text-gray-900 text-base pt-2 border-t">
-                  <span>Total</span>
-                  <span>৳ {grandTotal}</span>
-                </div>
-              </div>
-
-              <div className="mt-6 bg-green-50 border border-green-200 rounded-xl p-4 flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center mt-1">
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3"
+                <div className="relative">
+                  <select
+                    value={paymentMethod}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                    className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                   >
-                    <path d="M5 13l4 4L19 7" />
-                  </svg>
+                    <option value="cod">Cash on Delivery</option>
+                    <option value="bkash">bKash</option>
+                    <option value="nagad">Nagad</option>
+                    <option value="rocket">Rocket</option>
+                    <option value="card">Credit / Debit Card</option>
+                  </select>
                 </div>
-                <div>
-                  <p className="font-semibold text-gray-900 text-sm">
-                    Cash on Delivery
-                  </p>
-                  <p className="text-xs text-gray-600">
-                    Pay when your order arrives at your doorstep.
-                  </p>
-                </div>
+
+                {/* -------- Payment Details (Conditional Rendering) -------- */}
+
+                {paymentMethod === "cod" && (
+                  <div className="mt-4 bg-green-50 border border-green-200 rounded-xl p-4 flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center mt-1">
+                      <svg
+                        className="w-3 h-3 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                      >
+                        <path d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900 text-sm">
+                        Cash on Delivery
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        Pay when your order arrives at your doorstep.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {paymentMethod === "bkash" && (
+                  <div className="mt-4 bg-pink-50 border border-pink-200 rounded-xl p-4 text-sm">
+                    <p className="font-semibold text-gray-900">bKash Payment</p>
+                    <p className="text-xs text-gray-600">
+                      You will receive a bKash number after placing the order.
+                    </p>
+                  </div>
+                )}
+
+                {paymentMethod === "nagad" && (
+                  <div className="mt-4 bg-orange-50 border border-orange-200 rounded-xl p-4 text-sm">
+                    <p className="font-semibold text-gray-900">Nagad Payment</p>
+                    <p className="text-xs text-gray-600">
+                      Pay via Nagad after placing your order.
+                    </p>
+                  </div>
+                )}
+
+                {paymentMethod === "rocket" && (
+                  <div className="mt-4 bg-purple-50 border border-purple-200 rounded-xl p-4 text-sm">
+                    <p className="font-semibold text-gray-900">
+                      Rocket Payment
+                    </p>
+                    <p className="text-xs text-gray-600">
+                      Payment instructions will be sent to your phone.
+                    </p>
+                  </div>
+                )}
+
+                {paymentMethod === "card" && (
+                  <div className="mt-4 bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm">
+                    <p className="font-semibold text-gray-900">Card Payment</p>
+                    <p className="text-xs text-gray-600">
+                      We accept Visa, MasterCard, and American Express.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
