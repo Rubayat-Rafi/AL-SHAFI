@@ -45,7 +45,6 @@ const Collections = async ({ params }) => {
               <span className="text-red-600 font-semibold">Out of Stock</span>
             )}
           </p>
-
           <p className="text-sm">
             Shipping:
             <span className="font-semibold capitalize">
