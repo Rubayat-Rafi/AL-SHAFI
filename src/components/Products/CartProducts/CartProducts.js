@@ -170,14 +170,7 @@ const CartProducts = () => {
                         </div>
 
                         <div className="">
-                          <QtyBtn
-                            slug={product?.slug}
-                            maxQty={product?.stock}
-                            productPrice={product?.offerPrice}
-                          />
-                        </div>
-                        <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-3 sm:gap-4">
-                          <RemoveCart prod={JSON.stringify(product)} />
+                          <QtyBtn prod={JSON.stringify(product)} />
                         </div>
                       </div>
                     </div>
