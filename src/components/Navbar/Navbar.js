@@ -12,14 +12,20 @@ import { useCart } from "@/hooks/carts/useCart";
 import Container from "../Container/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { addCartFlag } from "@/utils/redux/slices/slice";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const pathname = usePathname();
   const { carts } = useCart();
-  const dispatch = useDispatch()
-  const {cartFlag} =useSelector((state)=>state?.slice)
-
+  const dispatch = useDispatch();
+  const { cartFlag } = useSelector((state) => state?.slice);
+  const validPath = pathname.startsWith("/adminDashboard");
   return (
-    <nav className="sticky top-0 w-full shadow-md px-4 md:px-8 py-3 bg-background z-50">
+    <nav
+      className={`${
+        validPath && "hidden"
+      } w-full shadow-md px-4 md:px-8 py-3 bg-background z-50`}
+    >
       <Container>
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -54,16 +60,19 @@ const Navbar = () => {
               <span className="hidden md:inline">Account</span>
             </Link>
 
-       
-              <button onClick={()=>{dispatch(addCartFlag(!cartFlag))}} className="relative flex items-center gap-1 text-gray-700 hover:text-gray-900">
-                <ShoppingCartIcon className="h-6 w-6" />
-                {
-                  <span className="absolute -top-3 bg-red-600 text-white w-5 h-5 text-xs rounded-full">
-                    {carts?.length < 1 ? 0 : carts?.length}
-                  </span>
-                }
-              </button>
-       
+            <button
+              onClick={() => {
+                dispatch(addCartFlag(!cartFlag));
+              }}
+              className="relative flex items-center gap-1 text-gray-700 hover:text-gray-900"
+            >
+              <ShoppingCartIcon className="h-6 w-6" />
+              {
+                <span className="absolute -top-3 bg-red-600 text-white w-5 h-5 text-xs rounded-full">
+                  {carts?.length < 1 ? 0 : carts?.length}
+                </span>
+              }
+            </button>
           </div>
         </div>
       </Container>

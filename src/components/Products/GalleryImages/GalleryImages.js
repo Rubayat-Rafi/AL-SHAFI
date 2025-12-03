@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 const GalleryImages = ({ thumbnail, images }) => {
-  const thumb = JSON.parse(thumbnail); 
+  const thumb = JSON.parse(thumbnail);
   const imgs = JSON.parse(images);
 
   const [mainImage, setMainImage] = useState(thumb);
@@ -12,7 +12,8 @@ const GalleryImages = ({ thumbnail, images }) => {
 
   // handle zoom movement
   const handleMouseMove = (e) => {
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const { left, top, width, height } =
+      e.currentTarget.getBoundingClientRect();
 
     const x = ((e.pageX - left) / width) * 100;
     const y = ((e.pageY - top) / height) * 100;
@@ -26,8 +27,8 @@ const GalleryImages = ({ thumbnail, images }) => {
       <div
         className="w-full h-[400px] rounded-xl shadow-md bg-no-repeat bg-cover cursor-zoom-in"
         style={{
-          backgroundImage: `url(${mainImage})`,
-          backgroundSize: "200%",        // zoom level
+          backgroundImage: `url(${mainImage?.secure_url})`,
+          backgroundSize: "200%", // zoom level
           backgroundPosition: backgroundPos,
         }}
         onMouseMove={handleMouseMove}
@@ -35,24 +36,23 @@ const GalleryImages = ({ thumbnail, images }) => {
       >
         {/* Hidden real image for maintaining layout */}
         <Image
-          src={mainImage}
+          src={mainImage?.secure_url}
           width={600}
           height={600}
           priority
-          alt="Zoom Image"
+          alt={mainImage?.alt}
           className="opacity-0 w-full h-full"
         />
       </div>
 
       {/* Thumbnails */}
       <div className="grid grid-cols-4 gap-3">
-
         {/* First Thumbnail */}
         <Image
-          src={thumb}
+          src={thumb?.secure_url}
           width={150}
           height={150}
-          alt="Thumbnail"
+          alt={thumb?.alt}
           priority
           onClick={() => setMainImage(thumb)}
           className="cursor-pointer rounded-lg border hover:scale-105 transition"
@@ -66,7 +66,7 @@ const GalleryImages = ({ thumbnail, images }) => {
             width={150}
             height={150}
             priority
-            alt="Gallery Image"
+            alt={img?.alt}
             onClick={() => setMainImage(img.secure_url)}
             className="cursor-pointer rounded-lg border hover:scale-105 transition"
           />

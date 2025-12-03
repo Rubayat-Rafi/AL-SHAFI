@@ -1,12 +1,12 @@
 export const dynamic = "force-dynamic";
 import SideBar from "@/components/AdminDashboard/SideBar/SideBar";
-import TopBar from "@/components/AdminDashboard/TopBar/TopBar";
 import React from "react";
+import Navbar from "@/components/AdminDashboard/Navbar/Navbar";
 
 const layout = ({ children }) => {
   return (
     <div>
-      <TopBar />
+      <Navbar/>
       <div className=" flex">
         <div>
           <SideBar />
