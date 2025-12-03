@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Link from "next/link";
 const ProductSeenHistories = () => {
-  const { activeFlag } = useSelector((state) => state);
+  const { activeFlag } = useSelector((state) => state?.slice);
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchViewedProducts = async () => {
@@ -27,13 +27,20 @@ const ProductSeenHistories = () => {
       try {
         const responses = await Promise.all(
           slugs.map((slug) =>
-            axios.get(`/pages/api/products/product/findProducts/${slug}`)
+            axios.get(`/pages/api/products/product/findProducts/${slug}`, {
+              headers: { "x-request-source": "12Hirock@" },
+            })
           )
         );
-        const productsData = responses
-          .map((res) => res.data?.product)
-          .filter(Boolean);
-        setProducts(productsData);
+        console.log(responses);
+        if (!responses) {
+          return;
+        } else {
+          const productsData = responses
+            .map((res) => res.data?.product)
+            .filter(Boolean);
+          setProducts(productsData);
+        }
       } catch (err) {
         console.error("Failed to fetch products", err);
         setProducts([]);
@@ -71,7 +78,7 @@ const ProductSeenHistories = () => {
         {products.map((prod) => (
           <SwiperSlide key={prod._id}>
             <div className="bg-white shadow rounded-lg p-2 hover:shadow-lg transition cursor-pointer">
-              <Link href={`/product-details/${prod?.slug}`}>
+              <Link href={`/product/product-details/${prod?.slug}`}>
                 <Image
                   src={prod.thumbnail.secure_url}
                   alt={prod.productName}

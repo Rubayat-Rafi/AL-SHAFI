@@ -1,18 +1,18 @@
 "use client";
-import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import { useCart } from "@/hooks/carts/useCart";
+import { addActiveFlag, addCartFlag } from "@/utils/redux/slices/slice";
+import { useDispatch, useSelector } from "react-redux";
 const AddCartBtn = ({ product, styles }) => {
+  const dispatch = useDispatch()
+  const {activeFlag,cartFlag} = useSelector((state)=>state?.slice)
   const parseProduct = JSON.parse(product);
-  const cartHandler = async () => {
-    try {
-      toast.success("Cart added");
-    } catch (error) {
-      throw new Error(error?.messsage);
-    } finally {
-    }
-  };
+  const { addToCart } = useCart();
   return (
-    <button onClick={cartHandler} className={styles}>
+    <button onClick={() => {addToCart(parseProduct.slug),
+    dispatch(addActiveFlag(!activeFlag))
+    dispatch(addCartFlag(!cartFlag))
+    
+    }} className={styles}>
       Add to Cart
     </button>
   );

@@ -1,11 +1,12 @@
 import dbConnect from "@/lib/dbConnect/dbConnect";
-import category from "@/models/products/category/category";
-import Product from "@/models/products/product/product";
+import Category from "@/models/Products/Category/Category";
+import Product from "@/models/Products/Product/Product";
+
 
 export async function AllCategories() {
   try {
     await dbConnect();
-    const categories = await category.find().sort({ createdAt: -1 }).lean();
+    const categories = await Category.find().sort({ createdAt: -1 }).lean();
     const formattedCategories = categories.map((cat) => ({
       ...cat,
       _id: cat._id.toString(),
@@ -47,6 +48,7 @@ export async function FindProductBySlug(slug) {
     throw new Error(error?.message);
   }
 }
+
 export async function FindAProduct(slug) {
   try {
     await dbConnect();
@@ -58,6 +60,20 @@ export async function FindAProduct(slug) {
       updatedAt: product.updatedAt?.toString(),
     };
     return formattedProduct;
+  } catch (error) {
+    throw new Error(error?.message);
+  }
+}
+
+export async function FindProducstBySlugs(slugs) {
+  try {
+    await dbConnect();
+    const products = await Product.find({ slug: { $in: slugs } }).lean();
+    const formattedProducts = products.map((p) => ({
+      ...p,
+      _id: p._id.toString(),
+    }));
+    return formattedProducts;
   } catch (error) {
     throw new Error(error?.message);
   }

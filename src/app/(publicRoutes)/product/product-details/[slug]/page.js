@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 import GalleryImages from "@/components/Products/GalleryImages/GalleryImages";
 import RelatedProducts from "@/components/Products/RelatedProducts/RelatedProducts";
-import { FindAProduct } from "@/app/actions/actions";
+import { FindAProduct } from "@/actions/actions";
 import AddCartBtn from "@/components/Ui/Products/AddCartBtn/AddCartBtn";
 import ProductSeenHistories from "@/components/Products/ProductSeenHistories/ProductSeenHistories";
 const Collections = async ({ params }) => {

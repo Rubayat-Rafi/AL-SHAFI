@@ -1,16 +1,15 @@
 export const dynamic = "force-dynamic";
-import category from "@/models/products/category/category";
+import Category from "@/models/Products/Category/Category";
 import dbConnect from "@/lib/dbConnect/dbConnect";
 import CategoryTable from "@/components/AdminDashboard/Products/Category/CategoryTable/CategoryTable";
-import CategoryAddBtn from "@/components/Ui/Products/Category/CategoryAddBtn/CategoryAddBtn";
+import CategoryAddBtn from "@/components/Ui/Products/Category/CategoryAddBtn/CategoryAddBtn.js";
 const Categories = async () => {
   await dbConnect();
-  const categories = await category.find().sort({ createdAt: -1 }).lean();
+  const categories = await Category.find().sort({ createdAt: -1 }).lean();
   const formattedCategories = categories.map((cat) => ({
     ...cat,
     _id: cat._id.toString(),
   }));
-
   return (
     <div className="p-6 relative h-screen">
       <div className=" flex items-center justify-between">
