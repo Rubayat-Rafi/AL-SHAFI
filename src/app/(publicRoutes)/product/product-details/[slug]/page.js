@@ -8,6 +8,7 @@ import ConverterToHtml from "@/components/ConverterToHtml/ConverterToHtml";
 const Collections = async ({ params }) => {
   const { slug } = await params;
   const product = await FindAProduct(slug);
+
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center text-xl font-semibold">
@@ -20,8 +21,7 @@ const Collections = async ({ params }) => {
       <div className="grid md:grid-cols-2 gap-10">
         <div className="w-full">
           <GalleryImages
-            thumbnail={JSON.stringify(product?.thumbnail)}
-            images={JSON.stringify(product?.images)}
+            product={JSON.stringify(product)}
           />
         </div>
         <div className="space-y-6">
