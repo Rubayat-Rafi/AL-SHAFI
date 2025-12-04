@@ -3,14 +3,15 @@
 import { useState } from "react";
 import Image from "next/image";
 
-const GalleryImages = ({ thumbnail, images }) => {
-  const thumb = JSON.parse(thumbnail);
-  const imgs = JSON.parse(images);
+const GalleryImages = ({ product }) => {
+  const parseProduct = typeof product === "string" ? JSON.parse(product) : product;
+
+  const thumb = parseProduct?.thumbnail;
+  const imgs = parseProduct?.images;
 
   const [mainImage, setMainImage] = useState(thumb);
   const [backgroundPos, setBackgroundPos] = useState("center");
 
-  // handle zoom movement
   const handleMouseMove = (e) => {
     const { left, top, width, height } =
       e.currentTarget.getBoundingClientRect();
@@ -23,7 +24,7 @@ const GalleryImages = ({ thumbnail, images }) => {
 
   return (
     <div className="space-y-4">
-      {/* Main Image with Magnifying Effect */}
+      {/* Main Image + Zoom */}
       <div
         className="w-full h-[400px] rounded-xl shadow-md bg-no-repeat bg-cover cursor-zoom-in"
         style={{
@@ -34,7 +35,6 @@ const GalleryImages = ({ thumbnail, images }) => {
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setBackgroundPos("center")}
       >
-        {/* Hidden real image for maintaining layout */}
         <Image
           src={mainImage?.secure_url}
           width={600}
@@ -47,7 +47,7 @@ const GalleryImages = ({ thumbnail, images }) => {
 
       {/* Thumbnails */}
       <div className="grid grid-cols-4 gap-3">
-        {/* First Thumbnail */}
+        {/* Thumbnail */}
         <Image
           src={thumb?.secure_url}
           width={150}
@@ -58,16 +58,16 @@ const GalleryImages = ({ thumbnail, images }) => {
           className="cursor-pointer rounded-lg border hover:scale-105 transition"
         />
 
-        {/* Other Images */}
-        {imgs?.map((img) => (
+        {/* Additional images */}
+        {imgs?.map((img, idx) => (
           <Image
-            key={img._id}
-            src={img.secure_url}
+            key={idx}
+            src={img?.secure_url}
             width={150}
             height={150}
-            priority
             alt={img?.alt}
-            onClick={() => setMainImage(img.secure_url)}
+            priority
+            onClick={() => setMainImage(img)}  // FIXED
             className="cursor-pointer rounded-lg border hover:scale-105 transition"
           />
         ))}

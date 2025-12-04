@@ -32,7 +32,7 @@ const ProductSeenHistories = () => {
             })
           )
         );
-        console.log(responses);
+
         if (!responses) {
           return;
         } else {
