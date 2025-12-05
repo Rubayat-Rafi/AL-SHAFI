@@ -16,27 +16,27 @@ const menuItems = [
   },
   {
     title: "Dashboard",
-    href: "/adminDashboard",
+    href: "/admin-dashboard",
     icon: <LayoutDashboard size={20} />,
   },
   {
     title: "Orders",
-    href: "/adminDashboard/orders",
+    href: "/admin-dashboard/orders",
     icon: <LayoutDashboard size={20} />,
   },
   {
     title: "Categories",
-    href: "/adminDashboard/categories",
+    href: "/admin-dashboard/categories",
     icon: <Layers size={20} />,
   },
   {
     title: "Products",
-    href: "/adminDashboard/products",
+    href: "/admin-dashboard/products",
     icon: <Package size={20} />,
   },
   {
     title: "Settings",
-    href: "/adminDashboard/settings",
+    href: "/admin-dashboard/settings",
     icon: <Settings size={20} />,
   },
 ];
