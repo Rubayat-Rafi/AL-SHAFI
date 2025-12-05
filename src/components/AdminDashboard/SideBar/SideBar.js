@@ -21,7 +21,7 @@ const menuItems = [
   },
   {
     title: "Orders",
-    href: "/adminDashboard/orders",
+    href: "/admin-dashboard/orders",
     icon: <LayoutDashboard size={20} />,
   },
   {

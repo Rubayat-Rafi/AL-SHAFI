@@ -21,13 +21,12 @@ export async function POST(req) {
       stock,
       status,
       shipping_fee,
-
-      // SEO fields
       seoTitle,
       seoDescription,
       seoKeywords = [],
       seoImage,
     } = body;
+
 
     await dbConnect();
 
@@ -77,7 +76,7 @@ export async function POST(req) {
     } else if (isThumbnailUrl && thumbnail) {
       finalThumbnail = {
         secure_url: thumbnail,
-        public_id: "",
+        public_id: "null",
         alt: thumbAltText,
       };
     }
@@ -110,7 +109,7 @@ export async function POST(req) {
         } else {
           return {
             secure_url: img,
-            public_id: "",
+            public_id: "null",
             alt: altText,
           };
         }
