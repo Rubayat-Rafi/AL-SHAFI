@@ -1,4 +1,5 @@
 import dbConnect from "@/lib/dbConnect/dbConnect";
+import UserOrder from "@/models/Order/UserOrder";
 import Category from "@/models/Products/Category/Category";
 import Product from "@/models/Products/Product/Product";
 
@@ -88,6 +89,20 @@ export async function HomeProducts() {
       _id: prod._id.toString(),
     }));
     return formattedProducts;
+  } catch (error) {
+    throw new Error(error?.message);
+  }
+}
+// ==============================================================================================================
+export async function AllUserOrders() {
+  try {
+    await dbConnect();
+    const userOrders = await UserOrder.find().sort({ createdAt: -1 }).lean();
+    const formattedOrders = userOrders.map((prod) => ({
+      ...prod,
+      _id: prod._id.toString(),
+    }));
+    return formattedOrders;
   } catch (error) {
     throw new Error(error?.message);
   }
