@@ -1,3 +1,4 @@
+'use client'
 import {
   Facebook,
   Instagram,
@@ -9,8 +10,14 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
+  const validPath = pathname.startsWith("/admin-dashboard");
+
+  if(validPath) return null
+
   return (
     <footer className="bg-black text-background pt-10 pb-5">
       <div className="max-w-[1440px] mx-auto px-4 xl:px-20 md:px-10 sm:px-6">

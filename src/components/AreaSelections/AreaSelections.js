@@ -10,6 +10,9 @@ const AreaSelections = ({ setSelectDta }) => {
   const [selectedDivision, setSelectedDivision] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedUpazila, setSelectedUpazila] = useState("");
+
+
+  
   const BDAPI = {
     division: "https://bdapi.vercel.app/api/v.1/division",
     districtByDivision: (divId) =>
@@ -86,7 +89,6 @@ const AreaSelections = ({ setSelectDta }) => {
       };
 
       setSelectDta(selection);
-
     };
     handler();
   }, [

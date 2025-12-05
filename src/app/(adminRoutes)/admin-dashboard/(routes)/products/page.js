@@ -1,9 +1,9 @@
 export const dynamic = "force-dynamic";
-import Product from "@/models/Products/Product/Product";
+import Product from "@/models/products/product/product";
 import React from "react";
 import dbConnect from "@/lib/dbConnect/dbConnect";
 import ProductTable from "@/components/AdminDashboard/Products/Product/ProductTable/ProductTable";
-import ProductAddBtn from "@/components/Ui/Products/Product/ProductAddBtn/ProductAddBtn.js";
+import ProductAddBtn from "@/components/ui/products/product/ProductAddBtn/ProductAddBtn.js";
 const Products = async () => {
   await dbConnect();
   const products = await Product.find().sort({ createdAt: -1 }).lean();

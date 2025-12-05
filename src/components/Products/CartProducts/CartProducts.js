@@ -1,6 +1,8 @@
 "use client";
-import QtyBtn from "@/components/Ui/Products/QtyBtn/QtyBtn";
-import RemoveCart from "@/components/Ui/Products/RemoveCart/RemoveCart";
+import QtyBtn from "@/components/ui/products/QtyBtn/QtyBtn";
+import RemoveCart from "@/components/ui/products/RemoveCart/RemoveCart";
+
+
 import { useCart } from "@/hooks/carts/useCart";
 import { useFetchCarts } from "@/hooks/carts/useFetchcarts";
 import Image from "next/image";
@@ -24,7 +26,7 @@ const CartProducts = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-red-600"></div>
           <p className="mt-4 text-gray-600 font-medium">Loading your cart...</p>
@@ -35,7 +37,7 @@ const CartProducts = () => {
 
   if (products.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
         <div className="text-center">
           <div className="w-24 h-24 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
             <svg
@@ -67,7 +69,7 @@ const CartProducts = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 sm:py-12">
+    <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 py-8 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
@@ -91,7 +93,7 @@ const CartProducts = () => {
                     className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-6 hover:bg-gray-50 transition-colors"
                   >
                     {/* Product Image */}
-                    <div className="flex-shrink-0 mx-auto sm:mx-0">
+                    <div className="shrink-0 mx-auto sm:mx-0">
                       <div className="w-24 h-24 sm:w-28 sm:h-28 bg-gray-100 rounded-xl overflow-hidden border border-gray-200 shadow-sm">
                         <Image
                           src={product.thumbnail.secure_url}
@@ -246,7 +248,7 @@ const CartProducts = () => {
                   </span>
                 </div>
 
-                <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-4 border border-red-100">
+                <div className="bg-linear-to-br from-red-50 to-orange-50 rounded-xl p-4 border border-red-100">
                   <div className="flex justify-between items-baseline">
                     <span className="text-xl sm:text-2xl font-bold text-gray-900">
                       Total
@@ -260,7 +262,7 @@ const CartProducts = () => {
 
               <Link
                 href={"/product/checkout"}
-                className="w-full py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center group"
+                className="w-full py-4 bg-linear-to-br from-red-600 to-red-700 text-white font-semibold rounded-xl hover:from-red-700 hover:to-red-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center group"
               >
                 <span>Proceed to Checkout</span>
                 <svg

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect/dbConnect";
-import Product from "@/models/Products/Product/Product";
+import Product from "@/models/products/product/product";
+
 import { uploadToCloudinary } from "@/utils/cloudinary/cloudinary";
 
 export async function POST(req) {

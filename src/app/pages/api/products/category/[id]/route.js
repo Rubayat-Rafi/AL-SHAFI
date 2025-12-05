@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect/dbConnect";
-import Category from "@/models/Products/Category/Category";
+import Category from "@/models/products/category/category.js";
+
+
 import {
   uploadToCloudinary,
   deleteFromCloudinary,
