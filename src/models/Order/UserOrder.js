@@ -8,8 +8,10 @@ const UserOrderSchema = new mongoose.Schema(
     items: [],
     note: { type: String, default: "" },
     totals: {},
+    status: { type: String, default: "pending" },
   },
   { timestamps: true }
 );
-const UserOrder = mongoose.models.userorders || mongoose.model("userorders", UserOrderSchema);
+const UserOrder =
+  mongoose.models.userorders || mongoose.model("userorders", UserOrderSchema);
 export default UserOrder;
