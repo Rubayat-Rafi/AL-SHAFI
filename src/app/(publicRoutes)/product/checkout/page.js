@@ -6,10 +6,13 @@ import { useFetchCarts } from "@/hooks/carts/useFetchcarts";
 import Image from "next/image";
 import AreaSelections from "@/components/AreaSelections/AreaSelections";
 import Container from "@/components/Container/Container";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Checkout = () => {
   const { carts } = useCart();
   const { fetchCarts: products, loading } = useFetchCarts(carts);
+
   const [selectDta, setSelectDta] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const quantityMap = useMemo(() => {
@@ -20,14 +23,16 @@ const Checkout = () => {
     return map;
   }, [carts]);
 
-  const { subtotal, shippingTotal, grandTotal } = useMemo(() => {
+  const { subtotal, shippingTotal, grandTotal, quantities } = useMemo(() => {
     let subtotal = 0;
     let shippingTotal = 0;
+    let quantities = 0;
 
     products?.forEach((p) => {
       const qty = quantityMap[p.slug] || 1;
       const price = p.offerPrice || p.regularPrice;
 
+      quantities = qty;
       subtotal += price * qty;
       if (p.shipping_fee !== "paid") {
         shippingTotal += Number(p.shipping_fee) || 0;
@@ -37,6 +42,7 @@ const Checkout = () => {
     return {
       subtotal,
       shippingTotal,
+      quantities,
       grandTotal: subtotal + shippingTotal,
     };
   }, [products, quantityMap]);
@@ -51,28 +57,34 @@ const Checkout = () => {
     note: "", // <-- new field
   });
 
-  const handleChange = (e) =>
+  const handleChange = async (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     const division = selectDta?.division;
     const district = selectDta?.district;
     const upazila = selectDta?.upazila;
-
+    const fixedAddress = {
+      divisionName: division?.name,
+      districtName: district?.name,
+      upazilaName: upazila?.name,
+    };
     const payload = {
       ...formData,
-      products,
+      flag: "steadFast",
+      products: carts,
+      fixedAddress,
       totals: { subtotal, shippingTotal, grandTotal },
     };
-    const payloadFroSteadFast = {
-      flag: "steadFast",
-    };
-    console.log(payload);
+    const { data } = await axios.post("/pages/api/orders/order", payload);
+    if (data?.success) {
+      toast.success("Order created")
+    }else{
+       toast.warning("Order not created")
+    }
   };
 
-  console.log(paymentMethod)
   return (
     <Container>
       <div className=" py-10">

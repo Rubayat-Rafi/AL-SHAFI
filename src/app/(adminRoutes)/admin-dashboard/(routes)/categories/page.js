@@ -1,8 +1,8 @@
 export const dynamic = "force-dynamic";
-import Category from "@/models/products/category/category";
+import Category from "@/models/Products/Category/Category";
 import dbConnect from "@/lib/dbConnect/dbConnect";
 import CategoryTable from "@/components/AdminDashboard/Products/Category/CategoryTable/CategoryTable";
-import CategoryAddBtn from "@/components/ui/products/category/CategoryAddBtn/CategoryAddBtn.js";
+import CategoryAddBtn from "@/components/UI/Products/Category/CategoryAddBtn/CategoryAddBtn.js";
 
 
 const Categories = async () => {

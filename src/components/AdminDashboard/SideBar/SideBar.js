@@ -20,6 +20,11 @@ const menuItems = [
     icon: <LayoutDashboard size={20} />,
   },
   {
+    title: "Orders",
+    href: "/adminDashboard/orders",
+    icon: <LayoutDashboard size={20} />,
+  },
+  {
     title: "Categories",
     href: "/admin-dashboard/categories",
     icon: <Layers size={20} />,

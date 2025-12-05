@@ -1,6 +1,6 @@
 "use client";
-import QtyBtn from "@/components/ui/products/QtyBtn/QtyBtn";
-import RemoveCart from "@/components/ui/products/RemoveCart/RemoveCart";
+import QtyBtn from "@/components/UI/Products/QtyBtn/QtyBtn";
+import RemoveCart from "@/components/UI/Products/RemoveCart/RemoveCart";
 
 
 import { useCart } from "@/hooks/carts/useCart";

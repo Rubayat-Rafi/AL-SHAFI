@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCartFlag } from "@/utils/redux/slices/slice";
 import { useCart } from "@/hooks/carts/useCart";
 import { useFetchCarts } from "@/hooks/carts/useFetchcarts";
-import QtyBtn from "@/components/ui/products/QtyBtn/QtyBtn";
+import QtyBtn from "@/components/UI/Products/QtyBtn/QtyBtn";
 import Link from "next/link";
 const CartSidebar = () => {
   const dispatch = useDispatch();

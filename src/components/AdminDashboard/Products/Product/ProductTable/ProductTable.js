@@ -1,4 +1,4 @@
-import ProductEditNDelBtn from "@/components/ui/products/Product/ProductEditNDelBtn/ProductEditNDelBtn";
+import ProductEditNDelBtn from "@/components/UI/Products/Product/ProductEditNDelBtn/ProductEditNDelBtn";
 import Image from "next/image";
 import React from "react";
 
