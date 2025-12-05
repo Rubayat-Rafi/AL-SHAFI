@@ -41,7 +41,7 @@ const Banner = () => {
                 key={i}
                 onClick={() => setIndex(i)}
                 className={`w-3 h-3 rounded-full transition-all ${
-                  index === i ? "bg-secondary scale-125" : "bg-secondary/40"
+                  index === i ? "bg-primary scale-125" : "bg-text/30"
                 }`}
               />
             ))}

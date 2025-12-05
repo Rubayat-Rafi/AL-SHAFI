@@ -4,8 +4,8 @@ import Link from "next/link";
 const SideBar = async ({ slug }) => {
   const categories = await AllCategories();
   return (
-    <div className="">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">
+    <div >
+      <h2 className="text-xl font-semibold text-text mb-4 border-b border-gray-300 pb-2">
         Categories
       </h2>
       <div className="flex flex-col space-y-2">

@@ -4,6 +4,7 @@ import Category from "@/models/Products/Category/Category";
 import Product from "@/models/Products/Product/Product";
 
 
+
 export async function AllCategories() {
   try {
     await dbConnect();

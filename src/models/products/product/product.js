@@ -18,9 +18,9 @@ const productSchema = new Schema(
     },
 
     thumbnail: {
-      secure_url: { type: String, required: true, default: "" },
-      public_id: { type: String, required: true, default: "" },
-      alt: { type: String, required: true, default: "" },
+      secure_url: { type: String, default: "" },
+      public_id: { type: String,  default: "" },
+      alt: { type: String, default: "" },
     },
 
     category: {
@@ -31,9 +31,9 @@ const productSchema = new Schema(
 
     images: [
       {
-        secure_url: { type: String, required: true, default: "" },
-        public_id: { type: String, required: true, default: "" },
-        alt: { type: String, required: true, default: "" },
+        secure_url: { type: String,  default: "" },
+        public_id: { type: String, default: "" },
+        alt: { type: String,  default: "" },
       },
     ],
 
