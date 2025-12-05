@@ -1,8 +1,8 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
-import { dbConnection } from "@/lib/dbConnection/dbConnection";
-import Order from "@/models/Order";
-import { Product } from "@/models/Product";
+import dbConnect from "@/lib/dbConnect/dbConnect";
+import Order from "@/models/Order/Order";
+import Product from "@/models/Products/Product/Product";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 function randomSuffix(len = 6) {
@@ -25,20 +25,24 @@ async function generateUniqueInvoice() {
 
 export async function POST(req) {
   try {
-    await dbConnection();
+    await dbConnect();
     const body = await req.json();
     const { items, flag, orderId, order, userId } = body;
     const invoiceId = await generateUniqueInvoice();
     if (flag === "admin") {
       const payload = order;
-      const { data } = await axios.post(`${process.env.STEADFAST_BASE_URL}//create_order`, payload, {
-        timeout: 15000,
-        headers: {
-          "Api-Key": process.env.STEADFAST_API_KEY,
-          "Secret-Key": process.env.STEADFAST_SECRET_KEY,
-          "Content-Type": "application/json",
-        },
-      });
+      const { data } = await axios.post(
+        `${process.env.STEADFAST_BASE_URL}//create_order`,
+        payload,
+        {
+          timeout: 15000,
+          headers: {
+            "Api-Key": process.env.STEADFAST_API_KEY,
+            "Secret-Key": process.env.STEADFAST_SECRET_KEY,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (data?.status === 200) {
         const update = {
           $set: {
@@ -112,6 +116,7 @@ export async function POST(req) {
 
 export async function GET() {
   try {
+    await dbConnect();
     const response = await Order.find().sort({ createdAt: -1 }).lean();
     return NextResponse.json({
       message: "Products found",

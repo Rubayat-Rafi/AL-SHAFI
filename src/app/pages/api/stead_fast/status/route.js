@@ -1,12 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import axios from "axios";
-import { dbConnection } from "@/lib/dbConnection/dbConnection";
+import dbConnect from "@/lib/dbConnect/dbConnect";
 
 export async function POST(req) {
   try {
-    await dbConnection();
+    await dbConnect();
     const { ids } = await req.json();
-
     if (!Array.isArray(ids) || ids.length === 0) {
       return NextResponse.json(
         { success: false, message: "No ids provided" },

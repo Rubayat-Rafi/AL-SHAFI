@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { dbConnection } from "@/lib/dbConnection/dbConnection";
-import { User } from "@/models/User";
+import dbConnect from "@/lib/dbConnect/dbConnect";
+import User from "@/models/User/User";
 
 export async function PUT(req, { params }) {
   try {
-    await dbConnection();
+    await dbConnect();
     const { id } = await params;
 
     const { orderId, qty, checkoutOrderID, cartIds } = await req.json();
@@ -96,7 +96,7 @@ export async function PUT(req, { params }) {
 
 export async function DELETE(req, { params }) {
   try {
-    await dbConnection();
+    await dbConnect();
     const { searchParams } = new URL(req.url);
     const cartId = searchParams.get("cartId")?.trim() || "";
     const { id } = await params;
