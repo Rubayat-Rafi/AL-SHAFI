@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCartFlag } from "@/utils/redux/slices/slice";
 import { useCart } from "@/hooks/carts/useCart";
 import { useFetchCarts } from "@/hooks/carts/useFetchcarts";
-import QtyBtn from "@/components/Ui/Products/QtyBtn/QtyBtn";
+import QtyBtn from "@/components/UI/Products/QtyBtn/QtyBtn";
 import Link from "next/link";
 const CartSidebar = () => {
   const dispatch = useDispatch();
@@ -90,7 +90,7 @@ const CartSidebar = () => {
                     className="flex gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
                   >
                     {/* Image */}
-                    <div className="flex-shrink-0">
+                    <div className="shrink-0">
                       <Image
                         src={
                           product.thumbnail?.secure_url || "/placeholder.jpg"
@@ -129,7 +129,7 @@ const CartSidebar = () => {
             <div className="border-t border-gray-200 p-6 bg-gray-50">
               <div className="flex justify-between text-xl font-bold mb-4">
                 <span>Subtotal</span>
-                <span className="text-blue-600">
+                <span className="text-text">
                   ৳ {subtotal?.toLocaleString()}
                 </span>
               </div>
