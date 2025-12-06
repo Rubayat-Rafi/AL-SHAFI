@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   activeFlag: false,
   cartFlag: false,
+  orderBulkIds: [],
 };
 
 export const Slice = createSlice({
@@ -14,9 +15,20 @@ export const Slice = createSlice({
     addCartFlag: (state, action) => {
       state.cartFlag = action.payload;
     },
+    addBulkOrders: (state, action) => {
+      if (!state.orderBulkIds.includes(action.payload)) {
+        state.orderBulkIds.push(action.payload);
+      }
+    },
+    removeBulkOrders: (state, action) => {
+      state.orderBulkIds = state.orderBulkIds.filter(
+        (id) => id !== action.payload
+      );
+    },
   },
 });
 
-export const { addActiveFlag,addCartFlag } = Slice.actions;
+export const { addActiveFlag, addCartFlag, addBulkOrders, removeBulkOrders } =
+  Slice.actions;
 
 export default Slice.reducer;

@@ -8,8 +8,14 @@ import AreaSelections from "@/components/AreaSelections/AreaSelections";
 import Container from "@/components/Container/Container";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { useDispatch, useSelector } from "react-redux";
+import { addActiveFlag } from "@/utils/redux/slices/slice";
+import { useRouter } from "next/navigation";
 const Checkout = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { activeFlag } = useSelector((state) => state?.slice);
+
   const { carts } = useCart();
   const { fetchCarts: products, loading } = useFetchCarts(carts);
 
@@ -54,7 +60,7 @@ const Checkout = () => {
     address: "",
     district: "",
     city: "",
-    note: "", // <-- new field
+    note: "",
   });
 
   const handleChange = async (e) =>
@@ -79,9 +85,13 @@ const Checkout = () => {
     };
     const { data } = await axios.post("/pages/api/orders/order", payload);
     if (data?.success) {
-      toast.success("Order created")
-    }else{
-       toast.warning("Order not created")
+      toast.success("Order created");
+      localStorage.removeItem("carts");
+      dispatch(addActiveFlag(!activeFlag));
+      router.push("/");
+    } else {
+      toast.warning("Order not created");
+      dispatch(addActiveFlag(!activeFlag));
     }
   };
 
