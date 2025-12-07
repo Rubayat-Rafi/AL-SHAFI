@@ -5,20 +5,19 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FaTrashAlt } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-const BulkDeleteBtn = () => {
+import { BsSendCheckFill } from "react-icons/bs";
+const BulkSendToSteadFastBtn = () => {
   const router = useRouter();
-  const { orderBulkIds } = useSelector((state) => state?.slice);
+  const { orderSteadFastBulkOrders } = useSelector((state) => state?.slice);
   const [loading, setLoading] = useState(false);
 
   const bulkdeleteHandler = async () => {
     try {
       setLoading(true);
-
       const { data } = await axios.post(
-        `/pages/api/orders/bulk_delete`,
-        orderBulkIds
+        `/pages/api/stead_fast/bulk-create`,
+        JSON.stringify(orderSteadFastBulkOrders)
       );
 
       if (data?.success) {
@@ -37,8 +36,8 @@ const BulkDeleteBtn = () => {
 
   return (
     <div>
-      {orderBulkIds?.length === 0 ? (
-        "Mark/Delete"
+      {orderSteadFastBulkOrders?.length === 0 ? (
+        "Send/steadFast"
       ) : (
         <button
           onClick={bulkdeleteHandler}
@@ -48,7 +47,7 @@ const BulkDeleteBtn = () => {
           {loading ? (
             <AiOutlineLoading3Quarters className={" animate-spin"} />
           ) : (
-            <FaTrashAlt className="h-5 w-5 text-red-600" />
+            <BsSendCheckFill className="h-5 w-5 text-red-600" />
           )}
         </button>
       )}
@@ -56,4 +55,4 @@ const BulkDeleteBtn = () => {
   );
 };
 
-export default BulkDeleteBtn;
+export default BulkSendToSteadFastBtn;

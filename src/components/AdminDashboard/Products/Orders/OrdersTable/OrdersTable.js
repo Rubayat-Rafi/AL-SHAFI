@@ -1,9 +1,12 @@
-export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic";
 import Link from "next/link";
-import OrderDelBtn from "@/components/Ui/Orders/OrderDelBtn/OrderDelBtn";
+import BulkSelectBtn from "@/components/Ui/Orders/BulkSelectBtn/BulkSelectBtn";
 import BulkDeleteBtn from "@/components/Ui/Orders/BulkDeleteBtn/BulkDeleteBtn";
+import OrderSelectSteadFastBtn from "@/components/Ui/Orders/SteadFast/OrderSelectSteadFastBtn/OrderSelectSteadFastBtn";
+import BulkSendToSteadFastBtn from "@/components/Ui/Orders/SteadFast/BulkSendToSteadFastBtn/BulkSendToSteadFastBtn";
 
 const OrdersTable = ({ orders }) => {
+  console.log(orders)
   if (!orders || orders.length === 0) {
     return (
       <div className="text-center py-12 bg-white rounded-lg shadow-sm border border-gray-200">
@@ -14,7 +17,6 @@ const OrdersTable = ({ orders }) => {
 
   return (
     <div className="">
-
       <div className="w-full bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         {/* Desktop & Tablet Table */}
         <div className="overflow-x-auto">
@@ -42,12 +44,14 @@ const OrdersTable = ({ orders }) => {
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                  Actions
-                </th>
+
                 <th className="px-6 py-4 text-center">
                   <BulkDeleteBtn />
                 </th>
+                <th className="px-6 py-4 text-center">
+                   <BulkSendToSteadFastBtn/>
+                </th>
+
               </tr>
             </thead>
 
@@ -158,14 +162,15 @@ const OrdersTable = ({ orders }) => {
                     </span>
                   </td>
 
-                  {/* Delete Button */}
+
+                  {/* Bulk Checkbox */}
                   <td className="px-6 py-4 text-center">
-                    <OrderDelBtn id={order._id} flag="del" />
+                    <BulkSelectBtn id={order._id} flag="bulk" />
                   </td>
 
                   {/* Bulk Checkbox */}
                   <td className="px-6 py-4 text-center">
-                    <OrderDelBtn id={order._id} flag="bulk" />
+                    <OrderSelectSteadFastBtn order={order} flag="bulk" />
                   </td>
                 </tr>
               ))}
@@ -173,74 +178,7 @@ const OrdersTable = ({ orders }) => {
           </table>
         </div>
 
-        {/* Mobile Card View (below md) */}
-        <div className="md:hidden divide-y divide-gray-200">
-          {orders.map((order) => (
-            <div key={order._id} className="p-5 bg-white hover:bg-gray-50">
-              <div className="flex justify-between items-start mb-3">
-                <div>
-                  <p className="font-semibold text-gray-900">
-                    {order.fullName}
-                  </p>
-                  <p className="text-sm text-gray-600">{order.email}</p>
-                  <p className="text-xs text-gray-500">{order.phone}</p>
-                </div>
 
-                <span
-                  className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                    order.status === "completed"
-                      ? "bg-green-100 text-green-800"
-                      : order.status === "pending"
-                      ? "bg-yellow-100 text-yellow-800"
-                      : "bg-red-100 text-red-800"
-                  }`}
-                >
-                  {order.status}
-                </span>
-              </div>
-
-              <div className="text-sm space-y-2 text-gray-700">
-                <p>
-                  <strong>Total:</strong> ৳{order.totals.grandTotal}
-                  {order.totals.shippingTotal > 0 &&
-                    ` (+৳${order.totals.shippingTotal} ship)`}
-                </p>
-                <p>
-                  <strong>Date:</strong>{" "}
-                  {new Date(order.createdAt).toLocaleDateString()}
-                </p>
-
-                {/* Mobile Items Summary */}
-                {order.items && (
-                  <details className="text-xs mt-2">
-                    <summary className="cursor-pointer font-medium text-blue-600">
-                      View {order.items.length} item(s)
-                    </summary>
-                    <div className="mt-2 space-y-1 pl-2 border-l-2 border-gray-300">
-                      {order.items.map((item, i) => (
-                        <div key={i}>
-                          <Link
-                            href={`/product/product-details/${item.slug}`}
-                            className="text-blue-600 hover:underline"
-                          >
-                            {item.name || item.slug}
-                          </Link>{" "}
-                          × {item.qty}
-                          {item.note && ` — ${item.note}`}
-                        </div>
-                      ))}
-                    </div>
-                  </details>
-                )}
-              </div>
-
-              <div className="flex gap-3 mt-4">
-                <OrderDelBtn id={order._id} flag="del" />
-                <OrderDelBtn id={order._id} flag="bulk" />
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
