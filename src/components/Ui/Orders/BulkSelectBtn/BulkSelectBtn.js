@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { addBulkOrders, removeBulkOrders } from "@/utils/redux/slices/slice";
-const OrderDelBtn = ({ id, flag }) => {
+const BulkSelectBtn = ({ id, flag }) => {
   const dispatch = useDispatch();
 
   const router = useRouter();
@@ -36,7 +36,7 @@ const OrderDelBtn = ({ id, flag }) => {
   return (
     <>
       {flag === "bulk" ? (
-        <input type="checkbox" onChange={handleCheckbox} />
+        <input type="checkbox"   onChange={handleCheckbox} />
       ) : (
         <button
           onClick={deleteHandler}
@@ -49,4 +49,4 @@ const OrderDelBtn = ({ id, flag }) => {
   );
 };
 
-export default OrderDelBtn;
+export default BulkSelectBtn;

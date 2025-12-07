@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-import {  ordersByStatus } from "@/actions/actions";
+import { ordersByStatus } from "@/actions/actions";
 import OrdersTable from "@/components/AdminDashboard/Products/Orders/OrdersTable/OrdersTable";
 import Link from "next/link";
 
