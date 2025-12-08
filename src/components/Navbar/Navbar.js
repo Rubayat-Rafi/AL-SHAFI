@@ -82,6 +82,18 @@ const Navbar = () => {
           {/* RIGHT — Account + Cart */}
           <div className="flex items-center justify-end gap-4">
             <Link
+              href="/admin-dashboard"
+              className="flex items-center gap-1 text-primary bg-primary/10 p-2 rounded-full "
+            >
+              Dashboard
+            </Link>
+            <Link
+              href="/order/histories"
+              className="flex items-center gap-1 text-primary bg-primary/10 p-2 rounded-full "
+            >
+              Histories
+            </Link>
+            <Link
               href="/login"
               className="flex items-center gap-1 text-primary bg-primary/10 p-2 rounded-full "
             >

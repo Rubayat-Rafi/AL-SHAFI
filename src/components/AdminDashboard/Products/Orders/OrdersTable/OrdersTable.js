@@ -6,7 +6,6 @@ import OrderSelectSteadFastBtn from "@/components/Ui/Orders/SteadFast/OrderSelec
 import BulkSendToSteadFastBtn from "@/components/Ui/Orders/SteadFast/BulkSendToSteadFastBtn/BulkSendToSteadFastBtn";
 
 const OrdersTable = ({ orders }) => {
-  console.log(orders)
   if (!orders || orders.length === 0) {
     return (
       <div className="text-center py-12 bg-white rounded-lg shadow-sm border border-gray-200">
@@ -49,9 +48,8 @@ const OrdersTable = ({ orders }) => {
                   <BulkDeleteBtn />
                 </th>
                 <th className="px-6 py-4 text-center">
-                   <BulkSendToSteadFastBtn/>
+                  <BulkSendToSteadFastBtn />
                 </th>
-
               </tr>
             </thead>
 
@@ -162,23 +160,21 @@ const OrdersTable = ({ orders }) => {
                     </span>
                   </td>
 
-
                   {/* Bulk Checkbox */}
                   <td className="px-6 py-4 text-center">
                     <BulkSelectBtn id={order._id} flag="bulk" />
                   </td>
 
-                  {/* Bulk Checkbox */}
-                  <td className="px-6 py-4 text-center">
-                    <OrderSelectSteadFastBtn order={order} flag="bulk" />
-                  </td>
+                  {order?.status === "pending" && (
+                    <td className="px-6 py-4 text-center">
+                      <OrderSelectSteadFastBtn order={order} flag="bulk" />
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-
-
       </div>
     </div>
   );
