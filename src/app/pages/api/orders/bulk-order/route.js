@@ -18,6 +18,7 @@ export async function POST(req) {
       totals,
     } = await req.json();
 
+
     const address1 = { address };
     const address2 = { district: district, city: city };
     const addreess3 = {

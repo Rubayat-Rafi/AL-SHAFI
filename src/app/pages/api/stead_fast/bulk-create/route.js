@@ -6,15 +6,12 @@ export async function POST(req) {
   try {
     await dbConnect();
     const orders = await req.json();
-
     if (!orders || orders.length === 0) {
-      return NextResponse.json(
-        { error: "No orders provided" },
-        { status: 400 }
-      );
+      return NextResponse.json({
+        message: "No orders provided",
+        success: false,
+      });
     }
-
-    // Prepare payload for SteadFast
     const data = orders.map((order) => ({
       invoice: order.invoice,
       recipient_name: order.fullName || "N/A",
@@ -25,7 +22,6 @@ export async function POST(req) {
     }));
 
     const payload = { data: JSON.stringify(data) };
-
     const response = await fetch(
       `${process.env.STEADFAST_BASE_URL}/create_order/bulk-order`,
       {
@@ -38,35 +34,34 @@ export async function POST(req) {
         body: JSON.stringify(payload),
       }
     );
-
     const result = await response.json();
-    console.log(result?.data);
-    // Create a map by invoice
     const resultMap = {};
-    result?.data?.forEach((item) => {
-      if (item?.invoice) resultMap[item.invoice] = item;
+    (result?.data || []).forEach((item) => {
+      const inv =
+        item?.invoice || item?.Invoice || item?.invoice_id || item?.Invoice_id;
+      if (inv) resultMap[inv] = item;
     });
-
-    // Update only orders that have a returned consignment/tracking
     for (const order of orders) {
       const returned = resultMap[order.invoice];
-      if (!returned) continue; // Skip if SteadFast didn't return data
+      if (!returned) {
+        continue;
+      }
 
-      const updateData = {};
-      if (returned.consignment_id)
-        updateData.consignment_id = returned.consignment_id;
-      if (returned.tracking_code)
-        updateData.tracking_code = returned.tracking_code;
-      updateData.status = "in_review"; // Always update status
-
+      const updateData = {
+        status: "in_review",
+      };
+      updateData.consignment_id =
+        returned.consignment_id || returned.consignmentId || null;
+      updateData.tracking_code =
+        returned.tracking_code || returned.trackingCode || null;
       await UserOrder.findByIdAndUpdate(order._id, { $set: updateData });
     }
-
     return NextResponse.json({
       message: "Orders updated successfully",
       success: true,
+      orders: result,
     });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ message: error?.message, success: false });
   }
 }

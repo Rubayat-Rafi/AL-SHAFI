@@ -29,7 +29,7 @@ const Checkout = () => {
     return map;
   }, [carts]);
 
-  const { subtotal, shippingTotal, grandTotal, quantities } = useMemo(() => {
+  const { subtotal, shippingTotal, grandTotal } = useMemo(() => {
     let subtotal = 0;
     let shippingTotal = 0;
     let quantities = 0;
@@ -83,10 +83,19 @@ const Checkout = () => {
       fixedAddress,
       totals: { subtotal, shippingTotal, grandTotal },
     };
-    const { data } = await axios.post("/pages/api/orders/order", payload);
+    const { data } = await axios.post("/pages/api/orders/bulk-order", payload);
     if (data?.success) {
       toast.success("Order created");
       localStorage.removeItem("carts");
+      const existInvoices = localStorage.getItem("invoices");
+      const inv = data?.orders?.invoice;
+      if (existInvoices) {
+        const parseInvoice = JSON.parse(existInvoices);
+        const newInvoices = [inv, ...parseInvoice];
+        localStorage.setItem("invoices", JSON.stringify(newInvoices));
+      } else {
+        localStorage.setItem("invoices", JSON.stringify([inv]));
+      }
       dispatch(addActiveFlag(!activeFlag));
       router.push("/");
     } else {

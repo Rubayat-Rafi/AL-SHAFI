@@ -130,3 +130,20 @@ export async function ordersByStatus({ status }) {
     throw new Error(error?.message);
   }
 }
+
+// export async function ordersByInvoice({ invices }) {
+//   try {
+//     await dbConnect();
+//     const userOrders = await UserOrder.find({ status: status })
+//       .sort({ createdAt: -1 })
+//       .lean()
+//       .exec();
+//     const formattedOrders = userOrders.map((prod) => ({
+//       ...prod,
+//       _id: prod._id.toString(),
+//     }));
+//     return formattedOrders;
+//   } catch (error) {
+//     throw new Error(error?.message);
+//   }
+// }

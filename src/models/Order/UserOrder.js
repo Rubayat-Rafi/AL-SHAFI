@@ -3,8 +3,10 @@ const UserOrderSchema = new mongoose.Schema(
   {
     invoice: {
       type: String,
-      default: `INV-${Date.now()}`,
       unique: true,
+      default: function () {
+        return `INV-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
+      },
     },
     consignment_id: { type: Number, default: "" },
     tracking_code: { type: String, default: "" },
