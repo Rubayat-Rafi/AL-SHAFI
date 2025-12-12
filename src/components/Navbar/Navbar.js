@@ -2,9 +2,7 @@
 
 import Image from "next/image";
 import {
-  MagnifyingGlassIcon,
-  UserIcon,
-  ShoppingCartIcon,
+  MagnifyingGlassIcon
 } from "@heroicons/react/24/outline";
 
 import Link from "next/link";
@@ -15,8 +13,11 @@ import { addCartFlag } from "@/utils/redux/slices/slice";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ShoppingCart, UserRound, Search } from "lucide-react";
+import useAuthUser from "@/hooks/user/useAuthUser";
 
 const Navbar = () => {
+   const { user, loading, error } = useAuthUser();
+  
   const [showSearch, setShowSearch] = useState(false);
   const pathname = usePathname();
   const { carts } = useCart();

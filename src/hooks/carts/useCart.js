@@ -14,16 +14,20 @@ export const useCart = () => {
   }, [activeFlag]);
 
   const addToCart = useCallback(
-    (slug) => {
-      if (!slug) return;
-      if (carts.some(item => item.slug === slug)) {
+    (product) => {
+      console.log(product);
+      if (!product) return;
+      if (carts.some((item) => item.slug === product?.slug)) {
         toast.warning("You already added this item!");
         return;
       }
-   
-
       const payload = {
-        slug: slug,
+        slug: product?.slug,
+        img: product?.thumbnail.secure_url,
+        productName: product?.productName,
+        category: product?.category,
+        price: product?.offerPrice,
+        stock: product?.stock,
         qty: 1,
       };
       const updated = [payload, ...carts];

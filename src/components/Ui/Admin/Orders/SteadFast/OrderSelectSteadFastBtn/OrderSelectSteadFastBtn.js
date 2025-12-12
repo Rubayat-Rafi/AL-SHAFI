@@ -8,11 +8,10 @@ import {
   addSteadFastBulkOrders,
   removeSteadFastBulkOrders,
 } from "@/utils/redux/slices/slice";
-const OrderSelectSteadFastBtn = ({ order, flag }) => {
+const OrderSelectSteadFastBtn = ({ ord, flag }) => {
+  const order = JSON.parse(ord);
   const dispatch = useDispatch();
-
   const router = useRouter();
-
   const deleteHandler = async () => {
     try {
       const { data } = await axios.delete(

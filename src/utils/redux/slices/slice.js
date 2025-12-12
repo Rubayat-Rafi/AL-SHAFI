@@ -4,6 +4,8 @@ const initialState = {
   cartFlag: false,
   orderBulkIds: [],
   orderSteadFastBulkOrders: [],
+  commonFlag: "",
+  commonData: null,
 };
 
 export const Slice = createSlice({
@@ -44,6 +46,12 @@ export const Slice = createSlice({
     },
 
     // -------------------------------------------
+    addCommonFlag: (state, action) => {
+      state.commonFlag = action.payload;
+    },
+    addCommonData: (state, action) => {
+      state.commonData = action.payload;
+    },
   },
 });
 
@@ -54,6 +62,8 @@ export const {
   removeBulkOrders,
   addSteadFastBulkOrders,
   removeSteadFastBulkOrders,
+  addCommonFlag,
+  addCommonData,
 } = Slice.actions;
 
 export default Slice.reducer;

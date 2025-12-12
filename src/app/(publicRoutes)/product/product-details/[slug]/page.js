@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 import GalleryImages from "@/components/Products/GalleryImages/GalleryImages";
 import RelatedProducts from "@/components/Products/RelatedProducts/RelatedProducts";
 import { FindAProduct } from "@/actions/actions";
-import AddCartBtn from "@/components/UI/Products/AddCartBtn/AddCartBtn";
+import AddCartBtn from "@/components/Ui/Products/AddCartBtn/AddCartBtn";
 import ProductSeenHistories from "@/components/Products/ProductSeenHistories/ProductSeenHistories";
 import ConverterToHtml from "@/components/ConverterToHtml/ConverterToHtml";
 const Collections = async ({ params }) => {
@@ -18,13 +18,13 @@ const Collections = async ({ params }) => {
   }
   return (
     <div className="container mx-auto px-5 py-10">
-      <div className="grid md:grid-cols-2 gap-10">
-        <div className="w-full">
+      <div className=" flex gap-10">
+        <div className="">
           <GalleryImages
             product={JSON.stringify(product)}
           />
         </div>
-        <div className="space-y-6">
+        <div className="space-y-6  w-full">
           <h1 className="text-3xl font-bold">{product.productName}</h1>
           <p className="text-gray-500">Category: {product.category}</p>
           <div className="flex items-center gap-4">
@@ -60,6 +60,7 @@ const Collections = async ({ params }) => {
           />
         </div>
       </div>
+
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-2">Description</h2>
         <div className="text-gray-700 leading-relaxed">

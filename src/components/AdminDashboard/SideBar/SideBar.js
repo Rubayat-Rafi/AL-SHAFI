@@ -20,6 +20,11 @@ const menuItems = [
     icon: <LayoutDashboard size={20} />,
   },
   {
+    title: "Products",
+    href: "/admin-dashboard/products",
+    icon: <Package size={20} />,
+  },
+  {
     title: "Orders",
     href: "/admin-dashboard/orders/pending",
     icon: <LayoutDashboard size={20} />,
@@ -29,11 +34,7 @@ const menuItems = [
     href: "/admin-dashboard/categories",
     icon: <Layers size={20} />,
   },
-  {
-    title: "Products",
-    href: "/admin-dashboard/products",
-    icon: <Package size={20} />,
-  },
+
   {
     title: "Settings",
     href: "/admin-dashboard/settings",

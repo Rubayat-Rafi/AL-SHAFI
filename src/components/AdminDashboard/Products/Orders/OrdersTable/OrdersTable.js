@@ -1,11 +1,14 @@
 export const dynamic = "force-dynamic";
 import Link from "next/link";
-import BulkSelectBtn from "@/components/Ui/Orders/BulkSelectBtn/BulkSelectBtn";
-import BulkDeleteBtn from "@/components/Ui/Orders/BulkDeleteBtn/BulkDeleteBtn";
-import OrderSelectSteadFastBtn from "@/components/Ui/Orders/SteadFast/OrderSelectSteadFastBtn/OrderSelectSteadFastBtn";
-import BulkSendToSteadFastBtn from "@/components/Ui/Orders/SteadFast/BulkSendToSteadFastBtn/BulkSendToSteadFastBtn";
+import BulkSelectBtn from "@/components/Ui/Admin/Orders/BulkSelectBtn/BulkSelectBtn";
+import BulkDeleteBtn from "@/components/Ui/Admin/Orders/BulkDeleteBtn/BulkDeleteBtn";
+import OrderSelectSteadFastBtn from "@/components/Ui/Admin/Orders/SteadFast/OrderSelectSteadFastBtn/OrderSelectSteadFastBtn";
+import BulkSendToSteadFastBtn from "@/components/Ui/Admin/Orders/SteadFast/BulkSendToSteadFastBtn/BulkSendToSteadFastBtn";
+import ViewOrderBtn from "@/components/Ui/Admin/Orders/ViewOrderBtn/ViewOrderBtn";
+import ViewPopup from "@/components/AdminDashboard/Order/ViewPopup/ViewPopup";
+import ConsignBtn from "@/components/Ui/Admin/Orders/ConsignBtn/ConsignBtn";
 
-const OrdersTable = ({ orders }) => {
+const OrdersTable = ({ orders, status }) => {
   if (!orders || orders.length === 0) {
     return (
       <div className="text-center py-12 bg-white rounded-lg shadow-sm border border-gray-200">
@@ -28,9 +31,7 @@ const OrdersTable = ({ orders }) => {
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Contact
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden md:table-cell">
-                  Address
-                </th>
+
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider hidden lg:table-cell">
                   Items
                 </th>
@@ -43,13 +44,19 @@ const OrdersTable = ({ orders }) => {
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Status
                 </th>
-
                 <th className="px-6 py-4 text-center">
                   <BulkDeleteBtn />
                 </th>
-                <th className="px-6 py-4 text-center">
-                  <BulkSendToSteadFastBtn />
-                </th>
+                {status === "pending" && (
+                  <th className="px-6 py-4 text-center">
+                    <BulkSendToSteadFastBtn />
+                  </th>
+                )}
+                {status !== "pending" && (
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    Actions
+                  </th>
+                )}
               </tr>
             </thead>
 
@@ -61,37 +68,15 @@ const OrdersTable = ({ orders }) => {
                 >
                   {/* Customer Name */}
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {order.fullName || "N/A"}
+                    <ViewOrderBtn order={JSON.stringify(order)} />
                   </td>
 
                   {/* Email + Phone */}
                   <td className="px-6 py-4 text-sm text-gray-600">
                     <div className="flex flex-col">
-                      <span className="font-medium text-gray-900">
-                        {order.email}
-                      </span>
                       <span className="text-xs text-gray-500 mt-1">
                         {order.phone}
                       </span>
-                    </div>
-                  </td>
-
-                  {/* Address (hidden on <md) */}
-                  <td className="px-6 py-4 text-sm text-gray-600 hidden md:table-cell">
-                    <div className="space-y-1 text-xs max-w-xs">
-                      {order.addresses && order.addresses.length > 0 ? (
-                        order.addresses.map((addr, i) => (
-                          <div key={i}>
-                            {addr.address ||
-                              [addr.division, addr.district, addr.city]
-                                .filter(Boolean)
-                                .join(", ") ||
-                              "No address"}
-                          </div>
-                        ))
-                      ) : (
-                        <span className="text-gray-400">—</span>
-                      )}
                     </div>
                   </td>
 
@@ -165,16 +150,25 @@ const OrdersTable = ({ orders }) => {
                     <BulkSelectBtn id={order._id} flag="bulk" />
                   </td>
 
-                  {order?.status === "pending" && (
+                  {status === "pending" && (
                     <td className="px-6 py-4 text-center">
-                      <OrderSelectSteadFastBtn order={order} flag="bulk" />
+                      <OrderSelectSteadFastBtn
+                        ord={JSON.stringify(order)}
+                        flag="bulk"
+                      />
                     </td>
                   )}
+                  <td className="px-6 py-4 text-center">
+                    {status !== "pending" && (
+                      <ConsignBtn order={JSON.stringify(order)} />
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        <ViewPopup />
       </div>
     </div>
   );

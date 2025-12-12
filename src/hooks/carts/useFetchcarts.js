@@ -13,7 +13,6 @@ export const useFetchCarts = (carts = []) => {
       try {
         setLoading(true);
         const slugs = carts.map((item) => item.slug);
-
         const { data } = await axios.get(
           `/pages/api/products/by_slugs`,
 
