@@ -2,6 +2,11 @@ import dbConnect from "@/lib/dbConnect/dbConnect";
 import UserOrder from "@/models/Order/UserOrder";
 import Category from "@/models/Products/Category/Category";
 import Product from "@/models/Products/Product/Product";
+import { cookies } from "next/headers";
+import * as jose from "jose";
+import User from "@/models/User/User";
+import { authHelper } from "@/helper/user/authHelper/authHelper";
+const JWT_SECRET = process.env.JWT_SECRET;
 export async function AllCategories() {
   try {
     await dbConnect();
@@ -36,6 +41,8 @@ export async function CategoryWiseProducts(slug) {
     throw new Error(error?.message);
   }
 }
+
+// ==============================================================================
 export async function FindProductBySlug(slug) {
   try {
     await dbConnect();
@@ -85,6 +92,19 @@ export async function FindProducstBySlugs(slugs) {
 }
 
 export async function HomeProducts() {
+  try {
+    await dbConnect();
+    const products = await Product.find().sort({ createdAt: -1 }).lean().exec();
+    const formattedProducts = products.map((prod) => ({
+      ...prod,
+      _id: prod._id.toString(),
+    }));
+    return formattedProducts;
+  } catch (error) {
+    throw new Error(error?.message);
+  }
+}
+export async function AllProducts() {
   try {
     await dbConnect();
     const products = await Product.find().sort({ createdAt: -1 }).lean().exec();
@@ -147,3 +167,27 @@ export async function ordersByStatus({ status }) {
 //     throw new Error(error?.message);
 //   }
 // }
+
+// ========================================================================================
+
+export const AuthUser = async () => {
+  try {
+    await dbConnect();
+    const cookieStore = await cookies();
+    const tokenCookie = cookieStore.get("auth_token");
+    if (!tokenCookie) return null;
+    const token = tokenCookie.value;
+    const { payload } = await jose.jwtVerify(
+      token,
+      new TextEncoder().encode(JWT_SECRET)
+    );
+    const user = await User.findById(payload?.id)
+      .select("-password")
+      .lean()
+      .exec();
+    return user || null;
+  } catch (err) {
+    console.error("Token verification failed:", err);
+    return null;
+  }
+};

@@ -8,7 +8,7 @@ const AddCartBtn = ({ product, styles }) => {
   const parseProduct = JSON.parse(product);
   const { addToCart } = useCart();
   return (
-    <button onClick={() => {addToCart(parseProduct.slug),
+    <button onClick={() => {addToCart(parseProduct),
     dispatch(addActiveFlag(!activeFlag))
     dispatch(addCartFlag(!cartFlag))
     

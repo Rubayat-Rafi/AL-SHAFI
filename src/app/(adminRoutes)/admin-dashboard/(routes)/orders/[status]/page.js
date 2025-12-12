@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 import { ordersByStatus } from "@/actions/actions";
+import ConsignmentSlip from "@/components/AdminDashboard/Order/ConsignmentSlip/ConsignmentSlip";
 import OrdersTable from "@/components/AdminDashboard/Products/Orders/OrdersTable/OrdersTable";
 import Link from "next/link";
 
@@ -56,10 +57,11 @@ const OrdersPage = async ({ params }) => {
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           <div className="p-4 sm:p-6">
-            <OrdersTable orders={orders || []} />
+            <OrdersTable orders={orders || []} status={status} />
           </div>
         </div>
       </div>
+      {status !== "pending" && <ConsignmentSlip />}
     </div>
   );
 };
