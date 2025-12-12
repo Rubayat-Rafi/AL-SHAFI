@@ -14,7 +14,6 @@ export async function GET() {
     if (!tokenCookie) {
       return NextResponse.json(
         { message: "Auth token not found", success: false },
-        { status: 401 }
       );
     }
     const token = tokenCookie.value;

@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 import { AuthUser } from "@/actions/actions";
+import LogoutBtn from "@/components/Ui/User/LogoutBtn/LogoutBtn";
 
 const Profile = async () => {
   const user = await AuthUser();
@@ -267,6 +268,9 @@ const Profile = async () => {
                 </svg>
                 Change Password
               </button>
+              <div >
+                    <LogoutBtn/>
+              </div>
             </div>
           </div>
         </div>
