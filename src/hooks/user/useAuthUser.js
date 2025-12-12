@@ -1,8 +1,10 @@
-
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 const useAuthUser = () => {
+  const { activeFlag } = useSelector((state) => state?.slice);
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -27,7 +29,7 @@ const useAuthUser = () => {
     };
 
     fetchUser();
-  }, []);
+  }, [activeFlag]);
 
   return { user, loading, error };
 };

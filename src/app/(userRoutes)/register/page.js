@@ -6,8 +6,14 @@ import { Eye, EyeOff } from "lucide-react";
 
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { addActiveFlag } from "@/utils/redux/slices/slice";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const { activeFlag } = useSelector((state) => state?.slice);
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -25,7 +31,6 @@ const Register = () => {
       toast.error("Passwords do not match!");
       return;
     }
-
     setLoading(true);
     try {
       const payload = {
@@ -36,6 +41,8 @@ const Register = () => {
       const { data } = await axios.post("/pages/api/user/register", payload);
       if (data?.success) {
         toast.success(data.message);
+        dispatch(addActiveFlag(!activeFlag));
+        router.push("/")
       } else {
         toast.warning(data.message);
       }
