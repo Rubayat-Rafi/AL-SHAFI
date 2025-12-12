@@ -1,9 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import {
-  MagnifyingGlassIcon
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import Link from "next/link";
 import { useCart } from "@/hooks/carts/useCart";
@@ -16,8 +14,8 @@ import { ShoppingCart, UserRound, Search } from "lucide-react";
 import useAuthUser from "@/hooks/user/useAuthUser";
 
 const Navbar = () => {
-   const { user, loading, error } = useAuthUser();
-  
+  const { user, loading, error } = useAuthUser();
+
   const [showSearch, setShowSearch] = useState(false);
   const pathname = usePathname();
   const { carts } = useCart();
@@ -95,7 +93,7 @@ const Navbar = () => {
               Histories
             </Link>
             <Link
-              href="/login"
+              href={` ${user ? "/account/profile" : "/login"} `}
               className="flex items-center gap-1 text-primary bg-primary/10 p-2 rounded-full "
             >
               <UserRound strokeWidth={2} className="h-5 w-5" />
