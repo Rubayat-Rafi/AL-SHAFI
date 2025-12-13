@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 import GalleryImages from "@/components/Products/GalleryImages/GalleryImages";
 import RelatedProducts from "@/components/Products/RelatedProducts/RelatedProducts";
 import { FindAProduct } from "@/actions/actions";
-import AddCartBtn from "@/components/UI/Products/AddCartBtn/AddCartBtn";
+import AddCartBtn from "@/components/Ui/Products/AddCartBtn/AddCartBtn";
 import ProductSeenHistories from "@/components/Products/ProductSeenHistories/ProductSeenHistories";
 import ConverterToHtml from "@/components/ConverterToHtml/ConverterToHtml";
 import {
@@ -18,6 +18,8 @@ import {
   Leaf,
 } from "lucide-react";
 import Link from "next/link";
+import SendReviews from "@/components/Products/ReviewSection/SendReviews/SendReviews";
+import ShowReviews from "@/components/Products/ReviewSection/ShowReviews/ShowReviews";
 
 const Collections = async ({ params }) => {
   const { slug } = await params;
@@ -256,6 +258,10 @@ const Collections = async ({ params }) => {
           <div className="prose prose-sm md:prose-base max-w-none text-text-secondary leading-relaxed">
             <ConverterToHtml html={product.descriptions} className="" />
           </div>
+        </div>
+        <div className="">
+          <SendReviews product={JSON.stringify(product)}/>
+          <ShowReviews slug={JSON.stringify(product?.slug)}/>
         </div>
 
         {/* Related Products */}
