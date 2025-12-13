@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import * as jose from "jose";
 import User from "@/models/User/User";
 import { authHelper } from "@/helper/user/authHelper/authHelper";
+import Review from "@/models/Products/Review/Review";
 const JWT_SECRET = process.env.JWT_SECRET;
 export async function AllCategories() {
   try {
@@ -191,3 +192,22 @@ export const AuthUser = async () => {
     return null;
   }
 };
+
+// ======================================================
+// reviews sections
+export async function ReviewsBySlug({ slug }) {
+  try {
+    await dbConnect();
+    const reviews = await Review.find({ slug, status: true })
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec();
+    const formattedReviews = reviews.map((review) => ({
+      ...review,
+      _id: review._id.toString(),
+    }));
+    return formattedReviews;
+  } catch (error) {
+    throw new Error(error?.message);
+  }
+}

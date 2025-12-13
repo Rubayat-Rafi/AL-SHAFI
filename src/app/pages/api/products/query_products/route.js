@@ -1,26 +1,40 @@
 import dbConnect from "@/lib/dbConnect/dbConnect";
-import Product from "../../../../../../../models/Products/Product/Product.js";
+import Product from "@/models/Products/Product/Product";
 import { NextResponse } from "next/server";
-export async function GET(_req, { params }) {
-  const { slug } = await params;
+export async function GET(req) {
   try {
     await dbConnect();
-    const product = await Product.findOne({ slug }).lean();
-    if (!product) {
+    const { searchParams } = new URL(req.url);
+    const query = searchParams.get("query");
+    if (!query || query.trim() === "") {
       return NextResponse.json({
-        message: "Product not found",
-        success: false,
+        success: true,
+        products: [],
       });
     }
+
+    const products = await Product.find({
+      $or: [
+        { productName: { $regex: query, $options: "i" } },
+        { category: { $regex: query, $options: "i" } },
+        { slug: { $regex: query, $options: "i" } },
+        { seoTitle: { $regex: query, $options: "i" } },
+      ],
+      status: "onSale",
+    })
+      .select("productName thumbnail offerPrice regularPrice slug category")
+      .limit(10)
+      .lean()
+      .exec();
+
     return NextResponse.json({
-      message: "Product found",
       success: true,
-      product,
+      products,
     });
   } catch (error) {
     return NextResponse.json({
-      message: error?.message || "Something went wrong",
       success: false,
+      message: error.message || "Something went wrong",
     });
   }
 }
