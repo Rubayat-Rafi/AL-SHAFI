@@ -12,6 +12,10 @@ import QueryProducts from "../Products/QueryProducts/QueryProducts";
 import useAuthUser from "@/hooks/user/useAuthUser";
 import { useCart } from "@/hooks/carts/useCart";
 import { addCartFlag, addQuery } from "@/utils/redux/slices/slice";
+// import Categories from "@/components/Categories/Categories";
+
+
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const pathname = usePathname();
@@ -52,7 +56,7 @@ const Navbar = () => {
                 type="text"
                 placeholder="Search products..."
                 onChange={(e) => dispatch(addQuery(e.target.value))}
-                className="w-full outline-none text-sm"
+                className="w-full outline-none text-sm "
               />
             </div>
 
@@ -122,8 +126,14 @@ const Navbar = () => {
               </button>
             </div>
           </div>
+
+          <div>
+            {/* <Categories/> */}
+          </div>
         </Container>
       </nav>
+
+
     </>
   );
 };

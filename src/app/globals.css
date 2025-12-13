@@ -1,34 +1,3 @@
-/* @import "tailwindcss";
-
-:root {
-  --background: #f8f8f8;
-  --text: #1a202c;
-  --primary: #7ea33e;
-  --second-primary: #486926;
-  --accent: #a3c746;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-primary: var(--primary);
-  --color-secondary: var(--second-primary);
-  --color-accent: var(--accent);
-  --color-text: var(--text);
-}
-
-
-body {
-  background-color: var(--background);
-  color: var(--text);
-
-}
-
-button {
-  @apply cursor-pointer;
-} */
-
-
-
 @import "tailwindcss";
 
 :root {

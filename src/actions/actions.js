@@ -8,6 +8,11 @@ import User from "@/models/User/User";
 import { authHelper } from "@/helper/user/authHelper/authHelper";
 import Review from "@/models/Products/Review/Review";
 const JWT_SECRET = process.env.JWT_SECRET;
+
+
+
+
+
 export async function AllCategories() {
   try {
     await dbConnect();

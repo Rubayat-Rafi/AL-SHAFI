@@ -1,6 +1,6 @@
 "use client";
 
-import AddCartBtn from "@/components/Ui/Products/AddCartBtn/AddCartBtn";
+import AddCartBtn from "@/components/UI/Products/AddCartBtn/AddCartBtn";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -42,8 +42,9 @@ const QueryProducts = () => {
   if (!query) return null;
 
   return (
-    <div className="bg-white rounded-xl shadow-2xl border border-gray-100 mt-3 max-h-[450px] overflow-hidden">
-      <div className="overflow-y-auto max-h-[450px] custom-scrollbar">
+    <div className="mt-3 overflow-hidden">
+
+      <div className="overflow-y-auto custom-scrollbar">
         {loading && (
           <div className="flex flex-col items-center justify-center py-12">
             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mb-3"></div>
@@ -53,9 +54,9 @@ const QueryProducts = () => {
           </div>
         )}
         {!loading && products.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-12 px-4">
+          <div className="flex flex-col items-center justify-center py-6 px-4">
             <svg
-              className="w-16 h-16 text-gray-300 mb-3"
+              className="w-10 h-10 text-gray-300 mb-3"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -75,7 +76,7 @@ const QueryProducts = () => {
         )}
 
         {!loading && products.length > 0 && (
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-gray-100 border border-gray-100 rounded-md">
             {products.map((product) => (
               <div
                 key={product._id}
@@ -85,7 +86,7 @@ const QueryProducts = () => {
                   href={`/product/product-details/${product.slug}`}
                   className="flex items-center gap-4 px-5 py-4 flex-1 group"
                 >
-                  <div className="relative flex-shrink-0">
+                  <div className="relative shrink-0">
                     <Image
                       src={product.thumbnail?.secure_url || "/placeholder.png"}
                       alt={product.productName}

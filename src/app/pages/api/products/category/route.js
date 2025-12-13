@@ -18,8 +18,7 @@ export async function POST(req) {
       alt: altText,
     };
 
-    const isUrl =
-      image?.startsWith("http://") || image?.startsWith("https://");
+    const isUrl = image?.startsWith("http://") || image?.startsWith("https://");
 
     // If base64 upload
     if (!isUrl && image) {
@@ -77,7 +76,7 @@ export async function GET() {
   try {
     await dbConnect();
 
-    const allCategories = await Category.find();
+    const allCategories = await Category.find().lean().exec();
 
     return NextResponse.json({
       message: "Categories fetched successfully!",
