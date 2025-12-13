@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Plus, Minus } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addActiveFlag } from "@/utils/redux/slices/slice";
-import RemoveCart from "@/components/Ui/Products/RemoveCart/RemoveCart";
+import RemoveCart from "@/components/UI/Products/RemoveCart/RemoveCart";
 
 const QtyBtn = ({ prod }) => {
   const product = JSON.parse(prod);
@@ -13,6 +13,7 @@ const QtyBtn = ({ prod }) => {
   const dispatch = useDispatch();
   const { activeFlag } = useSelector((state) => state.slice);
   const [quantity, setQuantity] = useState(product.qty || 1);
+
   useEffect(() => {
     const handler = () => {
       const stored = JSON.parse(localStorage.getItem("carts")) || [];
@@ -57,39 +58,65 @@ const QtyBtn = ({ prod }) => {
   };
 
   return (
-    <div className="flex items-center justify-between gap-5">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 w-full">
       {/* Price */}
-      <p className="font-bold">৳ {(productPrice * quantity).toFixed(2)}</p>
+      <p className="font-bold text-primary text-sm md:text-base lg:text-lg whitespace-nowrap">
+        ৳{(productPrice * quantity).toLocaleString()}
+      </p>
 
-      {/* Qty Controls */}
-      <div className="inline-flex items-center bg-white border-2 border-gray-300 rounded-lg overflow-hidden">
-        <button
-          onClick={handleDecrease}
-          disabled={quantity <= 1}
-          className="px-3 py-2 bg-gray-50 hover:bg-gray-100 disabled:opacity-40"
-        >
-          <Minus className="w-4 h-4 text-gray-700" />
-        </button>
+      {/* Qty Controls & Remove Button */}
+      <div className="flex items-center gap-3 w-full sm:w-auto">
+        {/* Quantity Controller */}
+        <div className="flex items-center rounded-xl border border-border bg-surface shadow-sm overflow-hidden">
+          {/* Decrease */}
+          <button
+            onClick={handleDecrease}
+            disabled={quantity <= 1}
+            aria-label="Decrease quantity"
+            className="px-3 py-2 flex items-center justify-center
+        text-muted-foreground hover:text-primary
+        hover:bg-primary/10
+        active:scale-95
+        transition-all
+        disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <Minus className="w-4 h-4" strokeWidth={2.5} />
+          </button>
 
-        <input
-          type="number"
-          value={quantity}
-          onChange={handleInputChange}
-          min="1"
-          max={maxQty}
-          className="w-14 text-center font-semibold bg-white"
-        />
+          {/* Quantity Input */}
+          <input
+            type="number"
+            value={quantity}
+            onChange={handleInputChange}
+            min="1"
+            max={maxQty}
+            aria-label="Quantity"
+            className="w-10 md:w-12 text-center text-sm font-semibold
+        bg-transparent text-foreground
+        border-x border-border
+        focus:outline-none focus:bg-primary/5
+        focus:ring-2 focus:ring-primary/30"
+          />
 
-        <button
-          onClick={handleIncrease}
-          disabled={quantity >= maxQty}
-          className="px-3 py-2 bg-gray-50 hover:bg-gray-100 disabled:opacity-40"
-        >
-          <Plus className="w-4 h-4 text-gray-700" />
-        </button>
+          {/* Increase */}
+          <button
+            onClick={handleIncrease}
+            disabled={quantity >= maxQty}
+            aria-label="Increase quantity"
+            className="px-3 py-2 flex items-center justify-center
+        text-muted-foreground hover:text-primary
+        hover:bg-primary/10
+        active:scale-95
+        transition-all
+        disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <Plus className="w-4 h-4" strokeWidth={2.5} />
+          </button>
+        </div>
+
+        {/* Remove from Cart */}
+        <RemoveCart prod={prod} />
       </div>
-
-      <RemoveCart prod={prod} />
     </div>
   );
 };

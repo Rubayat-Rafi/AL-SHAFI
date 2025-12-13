@@ -1,75 +1,134 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Banner = () => {
   const slides = ["/banner.jpg", "/banner2.avif", "/banner3.avif"];
 
   const [index, setIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   // Auto slide logic
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length);
-    }, 5000); // 5 seconds
+    if (!isHovered) {
+      const interval = setInterval(() => {
+        setIndex((prev) => (prev + 1) % slides.length);
+      }, 5000); // 5 seconds
 
-    return () => clearInterval(interval);
-  }, [slides.length]);
+      return () => clearInterval(interval);
+    }
+  }, [slides.length, isHovered]);
+
+  const goToPrevious = () => {
+    setIndex((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  const goToNext = () => {
+    setIndex((prev) => (prev + 1) % slides.length);
+  };
 
   return (
-    <div className="max-w-[1440px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4 py-6 ">
-      <div className="grid grid-cols-10 gap-4 w-full h-[400px] md:h-[450px]">
+    <div className="max-w-[1440px] mx-auto xl:px-20 md:px-10 sm:px-4 px-4 py-4 md:py-6">
+      <div className="grid grid-cols-1 lg:grid-cols-10 gap-3 md:gap-4 w-full">
         {/* Main Banner */}
-        <div className="relative w-full h-full lg:col-span-8 col-span-10 overflow-hidden">
+        <div 
+          className="relative w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[450px] xl:h-[500px] lg:col-span-8 overflow-hidden rounded-xl md:rounded-2xl shadow-lg group"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Images */}
           {slides.map((src, i) => (
             <Image
               key={i}
               src={src}
-              alt="banner"
+              alt={`Banner ${i + 1}`}
               fill
-              className={`object-cover transition-opacity duration-700 rounded-md ${
-                i === index ? "opacity-100" : "opacity-0"
+              priority={i === 0}
+              className={`object-cover transition-all duration-700 ease-in-out ${
+                i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
               }`}
             />
           ))}
 
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
 
-          {/* DOTS AT BOTTOM CENTER */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {/* Previous Button */}
+          <button
+            onClick={goToPrevious}
+            className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-primary p-2 md:p-2.5 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 active:scale-95 backdrop-blur-sm"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" strokeWidth={2.5} />
+          </button>
+
+          {/* Next Button */}
+          <button
+            onClick={goToNext}
+            className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-primary p-2 md:p-2.5 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 active:scale-95 backdrop-blur-sm"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5" strokeWidth={2.5} />
+          </button>
+
+          {/* Dots Navigation */}
+          <div className="absolute bottom-4 md:bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 md:gap-2.5 z-10">
             {slides.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setIndex(i)}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  index === i ? "bg-primary scale-125" : "bg-text/30"
+                className={`transition-all duration-300 rounded-full ${
+                  index === i
+                    ? "w-8 md:w-10 h-2.5 md:h-3 bg-primary shadow-md"
+                    : "w-2.5 md:w-3 h-2.5 md:h-3 bg-white/60 hover:bg-white/80"
                 }`}
+                aria-label={`Go to slide ${i + 1}`}
               />
             ))}
           </div>
 
+          {/* Slide Counter */}
+          <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold">
+            {index + 1} / {slides.length}
+          </div>
         </div>
 
         {/* Side Banners */}
-        <div className="w-full  md:h-full  col-span-10 lg:col-span-2 flex flex-row lg:flex-col space-x-4 lg:space-x-0 lg:space-y-4">
+        <div className="w-full grid grid-cols-2 lg:grid-cols-1 gap-3 md:gap-4 lg:col-span-2">
           {/* Small Image 1 */}
-          <div className="relative w-full lg:h-1/2 h-full">
+          <div className="relative w-full h-[135px] sm:h-[170px] md:h-[195px] lg:h-[218px] xl:h-[243px] overflow-hidden rounded-xl md:rounded-2xl shadow-md group">
             <Image
               src="/post1.jpg"
-              alt="post1"
+              alt="Promotional banner 1"
               fill
-              className="rounded-md object-cover"
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
             />
+            <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
 
           {/* Small Image 2 */}
-          <div className="relative w-full lg:h-1/2 h-full">
+          <div className="relative w-full h-[135px] sm:h-[170px] md:h-[195px] lg:h-[218px] xl:h-[243px] overflow-hidden rounded-xl md:rounded-2xl shadow-md group">
             <Image
               src="/post2.webp"
-              alt="post2"
+              alt="Promotional banner 2"
               fill
-              className="rounded-md object-cover"
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
             />
+            <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
+        </div>
+      </div>
+
+      {/* Optional: Progress Bar */}
+      <div className="max-w-[1440px] mx-auto mt-4 hidden md:block">
+        <div className="h-1 bg-border rounded-full overflow-hidden">
+          <div
+            className="h-full bg-linear-to-r from-primary to-primary-light transition-all duration-300 ease-linear"
+            style={{
+              width: `${((index + 1) / slides.length) * 100}%`,
+            }}
+          />
         </div>
       </div>
     </div>
