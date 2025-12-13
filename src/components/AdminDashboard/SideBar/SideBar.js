@@ -34,6 +34,11 @@ const menuItems = [
     href: "/admin-dashboard/categories",
     icon: <Layers size={20} />,
   },
+  {
+    title: "Reviews",
+    href: "/admin-dashboard/reviews/false",
+    icon: <Layers size={20} />,
+  },
 
   {
     title: "Settings",

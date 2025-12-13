@@ -211,3 +211,19 @@ export async function ReviewsBySlug({ slug }) {
     throw new Error(error?.message);
   }
 }
+export async function ReviewsByStatus({ st }) {
+  try {
+    await dbConnect();
+    const reviews = await Review.find({ status:st })
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec();
+    const formattedReviews = reviews.map((review) => ({
+      ...review,
+      _id: review._id.toString(),
+    }));
+    return formattedReviews;
+  } catch (error) {
+    throw new Error(error?.message);
+  }
+}
