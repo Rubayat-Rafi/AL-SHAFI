@@ -7,6 +7,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
+
+
 const BulkDeleteBtn = () => {
   const router = useRouter();
   const { orderBulkIds } = useSelector((state) => state?.slice);

@@ -1,8 +1,5 @@
 "use client";
 import QtyBtn from "@/components/UI/Products/QtyBtn/QtyBtn";
-import RemoveCart from "@/components/UI/Products/RemoveCart/RemoveCart";
-
-
 import { useCart } from "@/hooks/carts/useCart";
 import { useFetchCarts } from "@/hooks/carts/useFetchcarts";
 import Image from "next/image";
