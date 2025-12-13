@@ -12,7 +12,6 @@ const LogoutBtn = () => {
   const logoutHandler = async () => {
     try {
       const { data } = await axios.get("/pages/api/user/logout");
-      console.log(data);
       if (data.success) {
         toast.success(data?.message);
         dispatch(addActiveFlag(!activeFlag));
