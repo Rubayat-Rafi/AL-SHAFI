@@ -52,7 +52,7 @@ const Login = () => {
             </label>
             <input
               type="email"
-              className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
               placeholder="example@mail.com"
               {...register("email", { required: "Email is required" })}
             />
@@ -69,7 +69,7 @@ const Login = () => {
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
-                className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none pr-12"
+                className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none pr-12"
                 placeholder="•••••••••"
                 {...register("password", { required: "Password is required" })}
               />
@@ -93,8 +93,8 @@ const Login = () => {
             className={`w-full py-2.5 rounded-lg text-white text-lg font-semibold transition
               ${
                 loading
-                  ? "bg-blue-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
+                  ? "bg-accent cursor-not-allowed"
+                  : "bg-primary hover:bg-secondary"
               }`}
           >
             {loading ? "Logging in..." : "Login"}
@@ -106,7 +106,7 @@ const Login = () => {
             Don’t have an account?{" "}
             <Link
               href="/register"
-              className="text-blue-600 hover:underline font-medium"
+              className="text-secondary hover:underline font-medium"
             >
               Register
             </Link>

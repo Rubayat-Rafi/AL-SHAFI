@@ -44,10 +44,10 @@ const ProductCard = ({ product }) => {
 
       {/* Product Info */}
       <div className="w-full text-center mb-4">
-        <h3 className="text-lg font-semibold text-gray-800">
+        <h3 className="text-lg font-semibold ">
           {parseProduct?.productName || "Unnamed Product"}
         </h3>
-        <p className="text-green-600 font-bold text-md mt-1">
+        <p className="font-bold text-md mt-1">
           TK {parseProduct?.offerPrice || 0}
         </p>
         {parseProduct?.regularPrice &&
@@ -63,7 +63,7 @@ const ProductCard = ({ product }) => {
         <AddCartBtn
           product={product}
           styles={
-            " w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all duration-200"
+            " w-full px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary transition-all duration-200"
           }
         />
       </div>

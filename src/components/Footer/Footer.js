@@ -22,7 +22,7 @@ const Footer = () => {
     <footer className="bg-black text-background pt-10 pb-5">
       <div className="max-w-[1440px] mx-auto px-4 xl:px-20 md:px-10 sm:px-6">
         {/* TOP GRID */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {/* Brand / About */}
           <div>
             {/* <h2 className="text-2xl font-bold text-background">Al-Shafi</h2> */}
@@ -53,7 +53,7 @@ const Footer = () => {
           </div>
 
           {/* SHOP LINKS */}
-          <div>
+          {/* <div>
             <h3 className="text-background font-semibold text-lg mb-4">Shop</h3>
             <ul className="space-y-2 text-sm">
               <li className="hover:text-background cursor-pointer">
@@ -70,7 +70,7 @@ const Footer = () => {
               </li>
               <li className="hover:text-background cursor-pointer">Sale</li>
             </ul>
-          </div>
+          </div> */}
 
           {/* CUSTOMER SERVICE */}
           <div>
@@ -78,10 +78,10 @@ const Footer = () => {
               Customer Service
             </h3>
             <ul className="space-y-2 text-sm">
-              <li className="hover:text-background cursor-pointer">FAQs</li>
-              <li className="hover:text-background cursor-pointer">
+              {/* <li className="hover:text-background cursor-pointer">FAQs</li> */}
+              {/* <li className="hover:text-background cursor-pointer">
                 Shipping Policy
-              </li>
+              </li> */}
               <li className="hover:text-background cursor-pointer">
                 Return Policy
               </li>
@@ -110,10 +110,10 @@ const Footer = () => {
                 <span>+880 1234-567890</span>
               </li>
 
-              <li className="flex items-center space-x-2">
+              {/* <li className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4" />
                 <span>Gulshan, Dhaka, Bangladesh</span>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

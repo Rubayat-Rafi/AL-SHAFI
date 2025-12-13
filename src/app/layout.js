@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
             <Topbar />
             <Navbar />
           </>
-          <main className="min-h-[calc(100vh-388px)]">
+          <main className="min-h-[calc(100vh-352px)]">
             {children}
             <CartSidebar />
           </main>

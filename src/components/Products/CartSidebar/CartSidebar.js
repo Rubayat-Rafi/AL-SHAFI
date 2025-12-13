@@ -84,6 +84,7 @@ const CartSidebar = () => {
                 const price = product.offerPrice || product.regularPrice;
                 const shippingFee = product.shipping_fee;
 
+
                 return (
                   <div
                     key={product._id}
@@ -114,8 +115,8 @@ const CartSidebar = () => {
 
                       <p className="text-xs text-gray-500 mt-2">
                         Shipping:{" "}
-                        <span className="font-medium text-green-600">
-                          {shippingFee === "paid" ? "Free" : `৳ ${shippingFee}`}
+                        <span className="font-medium text-green-600 capitalize">
+                          {shippingFee === "free" ? "Free" : `৳ ${shippingFee}`}
                         </span>
                       </p>
                     </div>
@@ -137,7 +138,7 @@ const CartSidebar = () => {
                 onClick={() => {
                   dispatch(addCartFlag(!cartFlag));
                 }}
-                className="w-full bg-blue-600 text-white  rounded-lg overflow-hidden font-semibold text-lg hover:bg-blue-700 transition-colors duration-200"
+                className="w-full bg-primary text-white  rounded-lg overflow-hidden font-semibold text-lg hover:bg-secondary transition-colors duration-200"
               >
                 <Link
                   href={"/product/checkout"}
