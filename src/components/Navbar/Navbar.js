@@ -1,11 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import {
-  MagnifyingGlassIcon,
-  UserIcon,
-  ShoppingCartIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import Link from "next/link";
 import { useCart } from "@/hooks/carts/useCart";
@@ -15,8 +11,11 @@ import { addCartFlag } from "@/utils/redux/slices/slice";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ShoppingCart, UserRound, Search } from "lucide-react";
+import useAuthUser from "@/hooks/user/useAuthUser";
 
 const Navbar = () => {
+  const { user, loading, error } = useAuthUser();
+
   const [showSearch, setShowSearch] = useState(false);
   const pathname = usePathname();
   const { carts } = useCart();
@@ -82,7 +81,19 @@ const Navbar = () => {
           {/* RIGHT — Account + Cart */}
           <div className="flex items-center justify-end gap-4">
             <Link
-              href="/login"
+              href="/admin-dashboard"
+              className="flex items-center gap-1 text-primary bg-primary/10 p-2 rounded-full "
+            >
+              Dashboard
+            </Link>
+            <Link
+              href="/order/histories"
+              className="flex items-center gap-1 text-primary bg-primary/10 p-2 rounded-full "
+            >
+              Histories
+            </Link>
+            <Link
+              href={` ${user ? "/account/profile" : "/login"} `}
               className="flex items-center gap-1 text-primary bg-primary/10 p-2 rounded-full "
             >
               <UserRound strokeWidth={2} className="h-5 w-5" />

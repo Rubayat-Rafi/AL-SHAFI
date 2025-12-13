@@ -7,8 +7,15 @@ import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { addActiveFlag } from "@/utils/redux/slices/slice";
 
 const Login = () => {
+  const dispatch = useDispatch()
+  const router = useRouter();
+  const {activeFlag} = useSelector((state)=>state?.slice)
+
   const {
     register,
     handleSubmit,
@@ -24,6 +31,8 @@ const Login = () => {
       if (res?.data?.success) {
         toast.success(res?.data?.message);
         setLoading(false);
+        dispatch(addActiveFlag(!activeFlag))
+        router.push("/");
       } else {
         toast.warning(res?.data?.message);
       }

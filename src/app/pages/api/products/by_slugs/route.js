@@ -3,6 +3,7 @@ import dbConnect from "@/lib/dbConnect/dbConnect";
 import Product from "@/models/Products/Product/Product";
 export async function GET(req) {
   try {
+    await dbConnect();
     const url = new URL(req.url);
     const slugsQuery = url.searchParams.get("slugs");
     if (!slugsQuery) {
@@ -12,7 +13,7 @@ export async function GET(req) {
       });
     }
     const slugs = slugsQuery.split(",");
-    await dbConnect();
+    
     const products = await Product.find({ slug: { $in: slugs } }).lean();
     if (!products || products.length === 0) {
       return NextResponse.json({

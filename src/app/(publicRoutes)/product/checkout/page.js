@@ -2,50 +2,48 @@
 import React, { useState, useMemo } from "react";
 import { Package, MapPin, Phone, Mail, User, ShoppingBag } from "lucide-react";
 import { useCart } from "@/hooks/carts/useCart";
-import { useFetchCarts } from "@/hooks/carts/useFetchcarts";
 import Image from "next/image";
 import AreaSelections from "@/components/AreaSelections/AreaSelections";
 import Container from "@/components/Container/Container";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { addActiveFlag } from "@/utils/redux/slices/slice";
+import { useRouter } from "next/navigation";
 
 const Checkout = () => {
-  const { carts } = useCart();
-  const { fetchCarts: products, loading } = useFetchCarts(carts);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { activeFlag } = useSelector((state) => state?.slice);
 
-  const [selectDta, setSelectDta] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState("cod");
+  // 👉 GET CARTS FROM LOCAL STORAGE (via hook)
+  const { carts } = useCart();
+
+  // 👉 Build quantity map from carts data
   const quantityMap = useMemo(() => {
-    const map = {};
-    carts.forEach((item) => {
-      map[item.slug] = item.qty;
+    const q = {};
+    carts?.forEach((c) => {
+      q[c.slug] = c.qty || 1;
     });
-    return map;
+    return q;
   }, [carts]);
 
-  const { subtotal, shippingTotal, grandTotal, quantities } = useMemo(() => {
-    let subtotal = 0;
-    let shippingTotal = 0;
-    let quantities = 0;
+  // 👉 Calculate totals
+  const subtotal = useMemo(() => {
+    return carts?.reduce((sum, p) => {
+      const price = p.offerPrice || p.price || 0;
+      const qty = p.qty || 1;
+      return sum + price * qty;
+    }, 0);
+  }, [carts]);
 
-    products?.forEach((p) => {
-      const qty = quantityMap[p.slug] || 1;
-      const price = p.offerPrice || p.regularPrice;
+  const shippingTotal = subtotal > 0 ? 120 : 0; // your logic
+  const grandTotal = subtotal + shippingTotal;
 
-      quantities = qty;
-      subtotal += price * qty;
-      if (p.shipping_fee !== "paid") {
-        shippingTotal += Number(p.shipping_fee) || 0;
-      }
-    });
-
-    return {
-      subtotal,
-      shippingTotal,
-      quantities,
-      grandTotal: subtotal + shippingTotal,
-    };
-  }, [products, quantityMap]);
+  // =====================================================================================
+  // FORM STATES
+  const [selectDta, setSelectDta] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("cod");
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -54,51 +52,76 @@ const Checkout = () => {
     address: "",
     district: "",
     city: "",
-    note: "", // <-- new field
+    note: "",
   });
 
-  const handleChange = async (e) =>
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  // =====================================================================================
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const division = selectDta?.division;
     const district = selectDta?.district;
     const upazila = selectDta?.upazila;
+
     const fixedAddress = {
       divisionName: division?.name,
       districtName: district?.name,
       upazilaName: upazila?.name,
     };
+
     const payload = {
       ...formData,
+      carts: carts,
       flag: "steadFast",
-      products: carts,
       fixedAddress,
       totals: { subtotal, shippingTotal, grandTotal },
     };
-    const { data } = await axios.post("/pages/api/orders/order", payload);
+
+    const { data } = await axios.post("/pages/api/orders/bulk-order", payload);
+
     if (data?.success) {
-      toast.success("Order created")
-    }else{
-       toast.warning("Order not created")
+      toast.success("Order created");
+      localStorage.removeItem("carts");
+
+      // HANDLE INVOICE STORAGE
+      const existInvoices = localStorage.getItem("invoices");
+      const inv = data?.orders?.invoice;
+
+      if (existInvoices) {
+        const parseInvoice = JSON.parse(existInvoices);
+        localStorage.setItem("invoices", JSON.stringify([inv, ...parseInvoice]));
+      } else {
+        localStorage.setItem("invoices", JSON.stringify([inv]));
+      }
+
+      dispatch(addActiveFlag(!activeFlag));
+      router.push("/");
+    } else {
+      toast.warning("Order not created");
+      dispatch(addActiveFlag(!activeFlag));
     }
   };
+
+  // =====================================================================================
 
   return (
     <Container>
       <div className=" py-10">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Checkout</h1>
-          <p className="text-gray-600">
-            Complete your order in a few simple steps
-          </p>
+          <p className="text-gray-600">Complete your order in a few simple steps</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
+          {/* ===================================================================================== */}
+          {/* LEFT SECTION - FORM */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Contact Info */}
                 <div>
                   <div className="flex items-center gap-2 mb-4 pb-2 border-b border-gray-200">
                     <User className="w-5 h-5 text-blue-600" />
@@ -129,8 +152,7 @@ const Checkout = () => {
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Email{" "}
-                          <span className="text-gray-400">(optional)</span>
+                          Email <span className="text-gray-400">(optional)</span>
                         </label>
                         <div className="relative">
                           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -166,74 +188,71 @@ const Checkout = () => {
                   </div>
                 </div>
 
+                {/* Address */}
                 <div>
-                  <div className="space-y-4">
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div className="">
-                        <h2 className=" text-sm">
-                          Building / House No / Floor / Street
-                        </h2>
-                        <input
-                          type="text"
-                          name="district"
-                          value={formData.district}
-                          onChange={handleChange}
-                          placeholder="District"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl"
-                          required
-                        />
-                      </div>
-                      <div className="">
-                        <h2 className="text-sm  ">
-                          Colony / Suburb / Locality / Landmark
-                        </h2>
-
-                        <input
-                          type="text"
-                          name="city"
-                          value={formData.city}
-                          onChange={handleChange}
-                          placeholder="City / Thana"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl"
-                          required
-                        />
-                      </div>
-                    </div>
-                    {/* areas sectons_start */}
-                    <AreaSelections setSelectDta={setSelectDta} />
-                    {/* ------------------------ */}
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div className="">
-                      <div className="flex items-center gap-2 mb-4 pb-2 border-b border-gray-200">
-                        <MapPin className="w-5 h-5 text-blue-600" />
-                        <h2 className="text-xl font-semibold text-gray-800">
-                          Shipping Address
-                        </h2>
-                      </div>
-
-                      <textarea
-                        name="address"
-                        value={formData.address}
+                      <h2 className=" text-sm">Building / House / Road</h2>
+                      <input
+                        type="text"
+                        name="district"
+                        value={formData.district}
                         onChange={handleChange}
-                        placeholder="House no., Road no., Area..."
+                        placeholder="District"
                         className="w-full px-4 py-3 border border-gray-300 rounded-xl"
-                        rows={3}
                         required
                       />
                     </div>
+                    <div className="">
+                      <h2 className="text-sm">
+                        Area / Locality / Landmark
+                      </h2>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Note <span className="text-gray-400">(optional)</span>
-                      </label>
-                      <textarea
-                        name="note"
-                        value={formData.note}
+                      <input
+                        type="text"
+                        name="city"
+                        value={formData.city}
                         onChange={handleChange}
-                        placeholder="Delivery instructions or other notes"
+                        placeholder="City / Thana"
                         className="w-full px-4 py-3 border border-gray-300 rounded-xl"
-                        rows={3}
+                        required
                       />
                     </div>
+                  </div>
+
+                  <AreaSelections setSelectDta={setSelectDta} />
+
+                  <div className="">
+                    <div className="flex items-center gap-2 mb-4 pb-2 border-b border-gray-200">
+                      <MapPin className="w-5 h-5 text-blue-600" />
+                      <h2 className="text-xl font-semibold text-gray-800">
+                        Shipping Address
+                      </h2>
+                    </div>
+
+                    <textarea
+                      name="address"
+                      value={formData.address}
+                      onChange={handleChange}
+                      placeholder="House no., Road no., Area..."
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl"
+                      rows={3}
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Note <span className="text-gray-400">(optional)</span>
+                    </label>
+                    <textarea
+                      name="note"
+                      value={formData.note}
+                      onChange={handleChange}
+                      placeholder="Delivery instructions or other notes"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl"
+                      rows={3}
+                    />
                   </div>
                 </div>
 
@@ -248,6 +267,8 @@ const Checkout = () => {
             </div>
           </div>
 
+          {/* ===================================================================================== */}
+          {/* RIGHT SECTION - ORDER SUMMARY */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 sticky top-6">
               <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
@@ -256,41 +277,56 @@ const Checkout = () => {
               </h2>
 
               <div className="space-y-4 max-h-80 overflow-y-auto pr-2">
-                {loading && <p className="text-sm text-gray-500">Loading...</p>}
-
-                {products?.map((p) => (
+                {carts?.map((p) => (
                   <div
-                    key={p._id}
+                    key={p.slug}
                     className="flex gap-3 bg-gray-50 p-3 rounded-xl border border-slate-300"
                   >
                     <Image
-                      src={p.thumbnail?.secure_url}
+                      src={p.img}
                       alt={p.productName}
-                      width={500}
-                      height={500}
+                      width={80}
+                      height={80}
                       className="w-16 h-16 rounded-lg object-cover"
                     />
 
                     <div className="flex-1">
-                      <p className="font-medium text-gray-800">
-                        {p.productName}
-                      </p>
+                      <p className="font-medium text-gray-800">{p.productName}</p>
                       <p className="text-xs text-gray-500 capitalize">
                         Category: {p.category}
                       </p>
+
                       <p className="text-sm font-medium mt-1">
                         Qty: {quantityMap[p.slug] || 1}
                       </p>
 
                       <p className="text-blue-600 font-semibold">
-                        ৳ {p.offerPrice || p.regularPrice}
+                        ৳ {(p.offerPrice || p.price) * (p.qty || 1)}
                       </p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* ---------------- PAYMENT METHOD SECTION ---------------- */}
+              {/* Totals */}
+              <div className="mt-6 text-sm">
+                <div className="flex justify-between py-1">
+                  <span>Subtotal</span>
+                  <span>৳ {subtotal}</span>
+                </div>
+
+                <div className="flex justify-between py-1">
+                  <span>Shipping</span>
+                  <span>৳ {shippingTotal}</span>
+                </div>
+
+                <div className="flex justify-between font-bold text-lg py-2 border-t mt-2">
+                  <span>Total</span>
+                  <span>৳ {grandTotal}</span>
+                </div>
+              </div>
+
+              {/* Payment Method */}
               <div className="mt-6">
                 <label className="block text-sm font-semibold text-gray-900 mb-2">
                   Payment Method
@@ -310,24 +346,14 @@ const Checkout = () => {
                   </select>
                 </div>
 
-                {/* -------- Payment Details (Conditional Rendering) -------- */}
-
+                {/* COD */}
                 {paymentMethod === "cod" && (
-                  <div className="mt-4 bg-green-50 border border-green-200 rounded-xl p-4 flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center mt-1">
-                      <svg
-                        className="w-3 h-3 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="3"
-                      >
-                        <path d="M5 13l4 4L19 7" />
-                      </svg>
+                  <div className="mt-4 bg-green-50 border border-green-200 rounded-xl p-4 flex items-start gap-3 text-sm">
+                    <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center mt-1 text-white">
+                      ✓
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900 text-sm">
-                        Cash on Delivery
-                      </p>
+                      <p className="font-semibold text-gray-900">Cash on Delivery</p>
                       <p className="text-xs text-gray-600">
                         Pay when your order arrives at your doorstep.
                       </p>
@@ -355,9 +381,7 @@ const Checkout = () => {
 
                 {paymentMethod === "rocket" && (
                   <div className="mt-4 bg-purple-50 border border-purple-200 rounded-xl p-4 text-sm">
-                    <p className="font-semibold text-gray-900">
-                      Rocket Payment
-                    </p>
+                    <p className="font-semibold text-gray-900">Rocket Payment</p>
                     <p className="text-xs text-gray-600">
                       Payment instructions will be sent to your phone.
                     </p>
@@ -375,6 +399,8 @@ const Checkout = () => {
               </div>
             </div>
           </div>
+
+          {/* ===================================================================================== */}
         </div>
       </div>
     </Container>

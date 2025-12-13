@@ -1,160 +1,200 @@
 "use client";
 import Image from "next/image";
-import { X } from "lucide-react";
+import {
+  X,
+  ShoppingBag,
+  ArrowRight,
+  ShoppingCart,
+  Package,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addCartFlag } from "@/utils/redux/slices/slice";
 import { useCart } from "@/hooks/carts/useCart";
-import { useFetchCarts } from "@/hooks/carts/useFetchcarts";
 import QtyBtn from "@/components/UI/Products/QtyBtn/QtyBtn";
 import Link from "next/link";
+
 const CartSidebar = () => {
   const dispatch = useDispatch();
   const { cartFlag } = useSelector((state) => state.slice);
   const { carts } = useCart();
-  const { fetchCarts: products, loading } = useFetchCarts(carts);
+
   const isOpen = cartFlag;
-  const hasItems = products && products.length > 0;
   const closeCart = () => dispatch(addCartFlag(false));
-  // Calculate subtotal
-  const subtotal = products?.reduce((total, product) => {
-    const cartItem = carts.find((item) => item.slug === product.slug);
-    const qty = cartItem?.qty || 1;
-    const price = product.offerPrice || product.regularPrice;
-    return total + price * qty;
-  }, 0);
-  
+
+  // Subtotal
+  const subtotal = carts.reduce((sum, item) => sum + item.price * item.qty, 0);
+
   return (
     <>
       {/* Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0  w-fit bg-opacity-50 z-40 transition-opacity duration-300"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-all duration-300"
           onClick={closeCart}
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar - 70% width on mobile, max 480px on desktop */}
       <aside
-        className={`fixed top-0 right-0 bottom-0 w-full max-w-md bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 bottom-0 w-[70%] sm:w-[60%] md:max-w-md lg:max-w-lg bg-surface shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-900">Shopping Cart</h2>
+          <div className="flex items-center justify-between p-4 md:p-6 border-b border-border bg-gradient-to-r from-primary/5 to-accent/5">
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="bg-primary/10 p-1.5 md:p-2 rounded-lg md:rounded-xl">
+                <ShoppingCart
+                  className="w-4 h-4 md:w-5 md:h-5 text-primary"
+                  strokeWidth={2}
+                />
+              </div>
+              <div>
+                <h2 className="text-base md:text-xl lg:text-2xl font-bold text-text">
+                  Shopping Cart
+                </h2>
+                <p className="text-[10px] md:text-xs text-text-secondary">
+                  {carts.length} {carts.length === 1 ? "item" : "items"}
+                </p>
+              </div>
+            </div>
             <button
               onClick={closeCart}
-              className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
+              className="p-1.5 md:p-2.5 rounded-lg md:rounded-xl hover:bg-error/10 text-text hover:text-error transition-all duration-200 hover:scale-110 active:scale-95"
               aria-label="Close cart"
             >
-              <X className="w-6 h-6 text-gray-600" />
+              <X className="w-4 h-4 md:w-5 md:h-5" strokeWidth={2.5} />
             </button>
           </div>
 
-          {/* Cart Content */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-5">
-            {loading && (
-              <div className="text-center py-12">
-                <p className="text-gray-500 animate-pulse">
-                  Loading your cart...
-                </p>
-              </div>
-            )}
-
-            {!loading && !hasItems && (
-              <div className="text-center py-16">
-                <div className="bg-gray-200 border-2 border-dashed rounded-xl w-24 h-24 mx-auto mb-4" />
-                <p className="text-xl font-medium text-gray-700">
+          {/* Content */}
+          <div className="flex-1 overflow-y-auto p-3 md:p-6 space-y-3 md:space-y-4 bg-background">
+            {/* Empty Cart */}
+            {carts.length === 0 && (
+              <div className="text-center py-12 md:py-20">
+                <div className="bg-accent-cream rounded-full w-16 h-16 md:w-24 md:h-24 mx-auto mb-4 md:mb-6 flex items-center justify-center">
+                  <ShoppingBag
+                    className="w-8 h-8 md:w-12 md:h-12 text-primary"
+                    strokeWidth={1.5}
+                  />
+                </div>
+                <h3 className="text-lg md:text-xl font-bold text-text mb-2">
                   Your cart is empty
+                </h3>
+                <p className="text-xs md:text-sm text-text-secondary mb-4 md:mb-6 px-4">
+                  আপনার কার্ট খালি। পণ্য যোগ করুন!
                 </p>
-                <p className="text-sm text-gray-500 mt-2">
-                  Add some products to get started!
-                </p>
+                <button
+                  onClick={closeCart}
+                  className="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-primary text-white rounded-lg md:rounded-xl hover:bg-primary-dark transition-all duration-200 font-semibold text-sm md:text-base"
+                >
+                  <ShoppingBag className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                  Start Shopping
+                </button>
               </div>
             )}
 
-            {!loading &&
-              hasItems &&
-              products.map((product) => {
-                const cartItem = carts.find(
-                  (item) => item.slug === product.slug
-                );
-                const qty = cartItem?.qty || 1;
-                const price = product.offerPrice || product.regularPrice;
-                const shippingFee = product.shipping_fee;
+            {/* Cart List */}
+            {carts.length > 0 &&
+              carts.map((cart, idx) => (
+                <div
+                  key={idx}
+                  className="flex gap-2 md:gap-4 bg-surface p-3 md:p-4 rounded-lg md:rounded-xl border border-border hover:shadow-md hover:border-primary/30 transition-all duration-200 group"
+                >
+                  {/* Image */}
+                  <div className="shrink-0">
+                    {cart?.img ? (
+                      <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-lg md:rounded-xl overflow-hidden bg-background border border-border group-hover:border-primary/30 transition-colors">
+                        <Image
+                          src={cart.img}
+                          alt={cart?.productName || "Product image"}
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg md:rounded-xl bg-background border-2 border-dashed border-border flex items-center justify-center">
+                        <Package
+                          className="w-6 h-6 md:w-8 md:h-8 text-text-muted"
+                          strokeWidth={1.5}
+                        />
+                      </div>
+                    )}
+                  </div>
 
-
-                return (
-                  <div
-                    key={product._id}
-                    className="flex gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
-                  >
-                    {/* Image */}
-                    <div className="shrink-0">
-                      <Image
-                        src={
-                          product.thumbnail?.secure_url || "/placeholder.jpg"
-                        }
-                        alt={product.productName}
-                        width={80}
-                        height={80}
-                        className="w-20 h-20 rounded-lg object-cover"
-                      />
-                    </div>
-
-                    {/* Details */}
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 line-clamp-2">
-                        {product.productName}
+                  {/* Details */}
+                  <div className="flex-1 min-w-0">
+                    <Link
+                      href={`/product/product-details/${cart.slug}`}
+                      onClick={closeCart}
+                      className="block"
+                    >
+                      <h3 className="font-semibold text-text line-clamp-2 hover:text-primary transition-colors text-xs md:text-sm lg:text-base mb-1">
+                        {cart.productName}
                       </h3>
-                      <p className="text-sm text-gray-500 capitalize mt-1">
-                        {product.category}
-                      </p>
-                      <QtyBtn prod={JSON.stringify(product)} />
+                    </Link>
 
-                      <p className="text-xs text-gray-500 mt-2">
-                        Shipping:{" "}
-                        <span className="font-medium text-green-600 capitalize">
-                          {shippingFee === "free" ? "Free" : `৳ ${shippingFee}`}
-                        </span>
-                      </p>
+                    <p className="text-[10px] md:text-xs text-text-secondary capitalize mb-2">
+                      {cart.category}
+                    </p>
+
+                    <div className="w-full">
+                      {/* Qty Button */}
+                      <QtyBtn prod={JSON.stringify(cart)} />
                     </div>
                   </div>
-                );
-              })}
+                </div>
+              ))}
           </div>
 
-          {/* Footer - Subtotal & Checkout */}
-          {hasItems && !loading && (
-            <div className="border-t border-gray-200 p-6 bg-gray-50">
-              <div className="flex justify-between text-xl font-bold mb-4">
-                <span>Subtotal</span>
-                <span className="text-text">
-                  ৳ {subtotal?.toLocaleString()}
-                </span>
+          {/* Footer */}
+          {carts.length > 0 && (
+            <div className="border-t border-border p-4 md:p-6 bg-surface">
+              {/* Subtotal */}
+              <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-lg md:rounded-xl p-3 md:p-4 mb-3 md:mb-4 border border-primary/20">
+                <div className="flex justify-between items-baseline">
+                  <span className="text-sm md:text-base lg:text-lg font-semibold text-text">
+                    Subtotal
+                  </span>
+                  <span className="text-lg md:text-xl lg:text-2xl font-bold text-primary">
+                    ৳{subtotal.toLocaleString()}
+                  </span>
+                </div>
+                <p className="text-[10px] md:text-xs text-text-secondary mt-1 md:mt-2">
+                  Shipping & taxes calculated at checkout
+                </p>
               </div>
-              <button
-                onClick={() => {
-                  dispatch(addCartFlag(!cartFlag));
-                }}
-                className="w-full bg-primary text-white  rounded-lg overflow-hidden font-semibold text-lg hover:bg-secondary transition-colors duration-200"
-              >
-                <Link
-                  href={"/product/checkout"}
-                  className="  py-4 w-full h-full block"
-                >
-                  Proceed to Checkout
-                </Link>
-              </button>
+
+              {/* Checkout Button */}
               <Link
-                onClick={() => {
-                  dispatch(addCartFlag(!cartFlag));
-                }}
-                href={"/product/carts"}
+                href="/product/checkout"
+                onClick={closeCart}
+                className="block w-full bg-gradient-to-r from-primary to-primary-dark text-white text-center py-3 md:py-4 rounded-lg md:rounded-xl font-semibold hover:from-primary-dark hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] mb-2 md:mb-3 group text-sm md:text-base"
               >
-                <p className=" text-gray-500 text-center mt-3">View All</p>
+                <span className="flex items-center justify-center gap-2">
+                  Proceed to Checkout
+                  <ArrowRight
+                    className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform"
+                    strokeWidth={2.5}
+                  />
+                </span>
               </Link>
+
+              {/* View All Link */}
+              <Link
+                onClick={closeCart}
+                href="/product/carts"
+                className="block text-center text-text-secondary hover:text-primary text-xs md:text-sm font-medium transition-colors"
+              >
+                View Full Cart
+              </Link>
+
+              {/* Trust Badge */}
+              <div className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-border flex items-center justify-center gap-2 text-[10px] md:text-xs text-text-secondary">
+                <div className="w-1 h-1 rounded-full bg-success"></div>
+                <span>Secure checkout guaranteed</span>
+              </div>
             </div>
           )}
         </div>

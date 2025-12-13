@@ -2,6 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   activeFlag: false,
   cartFlag: false,
+  orderBulkIds: [],
+  orderSteadFastBulkOrders: [],
+  commonFlag: "",
+  commonData: null,
 };
 
 export const Slice = createSlice({
@@ -14,9 +18,52 @@ export const Slice = createSlice({
     addCartFlag: (state, action) => {
       state.cartFlag = action.payload;
     },
+    // -----------------------------------------------------
+    addBulkOrders: (state, action) => {
+      if (!state.orderBulkIds.includes(action.payload)) {
+        state.orderBulkIds.push(action.payload);
+      }
+    },
+    removeBulkOrders: (state, action) => {
+      state.orderBulkIds = state.orderBulkIds.filter(
+        (id) => id !== action.payload
+      );
+    },
+    addSteadFastBulkOrders: (state, action) => {
+      const exists = state.orderSteadFastBulkOrders.some(
+        (itm) => itm?._id === action.payload._id
+      );
+
+      if (!exists) {
+        state.orderSteadFastBulkOrders.push(action.payload);
+      }
+    },
+
+    removeSteadFastBulkOrders: (state, action) => {
+      state.orderSteadFastBulkOrders = state.orderSteadFastBulkOrders.filter(
+        (itm) => itm?._id !== action.payload
+      );
+    },
+
+    // -------------------------------------------
+    addCommonFlag: (state, action) => {
+      state.commonFlag = action.payload;
+    },
+    addCommonData: (state, action) => {
+      state.commonData = action.payload;
+    },
   },
 });
 
-export const { addActiveFlag,addCartFlag } = Slice.actions;
+export const {
+  addActiveFlag,
+  addCartFlag,
+  addBulkOrders,
+  removeBulkOrders,
+  addSteadFastBulkOrders,
+  removeSteadFastBulkOrders,
+  addCommonFlag,
+  addCommonData,
+} = Slice.actions;
 
 export default Slice.reducer;
