@@ -23,10 +23,8 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-
   const onSubmit = async (data) => {
     const { fullName, email, password, confirmPassword } = data;
-
     if (password !== confirmPassword) {
       toast.error("Passwords do not match!");
       return;

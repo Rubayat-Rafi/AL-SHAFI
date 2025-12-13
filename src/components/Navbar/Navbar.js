@@ -7,20 +7,20 @@ import Link from "next/link";
 import { useCart } from "@/hooks/carts/useCart";
 import Container from "../Container/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { addCartFlag } from "@/utils/redux/slices/slice";
+import { addCartFlag, addQuery } from "@/utils/redux/slices/slice";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ShoppingCart, UserRound, Search } from "lucide-react";
 import useAuthUser from "@/hooks/user/useAuthUser";
+import QueryProducts from "../Products/QueryProducts/QueryProducts";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const { cartFlag } = useSelector((state) => state?.slice);
   const { user, loading, error } = useAuthUser();
-
   const [showSearch, setShowSearch] = useState(false);
   const pathname = usePathname();
   const { carts } = useCart();
-  const dispatch = useDispatch();
-  const { cartFlag } = useSelector((state) => state?.slice);
   const validPath = pathname.startsWith("/admin-dashboard");
 
   return (
@@ -42,13 +42,17 @@ const Navbar = () => {
         className={`absolute left-0 w-full bg-background px-6 py-12 shadow-md transition-all duration-300 ease-in-out z-50
     ${showSearch ? "-top-14 opacity-100" : "-top-24 opacity-0"}`}
       >
-        <div className="flex items-center justify-center mx-auto border border-gray-300 rounded-lg px-4 py-2 max-w-xl">
+        <div className="  flex items-center justify-center mx-auto border border-gray-300 rounded-lg px-4 py-2 max-w-xl">
           <MagnifyingGlassIcon className="h-5 w-5 text-gray-500 mr-2" />
           <input
             type="text"
+            onChange={(e) => dispatch(addQuery(e.target.value))}
             placeholder="Search products..."
             className="w-full outline-none text-sm"
           />
+        </div>
+        <div className=" absolute w-11/12 ">
+          <QueryProducts/>
         </div>
       </div>
 
@@ -92,12 +96,16 @@ const Navbar = () => {
             >
               Histories
             </Link>
+
             <Link
               href={` ${user ? "/account/profile" : "/login"} `}
               className="flex items-center gap-1 text-primary bg-primary/10 p-2 rounded-full "
             >
-              <UserRound strokeWidth={2} className="h-5 w-5" />
-              {/* <span className="hidden md:inline">Account</span> */}
+              {!user ? (
+                <span className="hidden md:inline">Account</span>
+              ) : (
+                <UserRound strokeWidth={2} className="h-5 w-5" />
+              )}
             </Link>
 
             <button

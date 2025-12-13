@@ -6,6 +6,7 @@ const initialState = {
   orderSteadFastBulkOrders: [],
   commonFlag: "",
   commonData: null,
+  query: "",
 };
 
 export const Slice = createSlice({
@@ -52,6 +53,9 @@ export const Slice = createSlice({
     addCommonData: (state, action) => {
       state.commonData = action.payload;
     },
+    addQuery: (state, action) => {
+      state.query = action.payload;
+    },
   },
 });
 
@@ -64,6 +68,7 @@ export const {
   removeSteadFastBulkOrders,
   addCommonFlag,
   addCommonData,
+  addQuery,
 } = Slice.actions;
 
 export default Slice.reducer;
