@@ -6,6 +6,7 @@ import Topbar from "@/components/Topbar/Topbar";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import CartSidebar from "@/components/Products/CartSidebar/CartSidebar";
+import Sidebar from "@/components/Sidebar/Sidebar";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -36,6 +37,7 @@ export default function RootLayout({ children }) {
           <main className="min-h-[calc(100vh-352px)]">
             {children}
             <CartSidebar />
+            <Sidebar/>
           </main>
 
           <Footer />
