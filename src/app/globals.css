@@ -79,7 +79,7 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5 {
   color: var(--text);
   font-weight: 700;
   line-height: 1.2;
@@ -227,7 +227,7 @@ input::placeholder, textarea::placeholder {
 }
 
 /* Link Styles */
-a {
+/* a {
   color: var(--primary);
   text-decoration: none;
   transition: color var(--transition-fast);
@@ -236,7 +236,7 @@ a {
 a:hover {
   color: var(--primary-dark);
   text-decoration: underline;
-}
+} */
 
 /* Container */
 .container {

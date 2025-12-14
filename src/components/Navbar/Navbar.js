@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { ShoppingCart, UserRound, Search } from "lucide-react";
+import { ShoppingCart, UserRound, Search, Menu, X } from "lucide-react";
 import Container from "../Container/Container";
 import QueryProducts from "../Products/QueryProducts/QueryProducts";
 import useAuthUser from "@/hooks/user/useAuthUser";
@@ -22,8 +22,8 @@ const Navbar = () => {
   const { carts } = useCart();
   const { user } = useAuthUser();
   const { categories } = useCategories();
-
   const [showSearch, setShowSearch] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
 
   const validPath = pathname.startsWith("/admin-dashboard");
 
@@ -68,13 +68,20 @@ const Navbar = () => {
         </div>
 
         <Container>
-          <div className="grid grid-cols-3 items-center py-3 px-4 md:px-8">
+          <div className="grid grid-cols-3 items-center py-3">
             <div className="flex items-center">
               <button
-                onClick={() => setShowSearch((prev) => !prev)}
-                className="text-primary bg-primary/10 p-2 rounded-full"
+                onClick={() => setOpenMenu(!openMenu)}
+                className="text-primary lg:hidden"
               >
-                <Search className="h-5 w-5" />
+                {openMenu ? <X strokeWidth={2} /> : <Menu strokeWidth={2} />}
+              </button>
+
+              <button
+                onClick={() => setShowSearch((prev) => !prev)}
+                className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
+              >
+                <Search strokeWidth={2} />
               </button>
             </div>
             <div className="flex justify-center">
@@ -82,7 +89,7 @@ const Navbar = () => {
                 <Image
                   src="/logo.png"
                   alt="logo"
-                  width={100}
+                  width={130}
                   height={50}
                   priority
                 />
@@ -92,35 +99,42 @@ const Navbar = () => {
             <div className="flex items-center justify-end gap-3">
               <Link
                 href="/admin-dashboard"
-                className="text-primary bg-primary/10 px-3 py-2 rounded-full"
+                className="text-primary bg-primary/10 px-3 py-2 rounded-full max-lg:hidden"
               >
                 Dashboard
               </Link>
 
               <Link
                 href="/order/histories"
-                className="text-primary bg-primary/10 px-3 py-2 rounded-full"
+                className="text-primary bg-primary/10 px-3 py-2 rounded-full max-lg:hidden"
               >
                 Histories
               </Link>
 
               <Link
                 href={user ? "/account/profile" : "/login"}
-                className="text-primary bg-primary/10 p-2 rounded-full"
+                className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 {user ? (
-                  <UserRound className="h-5 w-5" />
+                  <UserRound strokeWidth={2} />
                 ) : (
-                  <span className="hidden md:inline">Account</span>
+                  <UserRound strokeWidth={2} />
                 )}
               </Link>
 
               <button
-                onClick={() => dispatch(addCartFlag(!cartFlag))}
-                className="relative text-primary bg-primary/10 p-2 rounded-full"
+                onClick={() => setShowSearch((prev) => !prev)}
+                className="text-primary rounded-full lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
               >
-                <ShoppingCart className="h-5 w-5" />
-                <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                <Search strokeWidth={2} />
+              </button>
+
+              <button
+                onClick={() => dispatch(addCartFlag(!cartFlag))}
+                className="relative text-primary hover:scale-105 transition-transform duration-300 ease-in-out"
+              >
+                <ShoppingCart strokeWidth={2} />
+                <span className="absolute -top-2 -right-3 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
                   {carts?.length || 0}
                 </span>
               </button>
@@ -128,10 +142,10 @@ const Navbar = () => {
           </div>
         </Container>
 
-
-        <div className="py-3 px-8 md:px-8 bg-gray-100">
+        <div className="py-3 px-8 md:px-8 hidden lg:block">
           <Container>
-            <div className="flex flex-wrap space-x-6">
+            <div className="flex flex-wrap space-x-6 items-center">
+              <h1>Menu: </h1>
               {categories?.map((categ) => (
                 <Link
                   key={categ._id}
@@ -145,7 +159,32 @@ const Navbar = () => {
           </Container>
         </div>
 
-
+        {/* Mobile Sidebar (Overlay + Slide-in Drawer) */}
+        {/* Overlay */}
+        <div
+          className={`fixed inset-0 bg-black/40 z-40 top-30 lg:hidden transition-opacity duration-300 ${
+            openMenu ? "opacity-100 visible" : "opacity-0 invisible"
+          }`}
+          onClick={() => setOpenMenu(false)}
+        ></div>
+        {/* Sidebar Drawer */}
+        <div
+          className={`fixed top-30 left-0 h-screen w-64 bg-background shadow-2xl z-50 lg:hidden transform transition-transform duration-300 ease-in-out ${
+            openMenu ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <div className="flex flex-col space-y-6 items-start p-8">
+            {categories?.map((categ) => (
+              <Link
+                key={categ._id}
+                href={`/product/collections/${categ.slug}`}
+                className="block  text-center transition transform hover:scale-105 duration-200"
+              >
+                <p className="text-gray-700 font-medium">{categ?.name}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
       </nav>
     </>
   );
