@@ -151,7 +151,6 @@ export async function ordersByStatus({ status }) {
     throw new Error(error?.message);
   }
 }
-
 // export async function ordersByInvoice({ invices }) {
 //   try {
 //     await dbConnect();
