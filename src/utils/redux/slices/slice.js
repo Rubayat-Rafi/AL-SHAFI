@@ -7,6 +7,7 @@ const initialState = {
   commonFlag: "",
   commonData: null,
   query: "",
+  sidebarFlag: false,
 };
 
 export const Slice = createSlice({
@@ -56,6 +57,9 @@ export const Slice = createSlice({
     addQuery: (state, action) => {
       state.query = action.payload;
     },
+    addSidebarFlag: (state, action) => {
+      state.sidebarFlag = action.payload;
+    },
   },
 });
 
@@ -68,6 +72,7 @@ export const {
   removeSteadFastBulkOrders,
   addCommonFlag,
   addCommonData,
+  addSidebarFlag,
   addQuery,
 } = Slice.actions;
 

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
@@ -18,22 +18,32 @@ import Container from "../Container/Container";
 import QueryProducts from "../Products/QueryProducts/QueryProducts";
 import useAuthUser from "@/hooks/user/useAuthUser";
 import { useCart } from "@/hooks/carts/useCart";
-import { addCartFlag, addQuery } from "@/utils/redux/slices/slice";
+import {
+  addCartFlag,
+  addCommonFlag,
+  addQuery,
+  addSidebarFlag,
+} from "@/utils/redux/slices/slice";
 import useCategories from "@/hooks/products/categories/useCategories";
 // import Categories from "@/components/Categories/Categories";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const pathname = usePathname();
-  const { cartFlag } = useSelector((state) => state.slice);
+  const { cartFlag, sidebarFlag } = useSelector((state) => state.slice);
   const { carts } = useCart();
   const { user } = useAuthUser();
   const { categories } = useCategories();
   const [showSearch, setShowSearch] = useState(false);
-  const [openMenu, setOpenMenu] = useState(false);
-
   const validPath = pathname.startsWith("/admin-dashboard");
 
+  useEffect(() => {
+    const handler = () => {
+      dispatch(addSidebarFlag(false));
+    };
+    window.addEventListener("click", handler);
+    return () => window.removeEventListener("click", handler);
+  }, [sidebarFlag]);
   return (
     <>
       {showSearch && (
@@ -78,10 +88,13 @@ const Navbar = () => {
           <div className="grid grid-cols-3 items-center py-3">
             <div className="flex items-center">
               <button
-                onClick={() => setOpenMenu(!openMenu)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(addSidebarFlag(!sidebarFlag))
+                }}
                 className="text-primary lg:hidden"
               >
-                {openMenu ? <X strokeWidth={2} /> : <Menu strokeWidth={2} />}
+                {sidebarFlag ? <X strokeWidth={2} /> : <Menu strokeWidth={2} />}
               </button>
 
               <button
@@ -168,14 +181,14 @@ const Navbar = () => {
 
         {/* Mobile Sidebar (Overlay + Slide-in Drawer) */}
         {/* Overlay */}
-        <div
+        {/* <div
           className={`fixed inset-0 bg-black/40 z-40 top-30 lg:hidden transition-opacity duration-300 ${
             openMenu ? "opacity-100 visible" : "opacity-0 invisible"
           }`}
           onClick={() => setOpenMenu(false)}
-        ></div>
-        {/* Sidebar Drawer */}
-        <div
+        ></div> */}
+
+        {/* <div
           className={`fixed top-30 left-0 h-screen w-64 bg-background shadow-2xl z-50 lg:hidden transform transition-transform duration-300 ease-in-out ${
             openMenu ? "translate-x-0" : "-translate-x-full"
           }`}
@@ -191,7 +204,7 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-        </div>
+        </div> */}
       </nav>
     </>
   );
