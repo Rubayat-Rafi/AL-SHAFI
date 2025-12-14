@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 import GalleryImages from "@/components/Products/GalleryImages/GalleryImages";
 import RelatedProducts from "@/components/Products/RelatedProducts/RelatedProducts";
 import { FindAProduct } from "@/actions/actions";
-import AddCartBtn from "@/components/Ui/Products/AddCartBtn/AddCartBtn";
+import AddCartBtn from "@/components/UI/Products/AddCartBtn/AddCartBtn";
 import ProductSeenHistories from "@/components/Products/ProductSeenHistories/ProductSeenHistories";
 import ConverterToHtml from "@/components/ConverterToHtml/ConverterToHtml";
 import {

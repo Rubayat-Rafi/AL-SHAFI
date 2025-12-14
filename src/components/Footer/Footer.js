@@ -40,14 +40,34 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook", color: "hover:text-[#1877F2]" },
-    { icon: Instagram, href: "#", label: "Instagram", color: "hover:text-[#E4405F]" },
-    { icon: Twitter, href: "#", label: "Twitter", color: "hover:text-[#1DA1F2]" },
-    { icon: Youtube, href: "#", label: "Youtube", color: "hover:text-[#FF0000]" },
+    {
+      icon: Facebook,
+      href: "#",
+      label: "Facebook",
+      color: "hover:text-[#1877F2]",
+    },
+    {
+      icon: Instagram,
+      href: "#",
+      label: "Instagram",
+      color: "hover:text-[#E4405F]",
+    },
+    {
+      icon: Twitter,
+      href: "#",
+      label: "Twitter",
+      color: "hover:text-[#1DA1F2]",
+    },
+    {
+      icon: Youtube,
+      href: "#",
+      label: "Youtube",
+      color: "hover:text-[#FF0000]",
+    },
   ];
 
   return (
-    <footer className="bg-[#1a1a1a] text-white/90">
+    <footer className="bg-text text-white/90">
       {/* Trust Badges Section */}
       <div className="border-y border-primary/20">
         <div className="max-w-[1440px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4 py-6">
@@ -57,7 +77,9 @@ const Footer = () => {
                 <Truck className="w-5 h-5" strokeWidth={2} />
               </div>
               <div>
-                <p className="font-semibold text-sm text-white">Fast Delivery</p>
+                <p className="font-semibold text-sm text-white">
+                  Fast Delivery
+                </p>
                 <p className="text-xs text-white/70">Across Bangladesh</p>
               </div>
             </div>
@@ -67,7 +89,9 @@ const Footer = () => {
                 <Shield className="w-5 h-5 text-white" strokeWidth={2} />
               </div>
               <div>
-                <p className="font-semibold text-sm text-white">Secure Payment</p>
+                <p className="font-semibold text-sm text-white">
+                  Secure Payment
+                </p>
                 <p className="text-xs text-white/70">100% Protected</p>
               </div>
             </div>
@@ -113,13 +137,13 @@ const Footer = () => {
               </Link>
             </div>
             <p className="text-sm leading-7 text-white/80 mb-5">
-              আল-শাফি আপনার বিশ্বস্ত অনলাইন স্টোর। প্রিমিয়াম প্রাকৃতিক খাদ্য পণ্যের
-              জন্য। দ্রুত ডেলিভারি, নিরাপদ পেমেন্ট এবং 24/7 সাপোর্ট।
+              আল-শাফি আপনার বিশ্বস্ত অনলাইন স্টোর। প্রিমিয়াম প্রাকৃতিক খাদ্য
+              পণ্যের জন্য। দ্রুত ডেলিভারি, নিরাপদ পেমেন্ট এবং 24/7 সাপোর্ট।
             </p>
             <p className="text-sm leading-7 text-white/80">
               Al-Shafi is your trusted online store for premium natural food
-              products at affordable prices. Fast delivery, secure payment & 24/7
-              support.
+              products at affordable prices. Fast delivery, secure payment &
+              24/7 support.
             </p>
 
             {/* Social Icons */}
@@ -140,7 +164,10 @@ const Footer = () => {
           {/* Quick Links */}
           <div className="lg:col-span-2">
             <h6 className="text-white/70 font-bold text-base md:text-lg mb-4 flex items-center gap-2">
-              <ShoppingBag className="w-4 h-4 text-white/70" strokeWidth={2.5} />
+              <ShoppingBag
+                className="w-4 h-4 text-white/70"
+                strokeWidth={2.5}
+              />
               Quick Links
             </h6>
             <ul className="space-y-2.5">
@@ -148,7 +175,7 @@ const Footer = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-sm text-white/70 hover:text-primary hover:translate-x-1 inline-block transition-all duration-200"
+                    className="text-sm text-white/70 hover:text-white/90 hover:translate-x-1 inline-block transition-all duration-200"
                   >
                     {link.name}
                   </Link>
@@ -168,7 +195,7 @@ const Footer = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-sm text-white/70 hover:text-primary hover:translate-x-1 inline-block transition-all duration-200"
+                    className="text-sm text-white/70 hover:text-white/90 hover:translate-x-1 inline-block transition-all duration-200"
                   >
                     {link.name}
                   </Link>
@@ -187,9 +214,9 @@ const Footer = () => {
               <li className="group">
                 <Link
                   href="mailto:support@alshafi.com"
-                  className="flex items-start gap-3 text-sm text-white/70 hover:text-primary transition-colors duration-200"
+                  className="flex items-center gap-3 text-sm text-white/70 hover:text-white/90 transition-colors duration-200"
                 >
-                  <div className="bg-white/20 p-2 rounded-lg group-hover:bg-primary/30 transition-colors">
+                  <div className="bg-white/20 p-2 rounded-lg group-hover:bg-white/30 transition-colors">
                     <Mail className="w-4 h-4 text-white/70" strokeWidth={2} />
                   </div>
                   <span className="pt-0.5">support@alshafi.com</span>
@@ -199,9 +226,9 @@ const Footer = () => {
               <li className="group">
                 <Link
                   href="tel:+8801718099526"
-                  className="flex items-start gap-3 text-sm text-white/70 hover:text-primary transition-colors duration-200"
+                  className="flex items-center gap-3 text-sm text-white/70 hover:text-white/90 transition-colors duration-200"
                 >
-                  <div className="bg-white/20 p-2 rounded-lg group-hover:bg-primary/30 transition-colors">
+                  <div className="bg-white/20 p-2 rounded-lg group-hover:bg-white/30 transition-colors">
                     <Phone className="w-4 h-4 text-white/70" strokeWidth={2} />
                   </div>
                   <span className="pt-0.5">+880 171 8099 526</span>
@@ -209,13 +236,11 @@ const Footer = () => {
               </li>
 
               <li className="group">
-                <div className="flex items-start gap-3 text-sm text-white/70">
-                  <div className="bg-white/20 p-2 rounded-lg">
+                <div className="flex items-center gap-3 text-sm text-white/70 hover:text-white/90">
+                  <div className="bg-white/20 p-2 rounded-lg group-hover:bg-white/30 transition-colors">
                     <MapPin className="w-4 h-4 text-white/70" strokeWidth={2} />
                   </div>
-                  <span className="pt-0.5">
-                    Dhaka, Bangladesh
-                  </span>
+                  <span className="pt-0.5">Dhaka, Bangladesh</span>
                 </div>
               </li>
             </ul>
@@ -252,14 +277,18 @@ const Footer = () => {
       <div className="border-t border-white/10">
         <div className="max-w-[1440px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/60">
-            <p>
-              © {new Date().getFullYear()} Al-Shafi — All Rights Reserved.
-            </p>
+            <p>© {new Date().getFullYear()} Al-Shafi — All Rights Reserved.</p>
             <div className="flex gap-6">
-              <Link href="/privacy-policy" className="hover:text-white/90 transition-colors">
+              <Link
+                href="/privacy-policy"
+                className="hover:text-white/90 transition-colors"
+              >
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="hover:text-white/90 transition-colors">
+              <Link
+                href="/terms"
+                className="hover:text-white/90 transition-colors"
+              >
                 Terms of Service
               </Link>
             </div>

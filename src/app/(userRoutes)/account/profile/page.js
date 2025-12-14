@@ -1,13 +1,13 @@
 export const dynamic = "force-dynamic";
 import { AuthUser } from "@/actions/actions";
-import LogoutBtn from "@/components/Ui/User/LogoutBtn/LogoutBtn";
+import LogoutBtn from "@/components/UI/User/LogoutBtn/LogoutBtn";
 
 const Profile = async () => {
   const user = await AuthUser();
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg
@@ -69,12 +69,12 @@ const Profile = async () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Profile Card */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           {/* Header Section with Gradient */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 h-32 relative">
+          <div className="bg-linear-to-r from-blue-600 to-indigo-600 h-32 relative">
             <div className="absolute -bottom-16 left-8">
               <div className="w-32 h-32 bg-white rounded-full shadow-lg flex items-center justify-center border-4 border-white">
                 <span className="text-4xl font-bold text-blue-600">
@@ -132,7 +132,7 @@ const Profile = async () => {
             {/* Information Grid */}
             <div className="grid md:grid-cols-2 gap-6 mt-8">
               {/* Account Information */}
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+              <div className="bg-linear-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
                 <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                   <svg
                     className="w-5 h-5 text-blue-600"
@@ -172,7 +172,7 @@ const Profile = async () => {
               </div>
 
               {/* Account Activity */}
-              <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100">
+              <div className="bg-linear-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100">
                 <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                   <svg
                     className="w-5 h-5 text-purple-600"
