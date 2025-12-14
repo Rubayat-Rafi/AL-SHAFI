@@ -7,10 +7,8 @@ export default function Home() {
     <div>
       {/* <Categories/> */}
       <Banner />
-      <div className=" max-w-[1440px] mx-auto px-5">
-        <div>
-          <Products />
-        </div>
+      <div>
+        <Products />
       </div>
     </div>
   );

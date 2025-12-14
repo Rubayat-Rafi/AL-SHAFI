@@ -14,9 +14,9 @@ const Products = async () => {
         <div className="text-center mb-10 md:mb-14">
           {/* Decorative Element */}
           <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="h-0.5 w-12 md:w-16 bg-linear-to-r from-transparent to-primary rounded-full"></div>
-            <Leaf className="w-6 h-6 text-primary animate-pulse" strokeWidth={2} />
-            <div className="h-0.5 w-12 md:w-16 bg-linear-to-l from-transparent to-primary rounded-full"></div>
+            <div className="h-0.5 w-12 md:w-16 bg-linear-to-r from-transparent to-text rounded-full"></div>
+            <Leaf className="w-6 h-6 text-text animate-pulse" strokeWidth={2} />
+            <div className="h-0.5 w-12 md:w-16 bg-linear-to-l from-transparent to-text rounded-full"></div>
           </div>
 
           <h2 className="text-3xl md:text-4xl  font-bold text-text mb-3 tracking-tight">
@@ -56,14 +56,14 @@ const Products = async () => {
         )}
 
         {/* View More Button (Optional) */}
-        {products && products.length > 0 && (
+        {/* {products && products.length > 0 && (
           <div className="text-center mt-10 md:mt-14">
-            <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-linear-to-r from-primary to-primary-dark text-white font-semibold rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 group">
+            <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-text text-white font-semibold rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 group">
               <span>আরও পণ্য দেখুন</span>
               <Sparkles className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" strokeWidth={2} />
             </button>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* Decorative Background Pattern (Optional) */}

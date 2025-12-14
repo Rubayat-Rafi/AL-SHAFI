@@ -69,7 +69,7 @@ const GalleryImages = ({ product }) => {
       {/* Main Image Container */}
       <div className="relative group">
         <div
-          className="relative w-fit rounded-2xl overflow-hidden shadow-lg"
+          className="relative w-fit rounded-xl overflow-hidden shadow-lg"
           onMouseMove={handleMouseMove}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}

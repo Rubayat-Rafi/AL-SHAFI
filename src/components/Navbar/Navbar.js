@@ -99,7 +99,7 @@ const Navbar = () => {
 
               <button
                 onClick={() => setShowSearch((prev) => !prev)}
-                className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="text-text rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 <Search strokeWidth={2} />
               </button>
@@ -119,21 +119,21 @@ const Navbar = () => {
             <div className="flex items-center justify-end gap-3">
               {/* <Link
                 href="/admin-dashboard"
-                className="text-primary bg-primary/10 px-3 py-2 rounded-full max-lg:hidden"
+                className="text-text bg-primary/10 px-3 py-2 rounded-full max-lg:hidden"
               >
                 Dashboard
               </Link> */}
 
               <Link
                 href="/order/histories"
-                className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="text-text rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 <FolderClock strokeWidth={2} />
               </Link>
 
               <Link
                 href={user ? "/account/profile" : "/login"}
-                className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="text-text rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 {user ? (
                   <UserRound strokeWidth={2} />
@@ -144,14 +144,14 @@ const Navbar = () => {
 
               <button
                 onClick={() => setShowSearch((prev) => !prev)}
-                className="text-primary rounded-full lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="text-text rounded-full lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 <Search strokeWidth={2} />
               </button>
 
               <button
                 onClick={() => dispatch(addCartFlag(!cartFlag))}
-                className="relative text-primary hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="relative text-text hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 <ShoppingCart strokeWidth={2} />
                 <span className="absolute -top-2 -right-3 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
@@ -165,14 +165,19 @@ const Navbar = () => {
         <div className="py-3 px-8 md:px-8 hidden lg:block">
           <Container>
             <div className="flex flex-wrap space-x-6 items-center">
-              <h1>Menu: </h1>
+              <Link href={"/product/collections/all-products"}>
+                {" "}
+                All Products
+              </Link>
               {categories?.map((categ) => (
                 <Link
                   key={categ._id}
                   href={`/product/collections/${categ.slug}`}
-                  className="block  text-center transition transform hover:scale-105 duration-200"
+                  className="block text-center transition transform hover:scale-105 duration-200 font-normal"
                 >
-                  <p className="text-gray-700 font-medium">{categ?.name}</p>
+                  <p className="text-gray-700 font-normal font-montserrat">
+                    {categ?.name}
+                  </p>
                 </Link>
               ))}
             </div>
@@ -200,7 +205,9 @@ const Navbar = () => {
                 href={`/product/collections/${categ.slug}`}
                 className="block  text-center transition transform hover:scale-105 duration-200"
               >
-                <p className="text-gray-700 font-medium">{categ?.name}</p>
+                <p className="text-gray-700 font-normal font-montserrat">
+                  {categ?.name}
+                </p>
               </Link>
             ))}
           </div>
