@@ -212,6 +212,48 @@ export async function ReviewsBySlug({ slug }) {
     throw new Error(error?.message);
   }
 }
+
+
+export async function ReviewsTotalBySlug({ slug }) {
+  try {
+    await dbConnect();
+    const result = await Review.aggregate([
+      {
+        $match: {
+          slug,
+          status: true,
+        },
+      },
+      {
+        $group: {
+          _id: "$slug",
+          totalReviews: { $sum: 1 },
+          averageRating: { $avg: "$rating" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          totalReviews: 1,
+          averageRating: { $round: ["$averageRating", 1] },
+        },
+      },
+    ]);
+
+    return (
+      result[0] || {
+        totalReviews: 0,
+        averageRating: 0,
+      }
+    );
+  } catch (error) {
+    throw new Error(error?.message);
+  }
+}
+
+
+
+
 export async function ReviewsByStatus({ st }) {
   try {
     await dbConnect();
