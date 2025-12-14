@@ -121,7 +121,7 @@ const Banner = () => {
       </div>
 
       {/* Optional: Progress Bar */}
-      <div className="max-w-[1440px] mx-auto mt-4 hidden md:block">
+      {/* <div className="max-w-[1440px] mx-auto mt-4 hidden md:block">
         <div className="h-1 bg-border rounded-full overflow-hidden">
           <div
             className="h-full bg-linear-to-r from-primary to-primary-light transition-all duration-300 ease-linear"
@@ -130,7 +130,9 @@ const Banner = () => {
             }}
           />
         </div>
-      </div>
+      </div> */}
+
+
     </div>
   );
 };

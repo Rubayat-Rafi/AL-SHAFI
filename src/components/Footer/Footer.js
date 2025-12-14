@@ -47,14 +47,14 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-linear-to-b from-text to-[#1a1a1a] text-white/90">
+    <footer className="bg-[#1a1a1a] text-white/90">
       {/* Trust Badges Section */}
-      <div className="bg-primary/10 border-y border-primary/20">
-        <div className="max-w-[1440px] mx-auto px-4 xl:px-20 md:px-10 sm:px-6 py-6">
+      <div className="border-y border-primary/20">
+        <div className="max-w-[1440px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             <div className="flex items-center gap-3 justify-center">
-              <div className="bg-primary/20 p-2.5 rounded-xl">
-                <Truck className="w-5 h-5 text-primary" strokeWidth={2} />
+              <div className="bg-white/20 p-2.5 rounded-xl">
+                <Truck className="w-5 h-5" strokeWidth={2} />
               </div>
               <div>
                 <p className="font-semibold text-sm text-white">Fast Delivery</p>
@@ -63,8 +63,8 @@ const Footer = () => {
             </div>
 
             <div className="flex items-center gap-3 justify-center">
-              <div className="bg-primary/20 p-2.5 rounded-xl">
-                <Shield className="w-5 h-5 text-primary" strokeWidth={2} />
+              <div className="bg-white/20 p-2.5 rounded-xl">
+                <Shield className="w-5 h-5 text-white" strokeWidth={2} />
               </div>
               <div>
                 <p className="font-semibold text-sm text-white">Secure Payment</p>
@@ -73,8 +73,8 @@ const Footer = () => {
             </div>
 
             <div className="flex items-center gap-3 justify-center">
-              <div className="bg-primary/20 p-2.5 rounded-xl">
-                <Leaf className="w-5 h-5 text-primary" strokeWidth={2} />
+              <div className="bg-white/20 p-2.5 rounded-xl">
+                <Leaf className="w-5 h-5 text-white" strokeWidth={2} />
               </div>
               <div>
                 <p className="font-semibold text-sm text-white">100% Natural</p>
@@ -83,8 +83,8 @@ const Footer = () => {
             </div>
 
             <div className="flex items-center gap-3 justify-center">
-              <div className="bg-primary/20 p-2.5 rounded-xl">
-                <Clock className="w-5 h-5 text-primary" strokeWidth={2} />
+              <div className="bg-white/20 p-2.5 rounded-xl">
+                <Clock className="w-5 h-5 text-white" strokeWidth={2} />
               </div>
               <div>
                 <p className="font-semibold text-sm text-white">24/7 Support</p>
@@ -96,7 +96,7 @@ const Footer = () => {
       </div>
 
       {/* Main Footer Content */}
-      <div className="max-w-[1440px] mx-auto px-4 xl:px-20 md:px-10 sm:px-6 pt-12 pb-8">
+      <div className="max-w-[1440px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4 pt-12 pb-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10">
           {/* Brand / About - Larger Column */}
           <div className="lg:col-span-4">
@@ -139,10 +139,10 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="lg:col-span-2">
-            <h3 className="text-white font-bold text-base md:text-lg mb-4 flex items-center gap-2">
-              <ShoppingBag className="w-4 h-4 text-primary" strokeWidth={2.5} />
+            <h6 className="text-white/70 font-bold text-base md:text-lg mb-4 flex items-center gap-2">
+              <ShoppingBag className="w-4 h-4 text-white/70" strokeWidth={2.5} />
               Quick Links
-            </h3>
+            </h6>
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.name}>
@@ -159,10 +159,10 @@ const Footer = () => {
 
           {/* Customer Service */}
           <div className="lg:col-span-3">
-            <h3 className="text-white font-bold text-base md:text-lg mb-4 flex items-center gap-2">
-              <Heart className="w-4 h-4 text-primary" strokeWidth={2.5} />
+            <h6 className="text-white/70 font-bold text-base md:text-lg mb-4 flex items-center gap-2">
+              <Heart className="w-4 h-4 text-white/70" strokeWidth={2.5} />
               Customer Service
-            </h3>
+            </h6>
             <ul className="space-y-2.5">
               {customerService.map((link) => (
                 <li key={link.name}>
@@ -179,18 +179,18 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div className="lg:col-span-3">
-            <h3 className="text-white font-bold text-base md:text-lg mb-4 flex items-center gap-2">
-              <Phone className="w-4 h-4 text-primary" strokeWidth={2.5} />
+            <h6 className="text-white/70 font-bold text-base md:text-lg mb-4 flex items-center gap-2">
+              <Phone className="w-4 h-4 text-white/70" strokeWidth={2.5} />
               Contact Us
-            </h3>
+            </h6>
             <ul className="space-y-4">
               <li className="group">
                 <Link
                   href="mailto:support@alshafi.com"
                   className="flex items-start gap-3 text-sm text-white/70 hover:text-primary transition-colors duration-200"
                 >
-                  <div className="bg-primary/20 p-2 rounded-lg group-hover:bg-primary/30 transition-colors">
-                    <Mail className="w-4 h-4 text-primary" strokeWidth={2} />
+                  <div className="bg-white/20 p-2 rounded-lg group-hover:bg-primary/30 transition-colors">
+                    <Mail className="w-4 h-4 text-white/70" strokeWidth={2} />
                   </div>
                   <span className="pt-0.5">support@alshafi.com</span>
                 </Link>
@@ -201,8 +201,8 @@ const Footer = () => {
                   href="tel:+8801718099526"
                   className="flex items-start gap-3 text-sm text-white/70 hover:text-primary transition-colors duration-200"
                 >
-                  <div className="bg-primary/20 p-2 rounded-lg group-hover:bg-primary/30 transition-colors">
-                    <Phone className="w-4 h-4 text-primary" strokeWidth={2} />
+                  <div className="bg-white/20 p-2 rounded-lg group-hover:bg-primary/30 transition-colors">
+                    <Phone className="w-4 h-4 text-white/70" strokeWidth={2} />
                   </div>
                   <span className="pt-0.5">+880 171 8099 526</span>
                 </Link>
@@ -210,8 +210,8 @@ const Footer = () => {
 
               <li className="group">
                 <div className="flex items-start gap-3 text-sm text-white/70">
-                  <div className="bg-primary/20 p-2 rounded-lg">
-                    <MapPin className="w-4 h-4 text-primary" strokeWidth={2} />
+                  <div className="bg-white/20 p-2 rounded-lg">
+                    <MapPin className="w-4 h-4 text-white/70" strokeWidth={2} />
                   </div>
                   <span className="pt-0.5">
                     Dhaka, Bangladesh
@@ -250,16 +250,16 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
-        <div className="max-w-[1440px] mx-auto px-4 xl:px-20 md:px-10 sm:px-6 py-6">
+        <div className="max-w-[1440px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/60">
             <p>
               © {new Date().getFullYear()} Al-Shafi — All Rights Reserved.
             </p>
             <div className="flex gap-6">
-              <Link href="/privacy-policy" className="hover:text-primary transition-colors">
+              <Link href="/privacy-policy" className="hover:text-white/90 transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="hover:text-primary transition-colors">
+              <Link href="/terms" className="hover:text-white/90 transition-colors">
                 Terms of Service
               </Link>
             </div>

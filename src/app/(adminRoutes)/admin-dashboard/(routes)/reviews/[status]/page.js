@@ -49,7 +49,7 @@ const Reviews = async ({ params }) => {
           {/* Filter Card */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-              <div className="bg-gradient-to-r from-primary to-primary-dark p-4">
+              <div className="bg-linear-to-r from-primary to-primary-dark p-4">
                 <div className="flex items-center gap-2 text-white">
                   <Filter className="w-5 h-5" />
                   <h3 className="font-semibold">Filter Reviews</h3>

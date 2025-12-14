@@ -42,7 +42,7 @@ const CartSidebar = () => {
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 md:p-6 border-b border-border bg-gradient-to-r from-primary/5 to-accent/5">
+          <div className="flex items-center justify-between p-4 md:p-6 border-b border-border bg-linear-to-r from-primary/5 to-accent/5">
             <div className="flex items-center gap-2 md:gap-3">
               <div className="bg-primary/10 p-1.5 md:p-2 rounded-lg md:rounded-xl">
                 <ShoppingCart
@@ -152,7 +152,7 @@ const CartSidebar = () => {
           {carts.length > 0 && (
             <div className="border-t border-border p-4 md:p-6 bg-surface">
               {/* Subtotal */}
-              <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-lg md:rounded-xl p-3 md:p-4 mb-3 md:mb-4 border border-primary/20">
+              <div className="bg-linear-to-br from-primary/5 to-accent/5 rounded-lg md:rounded-xl p-3 md:p-4 mb-3 md:mb-4 border border-primary/20">
                 <div className="flex justify-between items-baseline">
                   <span className="text-sm md:text-base lg:text-lg font-semibold text-text">
                     Subtotal
@@ -170,7 +170,7 @@ const CartSidebar = () => {
               <Link
                 href="/product/checkout"
                 onClick={closeCart}
-                className="block w-full bg-gradient-to-r from-primary to-primary-dark text-white text-center py-3 md:py-4 rounded-lg md:rounded-xl font-semibold hover:from-primary-dark hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] mb-2 md:mb-3 group text-sm md:text-base"
+                className="block w-full bg-linear-to-r from-primary to-primary-dark text-white text-center py-3 md:py-4 rounded-lg md:rounded-xl font-semibold hover:from-primary-dark hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] mb-2 md:mb-3 group text-sm md:text-base"
               >
                 <span className="flex items-center justify-center gap-2">
                   Proceed to Checkout
