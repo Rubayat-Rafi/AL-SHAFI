@@ -92,7 +92,7 @@ const Navbar = () => {
                   e.stopPropagation();
                   dispatch(addSidebarFlag(!sidebarFlag))
                 }}
-                className="text-primary lg:hidden"
+                className="text-text lg:hidden"
               >
                 {sidebarFlag ? <X strokeWidth={2} /> : <Menu strokeWidth={2} />}
               </button>
