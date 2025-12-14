@@ -9,10 +9,6 @@ import { authHelper } from "@/helper/user/authHelper/authHelper";
 import Review from "@/models/Products/Review/Review";
 const JWT_SECRET = process.env.JWT_SECRET;
 
-
-
-
-
 export async function AllCategories() {
   try {
     await dbConnect();
@@ -34,7 +30,8 @@ export async function AllCategories() {
 export async function CategoryWiseProducts(slug) {
   try {
     await dbConnect();
-    const products = await Product.find({ category: slug })
+    const query = slug === "all-products" ? {} : { category: slug };
+    const products = await Product.find(query)
       .sort({ createdAt: -1 })
       .lean()
       .exec();
@@ -218,7 +215,7 @@ export async function ReviewsBySlug({ slug }) {
 export async function ReviewsByStatus({ st }) {
   try {
     await dbConnect();
-    const reviews = await Review.find({ status:st })
+    const reviews = await Review.find({ status: st })
       .sort({ createdAt: -1 })
       .lean()
       .exec();
