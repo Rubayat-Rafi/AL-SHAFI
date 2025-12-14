@@ -59,36 +59,36 @@ const Collections = async ({ params }) => {
     : 0;
 
   return (
-    <div className="bg-background ">
+    <div className="bg-background scroll-my-28">
       {/* Breadcrumb */}
-      <div className="py-6">
-        <div className="container mx-auto px-4 md:px-6 lg:px-10 py-4">
+      <div className="py-4 md:py-6">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-10">
           <div className="flex items-center gap-2 text-sm text-text-secondary">
-            <Link href="/" className="hover:text-primary transition-colors">
+            <Link href="/" className="text-sm lg:text-base transition-colors">
               Home
             </Link>
             <span>/</span>
-            <Link href="/shop" className="hover:text-primary transition-colors">
+            <Link href="/product/collections/all-products" className="text-sm lg:text-base transition-colors">
               Shop
             </Link>
             <span>/</span>
             <Link
-              href={`/category/${product.category}`}
-              className="hover:text-primary transition-colors"
+              href={`/product/collections/${product.category}`}
+              className="text-sm lg:text-base transition-colors"
             >
               {product.category}
             </Link>
             <span>/</span>
-            <span className="text-text font-medium">{product.productName}</span>
+            <span className="text-text font-normal text-sm lg:text-base">{product.productName}</span>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 md:px-6 lg:px-10 py-8 md:py-12">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-10 py-8 md:py-12">
         {/* Main Product Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-12">
           {/* Gallery Images */}
-          <div className="sticky top-24 self-start">
+          <div className=" lg:sticky lg:top-24 lg:self-start">
             <GalleryImages product={JSON.stringify(product)} />
           </div>
 
@@ -198,13 +198,8 @@ const Collections = async ({ params }) => {
             <div className="space-y-3">
               <AddCartBtn
                 product={JSON.stringify(product)}
-                styles="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-primary-dark text-white px-6 py-4 rounded-xl hover:from-primary-dark hover:to-primary transition-all duration-300 font-semibold text-base shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] group"
+                styles="w-full px-4 py-2 md:py-3 bg-text  text-white rounded-md md:rounded-lg hover:from-black transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
               >
-                <ShoppingCart
-                  className="w-5 h-5 group-hover:scale-110 transition-transform"
-                  strokeWidth={2}
-                />
-                <span>Add to Cart</span>
               </AddCartBtn>
 
               <div className="grid grid-cols-2 gap-3">

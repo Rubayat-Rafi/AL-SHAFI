@@ -8,6 +8,7 @@ import { ShoppingCart, Eye, Heart } from "lucide-react";
 import { useState } from "react";
 
 const ProductCard = ({ product }) => {
+  
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -43,10 +44,10 @@ const ProductCard = ({ product }) => {
       : 0;
 
   return (
-    <div className="group relative flex flex-col justify-between items-center p-4 md:p-5 border border-border rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 bg-surface overflow-hidden hover:-translate-y-1">
+    <div className="group relative flex flex-col justify-between items-center p-4 md:p-5 border border-border rounded-md md:rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 bg-surface overflow-hidden hover:-translate-y-1">
       {/* Discount Badge */}
       {discountPercentage > 0 && (
-        <div className="absolute top-3 left-3 z-10 bg-linear-to-br from-error to-[#e53e3e] text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-md">
+        <div className="absolute top-3 left-3 z-10 bg-linear-to-br from-error to-[#e53e3e] text-white px-3 py-1.5 rounded-full text-[10px] md:text-xs font-normal shadow-md">
           {discountPercentage}% OFF
         </div>
       )}
@@ -71,7 +72,7 @@ const ProductCard = ({ product }) => {
       <Link
         onClick={viewHistoryHandler}
         href={`/product/product-details/${parseProduct?.slug}`}
-        className="w-full h-48 md:h-56 relative mb-4 overflow-hidden rounded-xl  group/image"
+        className="w-full h-48 md:h-56 relative mb-2 md:mb-4 overflow-hidden rounded-md md:rounded-lg  group/image"
       >
         {/* Loading Skeleton */}
         {!isImageLoaded && (
@@ -104,13 +105,13 @@ const ProductCard = ({ product }) => {
           onClick={viewHistoryHandler}
           href={`/product/product-details/${parseProduct?.slug}`}
         >
-          <h3 className="text-sm md:text-base font-semibold text-text hover:text-primary transition-colors duration-200 line-clamp-2 min-h-12">
+          <h3 className="text-sm md:text-base font-normal text-text transition-colors duration-200 line-clamp-2 mb-2 md:mb-4">
             {parseProduct?.productName || "Unnamed Product"}
           </h3>
         </Link>
 
         {/* Price Section */}
-        <div className="flex items-center justify-center gap-2 flex-wrap">
+        <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
           <p className="font-bold text-base md:text-lg text-text">
             ৳{parseProduct?.offerPrice || 0}
           </p>
@@ -125,7 +126,7 @@ const ProductCard = ({ product }) => {
         {/* Savings Badge */}
         {parseProduct?.regularPrice &&
           parseProduct?.regularPrice > parseProduct?.offerPrice && (
-            <p className="text-text text-xs md:text-sm font-medium mt-1">
+            <p className="text-text text-xs md:text-sm font-medium mt-0.5 md:mt-1">
               Save ৳{parseProduct.regularPrice - parseProduct.offerPrice}
             </p>
           )}
@@ -147,7 +148,7 @@ const ProductCard = ({ product }) => {
       <div className="w-full">
         <AddCartBtn
           product={product}
-          styles="w-full px-4 py-3 bg-text  text-white rounded-xl hover:from-black transition-all duration-300 font-semibold text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
+          styles="w-full px-4 py-2 md:py-3 bg-text  text-white rounded-md md:rounded-lg hover:from-black transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
         >
         </AddCartBtn>
       </div>

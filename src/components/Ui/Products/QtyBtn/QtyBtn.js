@@ -60,7 +60,7 @@ const QtyBtn = ({ prod }) => {
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 w-full">
       {/* Price */}
-      <p className="font-bold text-primary text-sm md:text-base lg:text-lg whitespace-nowrap">
+      <p className="font-bold text-text text-sm md:text-base lg:text-lg whitespace-nowrap">
         ৳{(productPrice * quantity).toLocaleString()}
       </p>
 
