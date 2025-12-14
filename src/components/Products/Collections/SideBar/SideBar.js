@@ -11,7 +11,11 @@ const SideBar = async ({ slug }) => {
       <div className="flex flex-col space-y-2">
         <Link
           href="/product/collections/all-products"
-          className={`text-gray-700  transition-colors duration-200 px-3 py-2 rounded-md`}
+          className={`text-gray-700 ${
+            slug !== "all-products" && "hover:bg-slate-300/50"
+          }  ${
+            slug === "all-products" && "bg-green-600 text-white"
+          }   transition-colors duration-200 px-3 py-2 rounded-md`}
         >
           All Products
         </Link>
