@@ -15,7 +15,6 @@ export const useCart = () => {
 
   const addToCart = useCallback(
     (product) => {
-      console.log(product);
       if (!product) return;
       if (carts.some((item) => item.slug === product?.slug)) {
         toast.warning("You already added this item!");

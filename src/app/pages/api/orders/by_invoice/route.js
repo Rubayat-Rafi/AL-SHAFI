@@ -6,7 +6,6 @@ export async function GET(req) {
     await dbConnect();
     const url = new URL(req.url);
     const invoicesQuery = url.searchParams.get("invoices");
-    console.log(invoicesQuery)
     if (!invoicesQuery) {
       return NextResponse.json({
         message: "No slugs provided",

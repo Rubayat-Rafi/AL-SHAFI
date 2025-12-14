@@ -12,9 +12,8 @@ import QueryProducts from "../Products/QueryProducts/QueryProducts";
 import useAuthUser from "@/hooks/user/useAuthUser";
 import { useCart } from "@/hooks/carts/useCart";
 import { addCartFlag, addQuery } from "@/utils/redux/slices/slice";
+import useCategories from "@/hooks/products/categories/useCategories";
 // import Categories from "@/components/Categories/Categories";
-
-
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -22,6 +21,7 @@ const Navbar = () => {
   const { cartFlag } = useSelector((state) => state.slice);
   const { carts } = useCart();
   const { user } = useAuthUser();
+  const { categories } = useCategories();
 
   const [showSearch, setShowSearch] = useState(false);
 
@@ -82,7 +82,7 @@ const Navbar = () => {
                 <Image
                   src="/logo.png"
                   alt="logo"
-                  width={150}
+                  width={100}
                   height={50}
                   priority
                 />
@@ -126,14 +126,27 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-
-          <div>
-            {/* <Categories/> */}
-          </div>
         </Container>
+
+
+        <div className="py-3 px-8 md:px-8 bg-gray-100">
+          <Container>
+            <div className="flex flex-wrap space-x-6">
+              {categories?.map((categ) => (
+                <Link
+                  key={categ._id}
+                  href={`/product/collections/${categ.slug}`}
+                  className="block  text-center transition transform hover:scale-105 duration-200"
+                >
+                  <p className="text-gray-700 font-medium">{categ?.name}</p>
+                </Link>
+              ))}
+            </div>
+          </Container>
+        </div>
+
+
       </nav>
-
-
     </>
   );
 };
