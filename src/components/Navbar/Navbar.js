@@ -6,7 +6,14 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { ShoppingCart, UserRound, Search, Menu, X } from "lucide-react";
+import {
+  ShoppingCart,
+  UserRound,
+  Search,
+  Menu,
+  X,
+  FolderClock,
+} from "lucide-react";
 import Container from "../Container/Container";
 import QueryProducts from "../Products/QueryProducts/QueryProducts";
 import useAuthUser from "@/hooks/user/useAuthUser";
@@ -39,7 +46,7 @@ const Navbar = () => {
       <nav
         className={`${
           validPath && "hidden"
-        } sticky top-0 z-50 bg-background shadow-md`}
+        } sticky top-0 z-20 bg-background shadow-md`}
       >
         <div
           className={`absolute left-0 top-full w-full bg-background shadow-md transition-all duration-300 ease-in-out
@@ -97,18 +104,18 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center justify-end gap-3">
-              <Link
+              {/* <Link
                 href="/admin-dashboard"
                 className="text-primary bg-primary/10 px-3 py-2 rounded-full max-lg:hidden"
               >
                 Dashboard
-              </Link>
+              </Link> */}
 
               <Link
                 href="/order/histories"
-                className="text-primary bg-primary/10 px-3 py-2 rounded-full max-lg:hidden"
+                className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
               >
-                Histories
+                <FolderClock strokeWidth={2} />
               </Link>
 
               <Link

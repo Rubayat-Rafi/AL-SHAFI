@@ -52,7 +52,7 @@ const ProductCard = ({ product }) => {
       )}
 
       {/* Favorite Button */}
-      <button
+      {/* <button
         onClick={() => setIsFavorite(!isFavorite)}
         className="absolute top-3 right-3 z-10 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:scale-110 active:scale-95 group/fav"
         aria-label="Add to favorites"
@@ -65,13 +65,13 @@ const ProductCard = ({ product }) => {
           }`}
           strokeWidth={2}
         />
-      </button>
+      </button> */}
 
       {/* Product Image */}
       <Link
         onClick={viewHistoryHandler}
         href={`/product/product-details/${parseProduct?.slug}`}
-        className="w-full h-48 md:h-56 relative mb-4 overflow-hidden rounded-xl bg-background group/image"
+        className="w-full h-48 md:h-56 relative mb-4 overflow-hidden rounded-xl  group/image"
       >
         {/* Loading Skeleton */}
         {!isImageLoaded && (
@@ -91,7 +91,7 @@ const ProductCard = ({ product }) => {
 
         {/* Quick View Overlay */}
         <div className="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 group-hover/image:opacity-100 transition-all duration-300 flex items-center justify-center">
-          <div className="bg-white text-primary px-4 py-2 rounded-full font-semibold text-sm flex items-center gap-2 shadow-lg transform translate-y-4 group-hover/image:translate-y-0 transition-transform duration-300">
+          <div className="bg-white text-text px-4 py-2 rounded-full font-semibold text-sm flex items-center gap-2 shadow-lg transform translate-y-4 group-hover/image:translate-y-0 transition-transform duration-300">
             <Eye className="w-4 h-4" strokeWidth={2} />
             <span>Quick View</span>
           </div>
@@ -104,14 +104,14 @@ const ProductCard = ({ product }) => {
           onClick={viewHistoryHandler}
           href={`/product/product-details/${parseProduct?.slug}`}
         >
-          <h3 className="text-base md:text-lg font-semibold text-text hover:text-primary transition-colors duration-200 line-clamp-2 mb-2 min-h-12">
+          <h3 className="text-sm md:text-base font-semibold text-text hover:text-primary transition-colors duration-200 line-clamp-2 min-h-12">
             {parseProduct?.productName || "Unnamed Product"}
           </h3>
         </Link>
 
         {/* Price Section */}
         <div className="flex items-center justify-center gap-2 flex-wrap">
-          <p className="font-bold text-base md:text-lg text-primary">
+          <p className="font-bold text-base md:text-lg text-text">
             ৳{parseProduct?.offerPrice || 0}
           </p>
           {parseProduct?.regularPrice &&
@@ -125,15 +125,14 @@ const ProductCard = ({ product }) => {
         {/* Savings Badge */}
         {parseProduct?.regularPrice &&
           parseProduct?.regularPrice > parseProduct?.offerPrice && (
-            <p className="text-black text-xs md:text-sm font-medium mt-1">
-              Save ৳
-              {parseProduct.regularPrice - parseProduct.offerPrice}
+            <p className="text-text text-xs md:text-sm font-medium mt-1">
+              Save ৳{parseProduct.regularPrice - parseProduct.offerPrice}
             </p>
           )}
       </div>
 
       {/* Add to Cart Button */}
-      <div className="w-full">
+      {/* <div className="w-full">
         <AddCartBtn
           product={product}
           styles="w-full px-4 py-3 bg-gradient-to-r from-primary to-primary-dark text-white rounded-xl hover:from-primary-dark hover:to-primary transition-all duration-300 font-semibold text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
@@ -143,6 +142,13 @@ const ProductCard = ({ product }) => {
             strokeWidth={2}
           />
           <span>Add to Cart</span>
+        </AddCartBtn>
+      </div> */}
+      <div className="w-full">
+        <AddCartBtn
+          product={product}
+          styles="w-full px-4 py-3 bg-text  text-white rounded-xl hover:from-black transition-all duration-300 font-semibold text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
+        >
         </AddCartBtn>
       </div>
 

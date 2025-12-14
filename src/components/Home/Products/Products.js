@@ -19,10 +19,10 @@ const Products = async () => {
             <div className="h-0.5 w-12 md:w-16 bg-linear-to-l from-transparent to-primary rounded-full"></div>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text mb-3 tracking-tight">
+          <h2 className="text-3xl md:text-4xl  font-bold text-text mb-3 tracking-tight">
             আমাদের সকল পণ্য
           </h2>
-          <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-3">
+          <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-text mb-3">
             ALL PRODUCTS
           </p>
           <p className="text-text-secondary text-sm md:text-base max-w-2xl mx-auto">
