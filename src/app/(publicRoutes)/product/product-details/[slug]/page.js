@@ -20,6 +20,10 @@ import {
 import Link from "next/link";
 import SendReviews from "@/components/Products/ReviewSection/SendReviews/SendReviews";
 import ShowReviews from "@/components/Products/ReviewSection/ShowReviews/ShowReviews";
+import ShareButton from "@/components/ShareButton/ShareButton";
+
+
+
 const ProductDetails = async ({ params }) => {
   const { slug } = await params;
   const product = await FindAProduct(slug);

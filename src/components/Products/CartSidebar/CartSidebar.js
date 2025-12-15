@@ -131,7 +131,7 @@ const CartSidebar = () => {
                       onClick={closeCart}
                       className="block"
                     >
-                      <h3 className="font-semibold text-text line-clamp-2 hover:text-primary transition-colors text-xs md:text-sm lg:text-base mb-1">
+                      <h3 className="font-semibold text-text line-clamp-2 transition-colors text-xs md:text-sm lg:text-base mb-1">
                         {cart.productName}
                       </h3>
                     </Link>
