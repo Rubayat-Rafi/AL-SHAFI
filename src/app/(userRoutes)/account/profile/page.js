@@ -233,10 +233,13 @@ const Profile = async () => {
                 Edit Profile
               </button>
 
-              <button className="bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 flex items-center gap-2">
+              <Link
+                href={"/order/histories"}
+                className="bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 flex items-center gap-2"
+              >
                 <FolderClock />
                 Orders
-              </button>
+              </Link>
               <button className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold px-6 py-3 rounded-lg transition-colors duration-200 flex items-center gap-2">
                 <svg
                   className="w-5 h-5"
