@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useForm, useFieldArray } from "react-hook-form";
 import RichTextEditor from "@/components/RichTextEditor/RichTextEditor";
+import { X } from "lucide-react";
+
 const AddProduct = ({ setAddFlag }) => {
   const router = useRouter();
 
@@ -131,7 +133,6 @@ const AddProduct = ({ setAddFlag }) => {
     };
 
     try {
-    
       const res = await axios.post("/pages/api/products/product", payload);
       if (res.data.success) {
         toast.success("Product Added Successfully!");
@@ -145,273 +146,507 @@ const AddProduct = ({ setAddFlag }) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg space-y-6">
-      <h2 className="text-3xl font-bold text-center text-gray-800">
-        Add New Product
-      </h2>
+    <div className="relative max-w-6xl mx-auto p-8 bg-white rounded-md shadow-xl border border-gray-100">
+      {/* Header */}
+      <div className="text-center mb-4">
+        <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          Add New Product
+        </h2>
+        <p className="text-gray-600">
+          Fill in the details to add a new product to your store
+        </p>
+      </div>
 
-      <button
-        onClick={() => setAddFlag(false)}
-        className="text-red-500 text-sm"
-      >
-        Cancel
-      </button>
-
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* PRODUCT NAME */}
-        <input
-          {...register("productName", { required: true })}
-          placeholder="Product Name"
-          className="w-full p-3 border rounded"
-        />
-        {errors.productName && (
-          <p className="text-red-500 text-sm">Product Name is required</p>
-        )}
-
-        {/* CATEGORY */}
-        <select
-          {...register("category", { required: true })}
-          className="w-full p-3 border rounded"
+      {/* Cancel Button */}
+      <div className=" absolute right-5 top-5">
+        <button
+          onClick={() => setAddFlag(false)}
+          className="p-2 text-sm font-medium text-red-500 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors"
         >
-          <option value="">Select Category</option>
-          {categories.map((cat) => (
-            <option key={cat._id} value={cat.slug}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
+          <X />
+        </button>
+      </div>
 
-        {/* THUMBNAIL */}
-        <div className="flex gap-4">
-          <label>
-            <input
-              type="radio"
-              checked={thumbnailType === "upload"}
-              onChange={() => {
-                setThumbnailType("upload");
-                setValue("thumbnail", "");
-                setThumbnailPreview(null);
-              }}
-            />
-            Upload
-          </label>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="space-y-8 max-h-[50vh] overflow-y-scroll">
+          {/* Basic Information Card */}
+          <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+            <h3 className="text-xl font-semibold text-gray-800 mb-6 pb-3 border-b border-gray-200">
+              Basic Information
+            </h3>
 
-          <label>
-            <input
-              type="radio"
-              checked={thumbnailType === "url"}
-              onChange={() => {
-                setThumbnailType("url");
-                setValue("thumbnail", "");
-                setThumbnailPreview(null);
-              }}
-            />
-            URL
-          </label>
-        </div>
-
-        {thumbnailType === "upload" ? (
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => handleThumbnailUpload(e.target.files[0])}
-            className="w-full border p-2 rounded"
-          />
-        ) : (
-          <input
-            {...register("thumbnail")}
-            placeholder="Thumbnail URL"
-            onChange={(e) => setThumbnailPreview(e.target.value)}
-            className="w-full border p-2 rounded"
-          />
-        )}
-
-        {thumbnailPreview && (
-          <div className="w-32 h-32 relative border rounded overflow-hidden">
-            <Image src={thumbnailPreview} alt="preview" fill />
-          </div>
-        )}
-
-        {/* THUMB ALT */}
-        <input
-          {...register("thumbnailAlt")}
-          placeholder="Thumbnail Alt Text"
-          className="w-full border p-2 rounded"
-        />
-
-        {/* IMAGES */}
-        <div>
-          <h4 className="font-medium">Additional Images</h4>
-
-          {fields.map((img, i) => (
-            <div key={img.id} className="border p-3 rounded mb-4">
-              {/* Type Selector */}
-              <div className="flex gap-4 mb-2">
-                <label>
-                  <input
-                    type="radio"
-                    checked={img.type === "upload"}
-                    onChange={() =>
-                      update(i, { ...img, type: "upload", value: "", preview: "" })
-                    }
-                  />
-                  Upload
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Product Name */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Product Name *
                 </label>
-
-                <label>
-                  <input
-                    type="radio"
-                    checked={img.type === "url"}
-                    onChange={() =>
-                      update(i, { ...img, type: "url", value: "", preview: "" })
-                    }
-                  />
-                  URL
-                </label>
+                <input
+                  {...register("productName", { required: true })}
+                  placeholder="Enter product name"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
+                {errors.productName && (
+                  <p className="mt-2 text-sm text-red-600">
+                    Product Name is required
+                  </p>
+                )}
               </div>
 
-              {/* Input */}
-              {img.type === "upload" ? (
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) =>
-                    handleImageChange(i, "upload", e.target.files[0])
-                  }
-                  className="w-full border p-2 rounded"
-                />
+              {/* Category */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Category *
+                </label>
+                <select
+                  {...register("category", { required: true })}
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                >
+                  <option value="">Select Category</option>
+                  {categories.map((cat) => (
+                    <option key={cat._id} value={cat.slug}>
+                      {cat.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Thumbnail Card */}
+          <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+            <h3 className="text-xl font-semibold text-gray-800 mb-6 pb-3 border-b border-gray-200">
+              Product Thumbnail
+            </h3>
+
+            {/* Thumbnail Type Selector */}
+            <div className="flex gap-6 mb-6">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <div className="relative">
+                  <input
+                    type="radio"
+                    name="thumbnailType"
+                    checked={thumbnailType === "upload"}
+                    onChange={() => {
+                      setThumbnailType("upload");
+                      setValue("thumbnail", "");
+                      setThumbnailPreview(null);
+                    }}
+                    className="sr-only"
+                  />
+                  <div
+                    className={`w-5 h-5 rounded-full border-2 ${
+                      thumbnailType === "upload"
+                        ? "border-blue-600"
+                        : "border-gray-200"
+                    } flex items-center justify-center`}
+                  >
+                    {thumbnailType === "upload" && (
+                      <div className="w-2.5 h-2.5 bg-blue-600 rounded-full"></div>
+                    )}
+                  </div>
+                </div>
+                <span className="text-gray-700 font-medium">Upload Image</span>
+              </label>
+
+              <label className="flex items-center gap-2 cursor-pointer">
+                <div className="relative">
+                  <input
+                    type="radio"
+                    name="thumbnailType"
+                    checked={thumbnailType === "url"}
+                    onChange={() => {
+                      setThumbnailType("url");
+                      setValue("thumbnail", "");
+                      setThumbnailPreview(null);
+                    }}
+                    className="sr-only"
+                  />
+                  <div
+                    className={`w-5 h-5 rounded-full border-2 ${
+                      thumbnailType === "url"
+                        ? "border-blue-600"
+                        : "border-gray-200"
+                    } flex items-center justify-center`}
+                  >
+                    {thumbnailType === "url" && (
+                      <div className="w-2.5 h-2.5 bg-blue-600 rounded-full"></div>
+                    )}
+                  </div>
+                </div>
+                <span className="text-gray-700 font-medium">Use URL</span>
+              </label>
+            </div>
+
+            {/* Thumbnail Input */}
+            <div className="space-y-4">
+              {thumbnailType === "upload" ? (
+                <div className="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleThumbnailUpload(e.target.files[0])}
+                    className="w-full"
+                  />
+                  <p className="text-gray-500 text-sm mt-2">
+                    Click or drag to upload
+                  </p>
+                </div>
               ) : (
                 <input
-                  value={img.value}
-                  placeholder="Image URL"
-                  onChange={(e) =>
-                    handleImageChange(i, "url", e.target.value)
-                  }
-                  className="w-full border p-2 rounded"
+                  {...register("thumbnail")}
+                  placeholder="https://example.com/image.jpg"
+                  onChange={(e) => setThumbnailPreview(e.target.value)}
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                 />
               )}
 
-              {/* Alt Text */}
+              {/* Thumbnail Alt Text */}
               <input
-                {...register(`images.${i}.alt`)}
-                placeholder="Image Alt"
-                className="w-full border p-2 rounded mt-2"
+                {...register("thumbnailAlt")}
+                placeholder="Thumbnail alt text (for SEO)"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               />
 
               {/* Preview */}
-              {img.preview && (
-                <div className="w-20 h-20 relative border rounded mt-2 overflow-hidden">
-                  <Image src={img.preview} alt="preview" fill />
+              {thumbnailPreview && (
+                <div className="mt-4">
+                  <p className="text-sm font-medium text-gray-700 mb-2">
+                    Preview
+                  </p>
+                  <div className="w-40 h-40 relative border-2 border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                    <Image
+                      src={thumbnailPreview}
+                      alt="preview"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                 </div>
               )}
-
-              {/* Remove */}
-              {fields.length > 1 && (
-                <button
-                  type="button"
-                  className="text-red-500 mt-2"
-                  onClick={() => remove(i)}
-                >
-                  Remove
-                </button>
-              )}
             </div>
-          ))}
+          </div>
 
+          {/* Gallery Images Card */}
+          <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+            <h3 className="text-xl font-semibold text-gray-800 mb-6 pb-3 border-b border-gray-200">
+              Gallery Images
+            </h3>
+
+            <div className="space-y-4">
+              {fields.map((img, i) => (
+                <div
+                  key={img.id}
+                  className="bg-white rounded-xl border border-gray-200 p-5 space-y-4"
+                >
+                  {/* Image Type Selector */}
+                  <div className="flex gap-6">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <div className="relative">
+                        <input
+                          type="radio"
+                          checked={img.type === "upload"}
+                          onChange={() =>
+                            update(i, {
+                              ...img,
+                              type: "upload",
+                              value: "",
+                              preview: "",
+                            })
+                          }
+                          className="sr-only"
+                        />
+                        <div
+                          className={`w-4 h-4 rounded-full border-2 ${
+                            img.type === "upload"
+                              ? "border-blue-600"
+                              : "border-gray-200"
+                          } flex items-center justify-center`}
+                        >
+                          {img.type === "upload" && (
+                            <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                          )}
+                        </div>
+                      </div>
+                      <span className="text-gray-700 text-sm">Upload</span>
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <div className="relative">
+                        <input
+                          type="radio"
+                          checked={img.type === "url"}
+                          onChange={() =>
+                            update(i, {
+                              ...img,
+                              type: "url",
+                              value: "",
+                              preview: "",
+                            })
+                          }
+                          className="sr-only"
+                        />
+                        <div
+                          className={`w-4 h-4 rounded-full border-2 ${
+                            img.type === "url"
+                              ? "border-blue-600"
+                              : "border-gray-200"
+                          } flex items-center justify-center`}
+                        >
+                          {img.type === "url" && (
+                            <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                          )}
+                        </div>
+                      </div>
+                      <span className="text-gray-700 text-sm">URL</span>
+                    </label>
+                  </div>
+
+                  {/* Input Field */}
+                  {img.type === "upload" ? (
+                    <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 hover:border-blue-400 transition-colors">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) =>
+                          handleImageChange(i, "upload", e.target.files[0])
+                        }
+                        className="w-full"
+                      />
+                    </div>
+                  ) : (
+                    <input
+                      value={img.value}
+                      placeholder="Image URL"
+                      onChange={(e) =>
+                        handleImageChange(i, "url", e.target.value)
+                      }
+                      className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    />
+                  )}
+
+                  {/* Alt Text */}
+                  <input
+                    {...register(`images.${i}.alt`)}
+                    placeholder="Image alt text"
+                    className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  />
+
+                  {/* Preview and Actions */}
+                  <div className="flex items-center justify-between">
+                    {img.preview && (
+                      <div className="w-16 h-16 relative border border-gray-200 rounded-lg overflow-hidden">
+                        <Image
+                          src={img.preview}
+                          alt="preview"
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+
+                    {fields.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => remove(i)}
+                        className="px-3 py-1.5 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {/* Add Image Button */}
+              <button
+                type="button"
+                onClick={() =>
+                  append({ value: "", alt: "", type: "upload", preview: null })
+                }
+                className="w-full py-3.5 border-2 border-dashed border-gray-200 rounded-xl text-gray-600 hover:text-gray-900 hover:border-gray-400 transition-all hover:bg-gray-50"
+              >
+                + Add Another Image
+              </button>
+            </div>
+          </div>
+
+          {/* Pricing & Inventory Card */}
+          <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+            <h3 className="text-xl font-semibold text-gray-800 mb-6 pb-3 border-b border-gray-200">
+              Pricing & Inventory
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Offer Price */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Offer Price *
+                </label>
+                <div className="relative">
+                  {/* <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                    $
+                  </span> */}
+                  <input
+                    {...register("offerPrice", { required: true })}
+                    type="number"
+                    step="0.01"
+                    placeholder="0.00"
+                    className="w-full pl-8 pr-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Regular Price */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Regular Price *
+                </label>
+                <div className="relative">
+                  {/* <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                    $
+                  </span> */}
+                  <input
+                    {...register("regularPrice", { required: true })}
+                    type="number"
+                    step="0.01"
+                    placeholder="0.00"
+                    className="w-full pl-8 pr-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Stock */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Stock Quantity *
+                </label>
+                <input
+                  {...register("stock", { required: true })}
+                  type="number"
+                  placeholder="0"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Description Card */}
+          <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+              Product Description
+            </h3>
+            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+              <RichTextEditor
+                value={descriptions}
+                onChange={(v) => setValue("descriptions", v)}
+              />
+            </div>
+          </div>
+
+          {/* Product Settings Card */}
+          <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+            <h3 className="text-xl font-semibold text-gray-800 mb-6 pb-3 border-b border-gray-200">
+              Product Settings
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Status */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Product Status
+                </label>
+                <select
+                  {...register("status")}
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                >
+                  <option value="regular">Regular</option>
+                  <option value="onSale">On Sale</option>
+                  <option value="new">New</option>
+                  <option value="hot">Hot</option>
+                </select>
+              </div>
+
+              {/* Shipping */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Shipping
+                </label>
+                <select
+                  {...register("shipping_fee")}
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                >
+                  <option value="free">Free Shipping</option>
+                  <option value="paid">Paid Shipping</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* SEO Settings Card */}
+          <div className="bg-linear-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200">
+            <h3 className="text-xl font-semibold text-gray-800 mb-6 pb-3 border-b border-gray-200">
+              SEO Settings
+            </h3>
+
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  SEO Title
+                </label>
+                <input
+                  {...register("seoTitle")}
+                  placeholder="Optimized title for search engines"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  SEO Description
+                </label>
+                <textarea
+                  {...register("seoDescription")}
+                  rows={3}
+                  placeholder="Brief description for search results"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  SEO Keywords
+                </label>
+                <input
+                  {...register("seoKeywords")}
+                  placeholder="keyword1, keyword2, keyword3"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  SEO Image URL
+                </label>
+                <input
+                  {...register("seoImage")}
+                  placeholder="https://example.com/seo-image.jpg"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <div className="pt-6">
           <button
-            type="button"
-            onClick={() =>
-              append({ value: "", alt: "", type: "upload", preview: null })
-            }
-            className="bg-green-600 text-white px-4 py-2 rounded"
+            type="submit"
+            className="w-full py-4 bg-primary  text-background font-semibold  hover:bg-primary-dark  transition-all shadow-lg"
           >
-            Add Image
+            Add Product
           </button>
         </div>
-
-        {/* PRICES */}
-        <input
-          {...register("offerPrice", { required: true })}
-          type="number"
-          placeholder="Offer Price"
-          className="w-full border p-2 rounded"
-        />
-
-        <input
-          {...register("regularPrice", { required: true })}
-          type="number"
-          placeholder="Regular Price"
-          className="w-full border p-2 rounded"
-        />
-
-        {/* DESCRIPTION (RICH TEXT) */}
-        <RichTextEditor
-          value={descriptions}
-          onChange={(v) => setValue("descriptions", v)}
-        />
-
-        {/* STOCK */}
-        <input
-          {...register("stock", { required: true })}
-          type="number"
-          placeholder="Stock"
-          className="w-full border p-2 rounded"
-        />
-
-        {/* STATUS */}
-        <select {...register("status")} className="w-full border p-2 rounded">
-          <option value="regular">Regular</option>
-          <option value="onSale">On Sale</option>
-          <option value="new">New</option>
-          <option value="hot">Hot</option>
-        </select>
-
-        {/* SHIPPING */}
-        <select
-          {...register("shipping_fee")}
-          className="w-full border p-2 rounded"
-        >
-          <option value="free">Free</option>
-          <option value="paid">Paid</option>
-        </select>
-
-        {/* SEO SECTION */}
-        <div className="border p-4 rounded space-y-3">
-          <h3 className="font-semibold">SEO Settings</h3>
-
-          <input
-            {...register("seoTitle")}
-            placeholder="SEO Title"
-            className="w-full border p-2 rounded"
-          />
-
-          <textarea
-            {...register("seoDescription")}
-            rows={3}
-            placeholder="SEO Description"
-            className="w-full border p-2 rounded"
-          />
-
-          <input
-            {...register("seoKeywords")}
-            placeholder="SEO Keywords (comma separated)"
-            className="w-full border p-2 rounded"
-          />
-
-          <input
-            {...register("seoImage")}
-            placeholder="SEO Image URL"
-            className="w-full border p-2 rounded"
-          />
-        </div>
-
-        {/* SUBMIT */}
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700"
-        >
-          Add Product
-        </button>
       </form>
     </div>
   );
