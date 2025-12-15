@@ -13,7 +13,7 @@ export default function Loading() {
 
         {/* Optional: Central icon or message */}
         <svg
-          className="absolute w-8 h-8 text-primary"
+          className="absolute animate-spin w-8 h-8 text-primary"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

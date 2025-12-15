@@ -8,7 +8,6 @@ import Link from "next/link";
 const Layout = async ({ children, params }) => {
   const { slug } = await params;
 
-  // Format slug for display (remove hyphens, capitalize)
   const formatSlugName = (slug) => {
     return slug
       .split('-')
@@ -16,11 +15,10 @@ const Layout = async ({ children, params }) => {
       .join(' ');
   };
 
+
   return (
     <div className="bg-background">
-      {/* Hero Header */}
       <div className="bg-linear-to-r from-primary via-primary-dark to-primary relative overflow-hidden">
-        {/* Decorative Elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-20 w-96 h-96 bg-white rounded-full blur-3xl"></div>
