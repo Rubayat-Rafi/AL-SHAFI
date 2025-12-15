@@ -29,8 +29,8 @@ const SendReviews = ({ product }) => {
     },
   });
 
+  
   const rating = watch("rating");
-
   const onSubmit = async (formData) => {
     try {
       formData.slug = parseProduct.slug;
@@ -63,7 +63,7 @@ const SendReviews = ({ product }) => {
     }
   };
   return (
-    <div className="mt-10 border-t pt-6">
+    <div className="mt-10 border-t border-border pt-6">
       <h2 className="text-xl font-semibold mb-4">
         Customer Reviews ({reviews.length})
       </h2>

@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 import CartProducts from "@/components/Products/CartProducts/CartProducts";
 const Carts = () => {
   return (
-    <div className="">
+    <div>
       <CartProducts />
     </div>
   );

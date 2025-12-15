@@ -10,7 +10,6 @@ import {
   ShoppingCart,
   Truck,
   Shield,
-  Heart,
   Share2,
   Star,
   StarHalf,
@@ -63,7 +62,7 @@ const ProductDetails = async ({ params }) => {
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
   return (
-    <div className="bg-background scroll-my-28">
+    <div className="bg-background">
       {/* Breadcrumb */}
       <div className="py-4 md:py-6">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-10">
@@ -117,7 +116,7 @@ const ProductDetails = async ({ params }) => {
                   </span>
                 )}
               </div>
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-text leading-tight">
+              <h1 className="text-2xl md:text-3xl lg:text-3xl font-bold text-text leading-tight">
                 {product.productName}
               </h1>
 
@@ -163,12 +162,12 @@ const ProductDetails = async ({ params }) => {
             {/* Price Section */}
             <div className="bg-linear-to-br from-primary/5 to-accent/5 p-6 rounded-2xl border border-primary/20">
               <div className="flex items-center gap-4 mb-2">
-                <span className="text-3xl md:text-4xl font-bold text-primary">
+                <span className="text-2xl md:text-3xl font-bold text-text">
                   ৳{product.offerPrice.toLocaleString()}
                 </span>
                 {product.regularPrice > product.offerPrice && (
                   <>
-                    <span className="text-xl md:text-2xl line-through text-text-muted">
+                    <span className="text-lg md:text-xl line-through text-text-muted">
                       ৳{product.regularPrice.toLocaleString()}
                     </span>
                     <span className="px-3 py-1 bg-error text-white rounded-full text-sm font-bold">
@@ -189,7 +188,7 @@ const ProductDetails = async ({ params }) => {
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-surface p-4 rounded-xl border border-border">
                 <div className="flex items-center gap-2 mb-1">
-                  <Package className="w-4 h-4 text-primary" strokeWidth={2} />
+                  <Package className="w-4 h-4 text-text" strokeWidth={2} />
                   <span className="text-sm font-semibold text-text">
                     Stock Status
                   </span>
@@ -210,7 +209,7 @@ const ProductDetails = async ({ params }) => {
 
               <div className="bg-surface p-4 rounded-xl border border-border">
                 <div className="flex items-center gap-2 mb-1">
-                  <Truck className="w-4 h-4 text-primary" strokeWidth={2} />
+                  <Truck className="w-4 h-4 text-text" strokeWidth={2} />
                   <span className="text-sm font-semibold text-text">
                     Shipping
                   </span>
@@ -228,15 +227,17 @@ const ProductDetails = async ({ params }) => {
                 styles="w-full px-4 py-2 md:py-3 bg-text  text-white rounded-md md:rounded-lg hover:from-black transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
               ></AddCartBtn>
 
-              <div className="grid grid-cols-2 gap-3">
-                <button className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-border hover:border-primary text-text hover:text-primary rounded-xl transition-all duration-200 font-medium hover:bg-primary/5">
+              <div className="w-full">
+                {/* <button className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-border hover:border-primary text-text hover:text-primary rounded-xl transition-all duration-200 font-medium hover:bg-primary/5">
                   <Heart className="w-4 h-4" strokeWidth={2} />
                   <span className="hidden sm:inline">Wishlist</span>
-                </button>
-                <button className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-border hover:border-primary text-text hover:text-primary rounded-xl transition-all duration-200 font-medium hover:bg-primary/5">
+                </button> */}
+                {/* <button className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-border hover:border-primary text-text hover:text-primary rounded-xl transition-all duration-200 font-medium hover:bg-primary/5 w-full">
                   <Share2 className="w-4 h-4" strokeWidth={2} />
                   <span className="hidden sm:inline">Share</span>
-                </button>
+                </button> */}
+
+                <ShareButton />
               </div>
             </div>
 

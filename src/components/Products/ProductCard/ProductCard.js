@@ -4,7 +4,7 @@ import { addActiveFlag } from "@/utils/redux/slices/slice";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { ShoppingCart, Eye, Heart } from "lucide-react";
+import { Eye } from "lucide-react";
 import { useState } from "react";
 
 const ProductCard = ({ product }) => {
@@ -44,7 +44,7 @@ const ProductCard = ({ product }) => {
       : 0;
 
   return (
-    <div className="group relative flex flex-col justify-between items-center p-4 md:p-5 border border-border rounded-md md:rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 bg-surface overflow-hidden hover:-translate-y-1">
+    <div className="group relative flex flex-col justify-between items-center p-4 md:p-5 border border-border rounded md:rounded-md shadow-sm hover:shadow-xl transition-all duration-300 bg-surface overflow-hidden hover:-translate-y-1">
       {/* Discount Badge */}
       {discountPercentage > 0 && (
         <div className="absolute top-3 left-3 z-10 bg-linear-to-br from-error to-[#e53e3e] text-white px-3 py-1.5 rounded-full text-[10px] md:text-xs font-normal shadow-md">
@@ -72,7 +72,7 @@ const ProductCard = ({ product }) => {
       <Link
         onClick={viewHistoryHandler}
         href={`/product/product-details/${parseProduct?.slug}`}
-        className="w-full h-48 md:h-56 relative mb-2 md:mb-4 overflow-hidden rounded-md md:rounded-lg  group/image"
+        className="w-full h-48 md:h-56 relative mb-2 md:mb-4 overflow-hidden rounded md:rounded-md  group/image"
       >
         {/* Loading Skeleton */}
         {!isImageLoaded && (
@@ -148,14 +148,14 @@ const ProductCard = ({ product }) => {
       <div className="w-full">
         <AddCartBtn
           product={product}
-          styles="w-full px-4 py-2 md:py-3 bg-text  text-white rounded-md md:rounded-lg hover:from-black transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
+          styles="w-full px-4 py-2 md:py-3 bg-primary text-white rounded rounded-md hover:bg-primary-dark transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
         >
         </AddCartBtn>
       </div>
 
       {/* Organic Badge (Optional - add if product has organic property) */}
       {parseProduct?.isOrganic && (
-        <div className="absolute bottom-3 left-3 bg-primary-lighter text-primary-dark px-2 py-1 rounded-md text-xs font-semibold">
+        <div className="absolute bottom-3 left-3 bg-primary-lighter text-primary-dark px-2 py-1 rounded text-xs font-semibold">
           🌿 Organic
         </div>
       )}

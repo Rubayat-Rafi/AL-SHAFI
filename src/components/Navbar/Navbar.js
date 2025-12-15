@@ -20,7 +20,6 @@ import useAuthUser from "@/hooks/user/useAuthUser";
 import { useCart } from "@/hooks/carts/useCart";
 import {
   addCartFlag,
-  addCommonFlag,
   addQuery,
   addSidebarFlag,
 } from "@/utils/redux/slices/slice";
@@ -44,12 +43,14 @@ const Navbar = () => {
     window.addEventListener("click", handler);
     return () => window.removeEventListener("click", handler);
   }, [sidebarFlag]);
+
+
   return (
     <>
       {showSearch && (
         <div
           onClick={() => setShowSearch(false)}
-          className="fixed inset-0 bg-black/30 z-40"
+          className="fixed inset-0 bg-black/30 z-10"
         />
       )}
 
@@ -92,20 +93,20 @@ const Navbar = () => {
                   e.stopPropagation();
                   dispatch(addSidebarFlag(!sidebarFlag))
                 }}
-                className="text-text lg:hidden"
+                className="text-primary lg:hidden"
               >
                 {sidebarFlag ? <X strokeWidth={2} /> : <Menu strokeWidth={2} />}
               </button>
 
               <button
                 onClick={() => setShowSearch((prev) => !prev)}
-                className="text-text rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 <Search strokeWidth={2} />
               </button>
             </div>
             <div className="flex justify-center">
-              <Link href="/">
+              <Link href="/" >
                 <Image
                   src="/logo.png"
                   alt="logo"
@@ -119,21 +120,21 @@ const Navbar = () => {
             <div className="flex items-center justify-end gap-3">
               {/* <Link
                 href="/admin-dashboard"
-                className="text-text bg-primary/10 px-3 py-2 rounded-full max-lg:hidden"
+                className="text-primary bg-primary/10 px-3 py-2 rounded-full max-lg:hidden"
               >
                 Dashboard
               </Link> */}
 
-              <Link
+              {/* <Link
                 href="/order/histories"
-                className="text-text rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 <FolderClock strokeWidth={2} />
-              </Link>
+              </Link> */}
 
               <Link
                 href={user ? "/account/profile" : "/login"}
-                className="text-text rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 {user ? (
                   <UserRound strokeWidth={2} />
@@ -144,14 +145,14 @@ const Navbar = () => {
 
               <button
                 onClick={() => setShowSearch((prev) => !prev)}
-                className="text-text rounded-full lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="text-primary rounded-full lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 <Search strokeWidth={2} />
               </button>
 
               <button
                 onClick={() => dispatch(addCartFlag(!cartFlag))}
-                className="relative text-text hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="relative text-primary hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 <ShoppingCart strokeWidth={2} />
                 <span className="absolute -top-2 -right-3 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">

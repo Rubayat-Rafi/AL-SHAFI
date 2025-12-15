@@ -35,7 +35,7 @@ const Footer = () => {
     { name: "Return Policy", href: "/return-policy" },
     { name: "Privacy Policy", href: "/privacy-policy" },
     { name: "Terms & Conditions", href: "/terms" },
-    { name: "Track Your Order", href: "/track-order" },
+    { name: "Track Your Order", href: "/order/histories" },
     { name: "FAQ", href: "/faq" },
   ];
 

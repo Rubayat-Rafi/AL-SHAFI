@@ -11,8 +11,6 @@ const AreaSelections = ({ setSelectDta }) => {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedUpazila, setSelectedUpazila] = useState("");
 
-
-  
   const BDAPI = {
     division: "https://bdapi.vercel.app/api/v.1/division",
     districtByDivision: (divId) =>
@@ -100,14 +98,16 @@ const AreaSelections = ({ setSelectDta }) => {
     upazilas,
   ]);
   return (
-    <div className="space-y-4">
+    <div className="grid md:grid-cols-3 gap-4">
       {/* Division */}
-      <div className="">
-        <h2>Division</h2>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1.5">
+          Division *
+        </label>
         <select
           value={selectedDivision}
           onChange={(e) => setSelectedDivision(e.target.value)}
-          className="w-full px-4 py-2 border border-slate-300 rounded-lg outline-0"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition bg-white"
         >
           <option value="">Select Division</option>
           {divisions.map((div) => (
@@ -119,13 +119,14 @@ const AreaSelections = ({ setSelectDta }) => {
       </div>
 
       {/* District */}
-      <div className="">
-        <h2>District</h2>
-
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1.5">
+          District *
+        </label>
         <select
           value={selectedDistrict}
           onChange={(e) => setSelectedDistrict(e.target.value)}
-          className="w-full px-4 py-2 border border-slate-300 rounded-lg outline-0"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition bg-white disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed"
           disabled={!districts.length}
         >
           <option value="">Select District</option>
@@ -136,14 +137,16 @@ const AreaSelections = ({ setSelectDta }) => {
           ))}
         </select>
       </div>
-      {/* Upazila */}
-      <div className="">
-        <h2>Upazila</h2>
 
+      {/* Upazila */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1.5">
+          Upazila *
+        </label>
         <select
           value={selectedUpazila}
           onChange={(e) => setSelectedUpazila(e.target.value)}
-          className="w-full px-4 py-2 border border-slate-300 rounded-lg outline-0"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition bg-white disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed"
           disabled={!upazilas.length}
         >
           <option value="">Select Upazila</option>

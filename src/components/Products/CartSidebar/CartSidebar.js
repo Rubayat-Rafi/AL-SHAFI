@@ -44,14 +44,14 @@ const CartSidebar = () => {
           {/* Header */}
           <div className="flex items-center justify-between p-4 md:p-6 border-b border-border bg-linear-to-r from-primary/5 to-accent/5">
             <div className="flex items-center gap-2 md:gap-3">
-              <div className="bg-text/5 p-1.5 md:p-2 rounded-lg md:rounded-xl">
+              <div className="bg-primary/5 p-1.5 md:p-2 rounded md:rounded-md">
                 <ShoppingCart
-                  className="w-4 h-4 md:w-5 md:h-5 text-text"
+                  className="w-4 h-4 md:w-5 md:h-5 text-primary"
                   strokeWidth={2}
                 />
               </div>
               <div>
-                <h2 className="text-base md:text-xl lg:text-2xl font-bold text-text">
+                <h2 className="text-base md:text-xl lg:text-2xl font-bold text-text uppercase">
                   Shopping Cart
                 </h2>
                 <p className="text-[10px] md:text-xs text-text-secondary">
@@ -61,7 +61,7 @@ const CartSidebar = () => {
             </div>
             <button
               onClick={closeCart}
-              className="p-1.5 md:p-2.5 rounded-lg md:rounded-xl hover:bg-error/10 text-text hover:text-error transition-all duration-200 hover:scale-110 active:scale-95"
+              className="p-1.5 md:p-2.5 rounded md:rounded-md hover:bg-error/10 text-text hover:text-error transition-all duration-200 hover:scale-110 active:scale-95"
               aria-label="Close cart"
             >
               <X className="w-4 h-4 md:w-5 md:h-5" strokeWidth={2.5} />
@@ -73,9 +73,9 @@ const CartSidebar = () => {
             {/* Empty Cart */}
             {carts.length === 0 && (
               <div className="text-center py-12 md:py-20">
-                <div className="bg-text/5 rounded-full w-16 h-16 md:w-24 md:h-24 mx-auto mb-4 md:mb-6 flex items-center justify-center">
+                <div className="bg-primary/5 rounded-full w-16 h-16 md:w-24 md:h-24 mx-auto mb-4 md:mb-6 flex items-center justify-center">
                   <ShoppingBag
-                    className="w-8 h-8 md:w-12 md:h-12 text-text"
+                    className="w-8 h-8 md:w-12 md:h-12 text-primary"
                     strokeWidth={1.5}
                   />
                 </div>
@@ -85,13 +85,14 @@ const CartSidebar = () => {
                 <p className="text-xs md:text-sm text-text-secondary mb-4 md:mb-6 px-4">
                   আপনার কার্ট খালি। পণ্য যোগ করুন!
                 </p>
-                <button
+                <Link
                   onClick={closeCart}
-                  className="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-text text-white rounded-md md:rounded-xl hover:bg-primary-dark transition-all duration-200 font-medium text-sm md:text-base"
+                  href="product/collections/all-products"
+                  className="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-primary text-white rounded md:rounded-md hover:bg-primary-dark transition-all duration-200 font-medium text-sm md:text-base"
                 >
                   <ShoppingBag className="w-3.5 h-3.5 md:w-4 md:h-4" />
                   Start Shopping
-                </button>
+                </Link>
               </div>
             )}
 
@@ -170,7 +171,7 @@ const CartSidebar = () => {
               <Link
                 href="/product/checkout"
                 onClick={closeCart}
-                className="block w-full bg-text text-white text-center py-3 md:py-4 rounded-lg md:rounded-xl font-semibold hover:from-primary-dark hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] mb-2 md:mb-3 group text-sm md:text-base"
+                className="block w-full bg-primary text-white text-center py-3 md:py-4 rounded md:rounded-md font-semibold hover:bg-primary-dark hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] mb-2 md:mb-3 group text-sm md:text-base"
               >
                 <span className="flex items-center justify-center gap-2">
                   Proceed to Checkout
