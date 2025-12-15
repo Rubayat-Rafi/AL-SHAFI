@@ -19,7 +19,7 @@ export default function ShareButton() {
     <button
       onClick={copyUrl}
       className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-border
-      hover:border-primary text-text hover:text-primary rounded-xl transition-all
+      hover:border-primary text-text hover:text-primary  transition-all
       duration-200 w-full"
     >
       <Share2 className="w-4 h-4" strokeWidth={2} />

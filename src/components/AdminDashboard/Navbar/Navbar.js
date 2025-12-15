@@ -30,7 +30,7 @@ const Navbar = () => {
 
           {/* User Profile */}
           <button className="flex items-center gap-2 md:gap-3 px-2 md:px-3 py-2 hover:bg-gray-50 rounded-lg transition-colors">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-linear-to-br from-primary to-primary-dark rounded-full flex items-center justify-center">
               <User size={16} className="text-white" />
             </div>
             <div className="text-left hidden sm:block">
