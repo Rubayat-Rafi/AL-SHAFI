@@ -8,6 +8,7 @@ const initialState = {
   commonData: null,
   query: "",
   sidebarFlag: false,
+  sidebarOpen: false,
 };
 
 export const Slice = createSlice({
@@ -60,6 +61,9 @@ export const Slice = createSlice({
     addSidebarFlag: (state, action) => {
       state.sidebarFlag = action.payload;
     },
+    addSidebarOpen: (state, action) => {
+      state.sidebarOpen = action.payload
+    }
   },
 });
 
@@ -74,6 +78,7 @@ export const {
   addCommonData,
   addSidebarFlag,
   addQuery,
+  addSidebarOpen,
 } = Slice.actions;
 
 export default Slice.reducer;

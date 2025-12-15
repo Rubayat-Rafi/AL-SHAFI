@@ -13,6 +13,8 @@ import {
   X,
 } from "lucide-react";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { addSidebarOpen } from "@/utils/redux/slices/slice";
 
 const menuItems = [
   {
@@ -52,8 +54,10 @@ const menuItems = [
   },
 ];
 
-const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
+const SideBar = () => {
   const pathname = usePathname();
+  const dispatch = useDispatch();
+  const { sidebarOpen } = useSelector((state) => state.slice);
 
   return (
     <aside
@@ -64,20 +68,20 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
       <div className="flex flex-col h-full">
         {/* Logo & Close Button */}
         <div className="h-16 flex items-center justify-between px-6 border-b border-background/20">
-            <div className="">
-              <Link href="/" className="inline-block">
-                <Image
-                  src="/logo.png"
-                  alt="Al-Shafi Logo"
-                  width={110}
-                  height={50}
-                  priority
-                  className="object-contain brightness-0 invert hover:scale-105 transition-transform duration-300"
-                />
-              </Link>
-            </div>
+          <div className="">
+            <Link href="/" className="inline-block">
+              <Image
+                src="/logo.png"
+                alt="Al-Shafi Logo"
+                width={110}
+                height={50}
+                priority
+                className="object-contain brightness-0 invert hover:scale-105 transition-transform duration-300"
+              />
+            </Link>
+          </div>
           <button
-            onClick={() => setSidebarOpen(false)}
+            onClick={() => dispatch(addSidebarOpen(false))}
             className="lg:hidden p-1 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <X size={20} className="text-background hover:text-text" />
@@ -103,7 +107,11 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
                     }`}
                   >
                     <span
-                      className={active ? "text-text" : "text-surface group-hover:text-text"}
+                      className={
+                        active
+                          ? "text-text"
+                          : "text-surface group-hover:text-text"
+                      }
                     >
                       {item.icon}
                     </span>

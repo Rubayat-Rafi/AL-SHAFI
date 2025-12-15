@@ -1,12 +1,17 @@
+'use client'
+import { addSidebarOpen } from "@/utils/redux/slices/slice";
 import { Bell, Menu, User } from "lucide-react";
+import { useDispatch } from "react-redux";
 
-const Navbar = ({ setSidebarOpen }) => {
+const Navbar = () => {
+  const dispatch = useDispatch();
+
   return (
     <header className="sticky top-0 z-30 h-16 bg-white border-b border-gray-200">
       <div className="h-full px-4 md:px-6 flex items-center justify-between">
         {/* Left Section - Menu Button */}
         <button
-          onClick={() => setSidebarOpen(true)}
+          onClick={() => dispatch(addSidebarOpen(true))}
           className="lg:hidden p-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
         >
           <Menu size={24} />
