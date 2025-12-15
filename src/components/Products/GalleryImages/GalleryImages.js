@@ -69,7 +69,7 @@ const GalleryImages = ({ product }) => {
       {/* Main Image Container */}
       <div className="relative group">
         <div
-          className="relative w-fit rounded-xl overflow-hidden shadow-lg"
+          className="relative w-fit rounded-md overflow-hidden shadow-lg"
           onMouseMove={handleMouseMove}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -169,7 +169,7 @@ const GalleryImages = ({ product }) => {
             <button
               key={idx}
               onClick={() => handleThumbnailClick(img, idx)}
-              className={`relative aspect-square rounded-xl overflow-hidden transition-all duration-200 ${
+              className={`relative aspect-square rounded-md overflow-hidden transition-all duration-200 ${
                 selectedIndex === idx
                   ? "ring-2 ring-blue-500 ring-offset-2 shadow-lg scale-105"
                   : "ring-1 ring-gray-200 hover:ring-gray-300 hover:scale-105 shadow-sm"

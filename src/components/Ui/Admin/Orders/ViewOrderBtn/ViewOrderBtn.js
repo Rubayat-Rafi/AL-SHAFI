@@ -1,6 +1,7 @@
 "use client";
 
 import { addCommonData, addCommonFlag } from "@/utils/redux/slices/slice";
+import { Eye } from "lucide-react";
 import { useDispatch } from "react-redux";
 
 const ViewOrderBtn = ({ order }) => {
@@ -17,7 +18,7 @@ const ViewOrderBtn = ({ order }) => {
   };
   return (
     <div>
-      <button onClick={viewHandler}>View</button>
+      <button onClick={viewHandler}><Eye className="hover:text-primary-dark"/></button>
     </div>
   );
 };

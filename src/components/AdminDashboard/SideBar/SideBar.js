@@ -39,7 +39,7 @@ const menuItems = [
   },
   {
     title: "Categories",
-    href: "/admin-dashboard/categories",
+    href: "/admin-dashboard/categories" ,
     icon: <Layers size={20} />,
   },
   {
@@ -61,7 +61,7 @@ const SideBar = () => {
 
   return (
     <aside
-      className={`fixed left-0 top-0 h-screen bg-text border-r border-background/20 shadow-lg z-40 transition-transform duration-300 ease-in-out
+      className={`fixed left-0 top-0 h-screen bg-primary border-r border-background/20 shadow-lg z-40 transition-transform duration-300 ease-in-out
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
         lg:translate-x-0 w-64`}
     >

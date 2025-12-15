@@ -9,7 +9,7 @@ const Products = async () => {
   const totalProducts = products?.length || 0;
 
   return (
-    <div className="p-6">
+    <div className="">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
@@ -35,9 +35,9 @@ const Products = async () => {
       </div>
 
       {/* Content */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <div className="">
         {products?.length === 0 ? (
-          <div className="text-center py-12">
+          <div className="text-center py-12 bg-white rounded-lg border border-gray-200 overflow-hidden">
             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Package className="w-8 h-8 text-gray-400" />
             </div>
@@ -51,7 +51,7 @@ const Products = async () => {
           </div>
         ) : (
           <>
-            <div className="border-b border-gray-200 px-6 py-4">
+            {/* <div className="border-b border-gray-200 px-6 py-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-gray-700">
                   Product List
@@ -60,7 +60,7 @@ const Products = async () => {
                   {totalProducts} items
                 </span>
               </div>
-            </div>
+            </div> */}
             <ProductTable product={JSON.stringify(products)} />
           </>
         )}
