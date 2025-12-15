@@ -5,30 +5,27 @@ const SideBar = async ({ slug }) => {
   const categories = await AllCategories();
   return (
     <div>
-      <h2 className="text-xl font-semibold text-text mb-4 border-b border-gray-300 pb-2">
-        Categories
+      <h2 className="text-xl font-semibold text-text mb-4 pb-2">
+        Collection
       </h2>
       <div className="flex flex-col space-y-2">
         <Link
           href="/product/collections/all-products"
-          className={`text-gray-700 ${
-            slug !== "all-products" && "hover:bg-slate-300/50"
-          }  ${
-            slug === "all-products" && "bg-green-600 text-white"
-          }   transition-colors duration-200 px-3 py-2 rounded-md`}
-        >
+          className={` ${
+            slug !== "all-products" && "hover:bg-white"} ${
+            slug === "all-products" && "bg-primary text-white"
+          } transition-colors duration-200 px-3 py-2 rounded-md`} >
           All Products
         </Link>
         {categories?.map((cat) => (
           <Link
             key={cat._id}
             href={`/product/collections/${cat.slug}`}
-            className={`text-gray-700 ${
-              cat?.slug !== slug && "hover:bg-slate-300/50"
+            className={` ${
+              cat?.slug !== slug && "hover:bg-white"
             }  ${
-              cat?.slug === slug && "bg-green-600 text-white"
-            }   transition-colors duration-200 px-3 py-2 rounded-md`}
-          >
+              cat?.slug === slug && "bg-primary text-white"
+            }   transition-colors duration-200 px-3 py-2 rounded-md`}>
             {cat.name}
           </Link>
         ))}

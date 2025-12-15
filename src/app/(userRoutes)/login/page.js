@@ -12,9 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addActiveFlag } from "@/utils/redux/slices/slice";
 
 const Login = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const router = useRouter();
-  const {activeFlag} = useSelector((state)=>state?.slice)
+  const { activeFlag } = useSelector((state) => state?.slice);
 
   const {
     register,
@@ -31,7 +31,7 @@ const Login = () => {
       if (res?.data?.success) {
         toast.success(res?.data?.message);
         setLoading(false);
-        dispatch(addActiveFlag(!activeFlag))
+        dispatch(addActiveFlag(!activeFlag));
         router.push("/");
       } else {
         toast.warning(res?.data?.message);
@@ -44,8 +44,8 @@ const Login = () => {
   };
 
   return (
-    <div className="h-[85vh] flex items-center justify-center px-4">
-      <div className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-2xl w-full max-w-md animate-fadeIn">
+    <div className="flex items-center justify-center px-4 py-8 md:py-12">
+      <div className="bg-white/90 backdrop-blur-md p-6 md:p-8 rounded md:rounded-md shadow-2xl w-full max-w-md animate-fadeIn">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
           Welcome Back
         </h2>
@@ -99,11 +99,11 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-2.5 rounded-lg text-white text-lg font-semibold transition
+            className={`w-full py-2 md:py-3 rounded md:rounded-md text-white text-base md:text-lg font-medium transition 
               ${
                 loading
-                  ? "bg-accent cursor-not-allowed"
-                  : "bg-primary hover:bg-secondary"
+                  ? "bg-primary-lighter cursor-not-allowed"
+                  : "bg-primary hover:bg-primary-dark"
               }`}
           >
             {loading ? "Logging in..." : "Login"}

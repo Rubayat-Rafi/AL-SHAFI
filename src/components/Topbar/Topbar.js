@@ -27,7 +27,7 @@ const Topbar = () => {
             <div className="flex items-center gap-2">
               <Link
                 href="tel:+8801718099526"
-                className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full transition-all duration-300 ease-in-out group border border-white/20"
+                className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm px-4 py-1 rounded-full transition-all duration-300 ease-in-out group border border-white/20"
               >
                 <Phone className="w-3.5 h-3.5 text-white group-hover:rotate-12 transition-transform" />
                 <span className="text-white font-semibold text-sm lg:text-base">

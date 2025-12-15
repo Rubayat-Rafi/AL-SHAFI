@@ -69,7 +69,7 @@ const Histories = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className=" py-8 md:py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Your Orders</h1>
@@ -82,7 +82,7 @@ const Histories = () => {
           {fetchOrders.map((order, index) => (
             <div
               key={`${order.invoice}-${index}`}
-              className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200"
+              className="bg-white rounded md:rounded-md shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200"
             >
               <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
                 <div className="flex flex-wrap items-center justify-between gap-4">

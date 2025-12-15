@@ -36,7 +36,7 @@ const ReviewTable = ({ reviews }) => {
       <div className="hidden lg:block overflow-y-scroll h-[60vh]">
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
-            <tr className="bg-gradient-to-r from-gray-50 to-gray-100">
+            <tr className="bg-linear-to-r from-gray-50 to-gray-100">
               <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                 <div className="flex items-center gap-2">
                   <User className="w-4 h-4" />
@@ -79,7 +79,7 @@ const ReviewTable = ({ reviews }) => {
                 {/* Customer Info */}
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center gap-3">
-                    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center shadow-sm">
+                    <div className="shrink-0 w-10 h-10 bg-linear-to-br from-primary to-primary-dark rounded-full flex items-center justify-center shadow-sm">
                       <span className="text-white font-semibold text-sm">
                         {review.name.charAt(0).toUpperCase()}
                       </span>
@@ -176,7 +176,7 @@ const ReviewTable = ({ reviews }) => {
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center shadow-sm">
+                <div className="w-12 h-12 bg-linear-to-br from-primary to-primary-dark rounded-full flex items-center justify-center shadow-sm">
                   <span className="text-white font-bold text-base">
                     {review.name.charAt(0).toUpperCase()}
                   </span>

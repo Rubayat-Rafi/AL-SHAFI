@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import CartSidebar from "@/components/Products/CartSidebar/CartSidebar";
 import Sidebar from "@/components/Sidebar/Sidebar";
+import { ScrollTop } from "@/components/ScrollTop/ScrollTop";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -17,8 +18,8 @@ const inter = Inter({
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
-    weight: ["400", "500", "600", "700", "800", "900"],
-})
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata = {
   title: "Al-Shafi",
@@ -34,10 +35,11 @@ export default function RootLayout({ children }) {
             <Topbar />
             <Navbar />
           </>
-          <main className="min-h-[calc(100vh-352px)]">
+          <main className=" md:min-h-[calc(100vh-712px)]">
             {children}
+            <ScrollTop />
             <CartSidebar />
-            <Sidebar/>
+            <Sidebar />
           </main>
 
           <Footer />

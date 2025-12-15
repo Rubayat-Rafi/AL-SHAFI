@@ -1,6 +1,8 @@
 export const dynamic = "force-dynamic";
 import { AuthUser } from "@/actions/actions";
 import LogoutBtn from "@/components/UI/User/LogoutBtn/LogoutBtn";
+import { FolderClock } from "lucide-react";
+import Link from "next/link";
 
 const Profile = async () => {
   const user = await AuthUser();
@@ -69,15 +71,15 @@ const Profile = async () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="py-6 md:py-12 ">
+      <div className="max-w-4xl mx-auto px-4">
         {/* Profile Card */}
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-white rounded md:rounded-xl shadow-xl overflow-hidden">
           {/* Header Section with Gradient */}
-          <div className="bg-linear-to-r from-blue-600 to-indigo-600 h-32 relative">
+          <div className="bg-linear-to-r from-primary-dark to-primary h-32 relative">
             <div className="absolute -bottom-16 left-8">
               <div className="w-32 h-32 bg-white rounded-full shadow-lg flex items-center justify-center border-4 border-white">
-                <span className="text-4xl font-bold text-blue-600">
+                <span className="text-4xl font-bold text-text">
                   {getInitials(user.name)}
                 </span>
               </div>
@@ -109,14 +111,14 @@ const Profile = async () => {
                 </p>
               </div>
 
-              <div className="flex gap-3 mt-4 md:mt-0">
-                <span
+              <div className="flex gap-3 mt-4 md:mt-0 items-center">
+                {/* <span
                   className={`px-4 py-2 rounded-lg text-sm font-semibold border ${getRoleBadgeColor(
                     user.role
                   )}`}
                 >
                   {user.role}
-                </span>
+                </span> */}
                 <span
                   className={`px-4 py-2 rounded-lg text-sm font-semibold ${
                     user.isActive
@@ -132,10 +134,10 @@ const Profile = async () => {
             {/* Information Grid */}
             <div className="grid md:grid-cols-2 gap-6 mt-8">
               {/* Account Information */}
-              <div className="bg-linear-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+              <div className="bg-primary/5 rounded md:rounded-md p-6 border border-primary/30">
                 <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                   <svg
-                    className="w-5 h-5 text-blue-600"
+                    className="w-5 h-5 text-primary"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -162,20 +164,20 @@ const Profile = async () => {
                       {user.email}
                     </p>
                   </div>
-                  <div>
+                  {/* <div>
                     <p className="text-sm text-gray-600 mb-1">Role</p>
                     <p className="text-base font-semibold text-gray-800 capitalize">
                       {user.role}
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
               {/* Account Activity */}
-              <div className="bg-linear-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100">
+              <div className="bg-primary/5 rounded md:rounded-md p-6 border border-primary/30">
                 <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                   <svg
-                    className="w-5 h-5 text-purple-600"
+                    className="w-5 h-5 text-primary"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -214,7 +216,7 @@ const Profile = async () => {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-3 mt-8">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 flex items-center gap-2">
+              <button className="bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 flex items-center gap-2">
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -230,27 +232,10 @@ const Profile = async () => {
                 </svg>
                 Edit Profile
               </button>
-              <button className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold px-6 py-3 rounded-lg transition-colors duration-200 flex items-center gap-2">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                Account Settings
+
+              <button className="bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 flex items-center gap-2">
+                <FolderClock />
+                Orders
               </button>
               <button className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold px-6 py-3 rounded-lg transition-colors duration-200 flex items-center gap-2">
                 <svg
@@ -268,8 +253,8 @@ const Profile = async () => {
                 </svg>
                 Change Password
               </button>
-              <div >
-                    <LogoutBtn/>
+              <div>
+                <LogoutBtn />
               </div>
             </div>
           </div>

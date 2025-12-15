@@ -52,8 +52,8 @@ const Register = () => {
   };
 
   return (
-    <div className="h-[90vh] flex items-center justify-center px-4">
-      <div className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-2xl w-full max-w-md animate-fadeIn">
+    <div className="flex items-center justify-center px-4 py-8 md:py-12">
+      <div className="bg-white/90 backdrop-blur-md p-6 md:p-8 rounded md:rounded-md shadow-2xl w-full max-w-md animate-fadeIn">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">
           Create Your Account
         </h2>
@@ -71,7 +71,7 @@ const Register = () => {
               type="text"
               placeholder="John Doe"
               {...register("fullName", { required: true })}
-              className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
             {errors.fullName && (
               <span className="text-red-500 text-sm">
@@ -89,7 +89,7 @@ const Register = () => {
               type="email"
               placeholder="example@mail.com"
               {...register("email", { required: true })}
-              className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
             {errors.email && (
               <span className="text-red-500 text-sm">Email is required</span>
@@ -106,7 +106,7 @@ const Register = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter password"
                 {...register("password", { required: true, minLength: 6 })}
-                className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 pr-12"
+                className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary pr-12"
               />
               <button
                 type="button"
@@ -133,7 +133,7 @@ const Register = () => {
                 type={showConfirm ? "text" : "password"}
                 placeholder="Retype password"
                 {...register("confirmPassword", { required: true })}
-                className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 pr-12"
+                className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary pr-12"
               />
               <button
                 type="button"
@@ -154,10 +154,10 @@ const Register = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-2.5 rounded-lg text-white text-lg font-semibold transition ${
+            className={`w-full py-2 md:py-3 rounded md:rounded-md text-white text-base md:text-lg font-medium transition ${
               loading
-                ? "bg-blue-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
+                ? "bg-primary-lighter cursor-not-allowed"
+                : "bg-primary hover:bg-primary-dark"
             }`}
           >
             {loading ? "Registering..." : "Register"}
@@ -169,7 +169,7 @@ const Register = () => {
           Already have an account?{" "}
           <a
             href="/login"
-            className="text-blue-600 hover:underline font-medium"
+            className=" text-secondary hover:underline font-medium"
           >
             Login
           </a>

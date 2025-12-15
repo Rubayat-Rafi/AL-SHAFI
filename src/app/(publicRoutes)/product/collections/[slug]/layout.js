@@ -17,7 +17,7 @@ const Layout = async ({ children, params }) => {
   };
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="bg-background">
       {/* Hero Header */}
       <div className="bg-linear-to-r from-primary via-primary-dark to-primary relative overflow-hidden">
         {/* Decorative Elements */}
@@ -27,14 +27,14 @@ const Layout = async ({ children, params }) => {
         </div>
 
         <Container>
-          <div className="relative py-12 md:py-16">
+          <div className="relative py-6 md:py-10">
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-sm text-white/80 mb-4">
               <Link href="/" className="hover:text-white transition-colors">
                 Home
               </Link>
               <ChevronRight className="w-4 h-4" />
-              <Link href="/collections" className="hover:text-white transition-colors">
+              <Link href="/product/collections/all-products" className="hover:text-white transition-colors">
                 Collections
               </Link>
               <ChevronRight className="w-4 h-4" />
@@ -63,10 +63,10 @@ const Layout = async ({ children, params }) => {
       <Container>
         <div className="flex flex-col lg:flex-row gap-6 md:gap-8 py-8 md:py-12">
           {/* Sidebar */}
-          <aside className="w-full lg:w-72 xl:w-80">
+          <aside className="w-full max-lg:hidden lg:w-64 xl:w-72">
             <div className="lg:sticky lg:top-24">
               {/* Mobile: Collapsible, Desktop: Always visible */}
-              <div className="bg-surface rounded-2xl shadow-md border border-border p-5 md:p-6">
+              <div className="">
                 <h2 className="text-lg font-bold text-text mb-4 flex items-center gap-2">
                   <div className="w-1 h-6 bg-primary rounded-full"></div>
                   Filter Products

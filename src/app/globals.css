@@ -5,8 +5,8 @@
   --background: #fafaf8;
   --surface: #ffffff;
   --text: #1a1a1a;
-  --text-secondary: #718096;
-  --text-muted: #a0aec0;
+  --text-secondary: #505760;
+  --text-muted: #6a6e74;
   
   /* Brand Colors - Fresh & Natural */
   --primary: #7ea33e;
@@ -32,7 +32,7 @@
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
   
   /* Borders */
-  --border-color: #e2e8f0;
+  --border-color: #eeeeee;
   --border-radius-sm: 6px;
   --border-radius-md: 10px;
   --border-radius-lg: 16px;

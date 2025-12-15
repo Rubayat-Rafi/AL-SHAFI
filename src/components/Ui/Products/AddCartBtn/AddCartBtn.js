@@ -8,6 +8,9 @@ const AddCartBtn = ({ product, styles }) => {
   const { activeFlag, cartFlag } = useSelector((state) => state?.slice);
   const parseProduct = JSON.parse(product);
   const { addToCart } = useCart();
+
+
+  
   return (
     <button
       onClick={() => {
