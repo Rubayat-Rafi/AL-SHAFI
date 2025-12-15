@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 import GalleryImages from "@/components/Products/GalleryImages/GalleryImages";
 import RelatedProducts from "@/components/Products/RelatedProducts/RelatedProducts";
-import { FindAProduct } from "@/actions/actions";
+import { FindAProduct, ReviewsTotalBySlug } from "@/actions/actions";
 import AddCartBtn from "@/components/UI/Products/AddCartBtn/AddCartBtn";
 import ProductSeenHistories from "@/components/Products/ProductSeenHistories/ProductSeenHistories";
 import ConverterToHtml from "@/components/ConverterToHtml/ConverterToHtml";
@@ -12,6 +12,7 @@ import {
   Shield,
   Share2,
   Star,
+  StarHalf,
   Check,
   Tag,
   Leaf,
@@ -19,12 +20,10 @@ import {
 import Link from "next/link";
 import SendReviews from "@/components/Products/ReviewSection/SendReviews/SendReviews";
 import ShowReviews from "@/components/Products/ReviewSection/ShowReviews/ShowReviews";
-import ShareButton from "@/components/ShareButton/ShareButton";
-
-const Collections = async ({ params }) => {
+const ProductDetails = async ({ params }) => {
   const { slug } = await params;
   const product = await FindAProduct(slug);
-
+  const { totalReviews, averageRating } = await ReviewsTotalBySlug({ slug });
   if (!product) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background">
@@ -57,6 +56,10 @@ const Collections = async ({ params }) => {
           100
       )
     : 0;
+
+  const fullStars = Math.floor(averageRating);
+  const hasHalfStar = averageRating % 1 !== 0;
+  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
   return (
     <div className="bg-background">
@@ -117,23 +120,41 @@ const Collections = async ({ params }) => {
                 {product.productName}
               </h1>
 
-              {/* Rating (if available) */}
               <div className="flex items-center gap-2 mt-3">
                 <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
+                  {[...Array(fullStars)].map((_, i) => (
                     <Star
-                      key={i}
-                      className={`w-4 h-4 ${
-                        i < 4
-                          ? "fill-accent-orange text-accent-orange"
-                          : "text-border"
-                      }`}
+                      key={`full-${i}`}
+                      className="fill-accent-orange text-accent-orange"
+                      width={16}
+                      height={16}
+                      strokeWidth={1.5}
+                    />
+                  ))}
+
+                  {/* Half Star */}
+                  {hasHalfStar && (
+                    <StarHalf
+                      className="fill-accent-orange text-accent-orange"
+                      width={16}
+                      height={16}
+                      strokeWidth={1.5}
+                    />
+                  )}
+
+                  {/* Empty Stars */}
+                  {[...Array(emptyStars)].map((_, i) => (
+                    <Star
+                      key={`empty-${i}`}
+                      className="text-border"
+                      width={16}
+                      height={16}
                       strokeWidth={1.5}
                     />
                   ))}
                 </div>
                 <span className="text-sm text-text-secondary">
-                  (4.0) 128 reviews
+                  ({averageRating}) {totalReviews} reviews
                 </span>
               </div>
             </div>
@@ -203,7 +224,7 @@ const Collections = async ({ params }) => {
             <div className="space-y-3">
               <AddCartBtn
                 product={JSON.stringify(product)}
-                styles="w-full px-4 py-2 md:py-3 bg-primary  text-white rounded md:rounded-md hover:bg-primary-dark transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
+                styles="w-full px-4 py-2 md:py-3 bg-text  text-white rounded-md md:rounded-lg hover:from-black transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
               ></AddCartBtn>
 
               <div className="w-full">
@@ -279,4 +300,4 @@ const Collections = async ({ params }) => {
   );
 };
 
-export default Collections;
+export default ProductDetails;
