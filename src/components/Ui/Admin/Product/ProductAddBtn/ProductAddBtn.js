@@ -5,7 +5,7 @@ const ProductAddBtn = () => {
   const [addFalg, setAddFlag] = useState(false);
   return (
     <div>
-      <button onClick={() => setAddFlag(true)}>Add+</button>
+      <button onClick={() => setAddFlag(true)} className="bg-primary border border-primary px-4 py-2 rounded-md text-background font-medium">Add + </button>
       <div
         className={`${
           !addFalg && "hidden"

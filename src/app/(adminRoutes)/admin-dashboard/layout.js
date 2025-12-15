@@ -10,25 +10,16 @@ const Layout = ({ children }) => {
       <div className="flex">
         {/* Sidebar */}
         <SideBar />
-
         {/* Main Content */}
         <main className="flex-1 lg:ml-64 w-full">
           {/* Navbar */}
           <Navbar />
-
           {/* Page Content */}
           <div className="p-4 md:p-6">{children}</div>
         </main>
       </div>
-
       {/* Overlay for mobile */}
       <SidebarOverlay />
-      {/* {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )} */}
     </div>
   );
 };

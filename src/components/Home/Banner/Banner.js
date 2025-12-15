@@ -31,6 +31,7 @@ const Banner = () => {
   return (
     <div className="max-w-[1440px] mx-auto xl:px-20 md:px-10 sm:px-4 px-4 py-4 md:py-6">
       <div className="grid grid-cols-1 lg:grid-cols-10 gap-3 md:gap-4 w-full">
+        
         {/* Main Banner */}
         <div 
           className="relative w-full h-[200px] sm:h-[350px] md:h-[400px] lg:h-[450px] xl:h-[500px] lg:col-span-8 overflow-hidden rounded md:rounded-md shadow-lg group"
@@ -97,7 +98,7 @@ const Banner = () => {
         {/* Side Banners */}
         <div className="w-full grid grid-cols-2 lg:grid-cols-1 gap-3 md:gap-4 lg:col-span-2">
           {/* Small Image 1 */}
-          <div className="relative w-full h-[170px] md:h-[195px] lg:h-[218px] xl:h-[243px] overflow-hidden rounded-md md:rounded-xl shadow-md group">
+          <div className="relative w-full h-[170px] md:h-[195px] lg:h-[218px] xl:h-[243px] overflow-hidden rounded md:rounded-md shadow-md group">
             <Image
               src="/post1.jpg"
               alt="Promotional banner 1"
@@ -108,7 +109,7 @@ const Banner = () => {
           </div>
 
           {/* Small Image 2 */}
-          <div className="relative w-full h-[170px] md:h-[195px] lg:h-[218px] xl:h-[243px] overflow-hidden rounded-md md:rounded-xl shadow-md group">
+          <div className="relative w-full h-[170px] md:h-[195px] lg:h-[218px] xl:h-[243px] overflow-hidden rounded md:rounded-md shadow-md group">
             <Image
               src="/post2.webp"
               alt="Promotional banner 2"

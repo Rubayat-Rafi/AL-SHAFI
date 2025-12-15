@@ -148,7 +148,7 @@ const ProductCard = ({ product }) => {
       <div className="w-full">
         <AddCartBtn
           product={product}
-          styles="w-full px-4 py-2 md:py-3 bg-primary text-white rounded rounded-md hover:bg-primary-dark transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
+          styles="w-full px-4 py-2 md:py-3 bg-primary text-white  hover:bg-primary-dark transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
         >
         </AddCartBtn>
       </div>
