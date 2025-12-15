@@ -98,7 +98,7 @@ const SideBar = () => {
                 <li key={i}>
                   <Link
                     href={item.href}
-                    onClick={() => setSidebarOpen(false)}
+                    onClick={() => dispatch(addSidebarOpen(false))}
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group
                     ${
                       active
