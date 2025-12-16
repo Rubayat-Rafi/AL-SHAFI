@@ -48,6 +48,11 @@ const menuItems = [
     icon: <MessageSquare size={20} />,
   },
   {
+    title: "Banner",
+    href: "/admin-dashboard/banner-management",
+    icon: <MessageSquare size={20} />,
+  },
+  {
     title: "Settings",
     href: "/admin-dashboard/settings",
     icon: <Settings size={20} />,

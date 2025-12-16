@@ -7,6 +7,7 @@ import * as jose from "jose";
 import User from "@/models/User/User";
 import { authHelper } from "@/helper/user/authHelper/authHelper";
 import Review from "@/models/Products/Review/Review";
+import Banner from "@/models/Banner/Banner";
 const JWT_SECRET = process.env.JWT_SECRET;
 
 export async function AllCategories() {
@@ -213,7 +214,6 @@ export async function ReviewsBySlug({ slug }) {
   }
 }
 
-
 export async function ReviewsTotalBySlug({ slug }) {
   try {
     await dbConnect();
@@ -251,9 +251,6 @@ export async function ReviewsTotalBySlug({ slug }) {
   }
 }
 
-
-
-
 export async function ReviewsByStatus({ st }) {
   try {
     await dbConnect();
@@ -266,6 +263,20 @@ export async function ReviewsByStatus({ st }) {
       _id: review._id.toString(),
     }));
     return formattedReviews;
+  } catch (error) {
+    throw new Error(error?.message);
+  }
+}
+
+export async function Banners() {
+  try {
+    await dbConnect();
+    const banners = await Banner.find().sort({ createdAt: -1 }).lean().exec();
+    const formattedBanners = banners.map((banner) => ({
+      ...banner,
+      _id: banner._id.toString(),
+    }));
+    return formattedBanners;
   } catch (error) {
     throw new Error(error?.message);
   }

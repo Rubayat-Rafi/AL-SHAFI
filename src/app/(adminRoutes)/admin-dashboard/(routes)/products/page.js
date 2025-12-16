@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 import ProductTable from "@/components/AdminDashboard/Products/Product/ProductTable/ProductTable";
-import ProductAddBtn from "@/components/UI/Admin/Product/ProductAddBtn/ProductAddBtn.js";
+import ProductAddBtn from "@/components/Ui/Admin/Product/ProductAddBtn/ProductAddBtn";
 import { AllProducts } from "@/actions/actions";
 import { Package, Search } from "lucide-react";
 

@@ -161,7 +161,7 @@ export async function POST(req) {
 export async function GET() {
   try {
     await dbConnect();
-    const finddAllProducts = await Product.find();
+    const finddAllProducts = await Product.find().lean().exec();
     return NextResponse.json({
       message: "Products found!",
       success: true,

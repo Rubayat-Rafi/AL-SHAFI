@@ -15,11 +15,7 @@ const Checkout = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { activeFlag } = useSelector((state) => state?.slice);
-
-  // 👉 GET CARTS FROM LOCAL STORAGE (via hook)
   const { carts } = useCart();
-
-  // 👉 Build quantity map from carts data
   const quantityMap = useMemo(() => {
     const q = {};
     carts?.forEach((c) => {
@@ -28,7 +24,6 @@ const Checkout = () => {
     return q;
   }, [carts]);
 
-  // 👉 Calculate totals
   const subtotal = useMemo(() => {
     return carts?.reduce((sum, p) => {
       const price = p.offerPrice || p.price || 0;
@@ -37,14 +32,10 @@ const Checkout = () => {
     }, 0);
   }, [carts]);
 
-  const shippingTotal = subtotal > 0 ? 120 : 0; // your logic
+  const shippingTotal = subtotal > 0 ? 120 : 0; 
   const grandTotal = subtotal + shippingTotal;
-
-  // =====================================================================================
-  // FORM STATES
   const [selectDta, setSelectDta] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cod");
-
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -74,13 +65,13 @@ const Checkout = () => {
 
     const payload = {
       ...formData,
-      carts: carts,
+      items: carts,
       flag: "steadFast",
       fixedAddress,
       totals: { subtotal, shippingTotal, grandTotal },
     };
 
-    const { data } = await axios.post("/pages/api/orders/bulk-order", payload);
+    const { data } = await axios.post("/pages/api/orders/create-order", payload);
 
     if (data?.success) {
       toast.success("Order created");

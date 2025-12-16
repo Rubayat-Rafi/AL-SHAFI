@@ -12,13 +12,10 @@ export async function POST(req) {
       district,
       city,
       note,
-      flag,
-      products,
+      items,
       fixedAddress,
       totals,
     } = await req.json();
-
-
     const address1 = { address };
     const address2 = { district: district, city: city };
     const addreess3 = {
@@ -26,13 +23,12 @@ export async function POST(req) {
       district: fixedAddress?.districtName,
       city: fixedAddress?.upazilaName,
     };
-
     const payload = {
       fullName: fullName,
       email: email,
       phone: phone,
       addresses: [address1, address2, addreess3],
-      items: products,
+      items: items,
       note: note,
       totals: totals,
     };
