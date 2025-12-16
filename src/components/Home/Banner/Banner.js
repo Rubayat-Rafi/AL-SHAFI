@@ -2,47 +2,58 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
+import { useBanners } from "@/hooks/banners/useBanners";
 const Banner = () => {
-  const slides = ["/banner.jpg", "/banner2.avif", "/banner3.avif"];
-
+  const { fetchBanners, loading } = useBanners();
+  const flterBanners = fetchBanners?.filter((bn) =>
+    bn?.alt?.toLowerCase().startsWith("banner")
+  );
+  const flterPosters = fetchBanners?.filter((pos) =>
+    pos?.alt?.toLowerCase().startsWith("poster")
+  );
   const [index, setIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-
-  // Auto slide logic
   useEffect(() => {
     if (!isHovered) {
       const interval = setInterval(() => {
-        setIndex((prev) => (prev + 1) % slides.length);
-      }, 5000); // 5 seconds
-
+        setIndex((prev) => (prev + 1) % flterBanners.length);
+      }, 5000);
       return () => clearInterval(interval);
     }
-  }, [slides.length, isHovered]);
+  }, [flterBanners.length, isHovered]);
 
   const goToPrevious = () => {
-    setIndex((prev) => (prev - 1 + slides.length) % slides.length);
+    setIndex((prev) => (prev - 1 + flterBanners.length) % flterBanners.length);
   };
 
   const goToNext = () => {
-    setIndex((prev) => (prev + 1) % slides.length);
+    setIndex((prev) => (prev + 1) % flterBanners.length);
   };
+
+  if (loading) {
+    return (
+      <div className="max-w-[1440px] mx-auto px-4 py-6">
+        <div className="w-full h-[300px] rounded-lg bg-gray-200 animate-pulse" />
+      </div>
+    );
+  }
+
+  if (!fetchBanners.length) return null;
 
   return (
     <div className="max-w-[1440px] mx-auto xl:px-20 md:px-10 sm:px-4 px-4 py-4 md:py-6">
       <div className="grid grid-cols-1 lg:grid-cols-10 gap-3 md:gap-4 w-full">
-        
         {/* Main Banner */}
-        <div 
+        <div
           className="relative w-full h-[200px] sm:h-[350px] md:h-[400px] lg:h-[450px] xl:h-[500px] lg:col-span-8 overflow-hidden rounded md:rounded-md shadow-lg group"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
           {/* Images */}
-          {slides.map((src, i) => (
+          {flterBanners.map((src, i) => (
             <Image
               key={i}
-              src={src}
+              src={src?.secure_url}
               alt={`Banner ${i + 1}`}
               fill
               priority={i === 0}
@@ -75,7 +86,7 @@ const Banner = () => {
 
           {/* Dots Navigation */}
           <div className="absolute bottom-4 md:bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 md:gap-2.5 z-10">
-            {slides.map((_, i) => (
+            {flterBanners.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setIndex(i)}
@@ -91,7 +102,7 @@ const Banner = () => {
 
           {/* Slide Counter */}
           <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold">
-            {index + 1} / {slides.length}
+            {index + 1} / {flterBanners.length}
           </div>
         </div>
 
@@ -100,8 +111,8 @@ const Banner = () => {
           {/* Small Image 1 */}
           <div className="relative w-full h-[170px] md:h-[195px] lg:h-[218px] xl:h-[243px] overflow-hidden rounded md:rounded-md shadow-md group">
             <Image
-              src="/post1.jpg"
-              alt="Promotional banner 1"
+              src={flterPosters[0]?.secure_url}
+              alt={flterPosters[0]?.alt}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-110"
             />
@@ -111,8 +122,8 @@ const Banner = () => {
           {/* Small Image 2 */}
           <div className="relative w-full h-[170px] md:h-[195px] lg:h-[218px] xl:h-[243px] overflow-hidden rounded md:rounded-md shadow-md group">
             <Image
-              src="/post2.webp"
-              alt="Promotional banner 2"
+              src={flterPosters[1]?.secure_url}
+              alt={flterPosters[1]?.alt}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-110"
             />
@@ -132,8 +143,6 @@ const Banner = () => {
           />
         </div>
       </div> */}
-
-
     </div>
   );
 };
