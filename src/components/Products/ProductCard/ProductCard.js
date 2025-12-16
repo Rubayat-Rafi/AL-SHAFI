@@ -43,7 +43,7 @@ const ProductCard = ({ product }) => {
       : 0;
 
   return (
-    <div className="group relative flex flex-col justify-between items-center p-4 md:p-5 border border-border  shadow-sm hover:shadow-xl transition-all duration-300 bg-surface overflow-hidden hover:-translate-y-1">
+    <div className="group relative flex flex-col justify-between items-center p-4 md:p-5 border border-text/20  shadow-sm hover:shadow-xl transition-all duration-300 bg-surface overflow-hidden hover:-translate-y-1 rounded-md lg:rounded-lg">
       {/* Discount Badge */}
       {discountPercentage > 0 && (
         <div className="absolute top-3 left-3 z-10 bg-linear-to-br from-error to-[#e53e3e] text-white px-3 py-1.5 rounded-full text-[10px] md:text-xs font-normal shadow-md">
@@ -147,7 +147,7 @@ const ProductCard = ({ product }) => {
       <div className="w-full">
         <AddCartBtn
           product={product}
-          styles="w-full px-4 py-2 md:py-3 bg-primary text-white  hover:bg-primary-dark transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
+          styles="w-full px-4 py-2 md:py-3 bg-text text-white hover:bg-black transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
         >
           <ShoppingCart
             className="w-4 h-4 group-hover/btn:scale-110 transition-transform"

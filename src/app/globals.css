@@ -92,15 +92,7 @@ button {
   width: 100%;
 } */
 
-/* input:focus, textarea:focus, select:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-lighter);
-}
 
-input::placeholder, textarea::placeholder {
-  color: var(--text-muted);
-} */
 
 /* Badge/Tag Styles */
 .badge {

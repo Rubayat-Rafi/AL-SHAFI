@@ -107,26 +107,32 @@ const Navbar = () => {
                   priority
                 />
               </Link>
+
             </div>
+
+              <div className="space-x-6 max-lg:hidden mr-6 font-semibold ">
+                <Link href={"/"} className="hover:text-primary-dark">Home</Link>
+                <Link href={"/product/collections/all-products"} className="hover:text-primary-dark">Shop Now</Link>
+                <Link href={"/"} className="hover:text-primary-dark">About Us</Link>
+                <Link href={"/"} className="hover:text-primary-dark">Contact Us</Link>
+              
+              </div>
+
+
             {/* icons  */}
             <div className="flex items-center justify-end space-x-3">
       
-              <div className="space-x-6 max-lg:hidden mr-6">
-                <Link href={"/"}>Home</Link>
-                <Link href={"/product/collections/all-products"}>Shop Now</Link>
-                <Link href={"/"}>About Us</Link>
-                <Link href={"/"}>Contact Us</Link>
-              
-              </div>
+
+
               <button
                 onClick={() => setShowSearch((prev) => !prev)}
-                className="text-primary rounded-full  hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="text-text rounded-full  hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 <Search strokeWidth={2} />
               </button>
               <Link
                 href={user ? "/account/profile" : "/login"}
-                className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="text-text rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 {user ? (
                   <UserRound strokeWidth={2} />
@@ -136,7 +142,7 @@ const Navbar = () => {
               </Link>
               <button
                 onClick={() => dispatch(addCartFlag(!cartFlag))}
-                className="relative text-primary hover:scale-105 transition-transform duration-300 ease-in-out"
+                className="relative text-text hover:scale-105 transition-transform duration-300 ease-in-out"
               >
                 <ShoppingCart strokeWidth={2} />
                 <span className="absolute -top-2 -right-3 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">

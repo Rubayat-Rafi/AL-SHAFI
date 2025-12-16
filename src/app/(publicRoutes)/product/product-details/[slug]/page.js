@@ -226,7 +226,7 @@ const ProductDetails = async ({ params }) => {
             <div className="space-y-3">
               <AddCartBtn
                 product={JSON.stringify(product)}
-                styles="w-full px-4 py-2 md:py-3 bg-primary  text-white hover:bg-primary-dark transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
+                styles="w-full px-4 py-2 md:py-3 bg-text  text-white hover:bg-black transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
               >
                 <ShoppingCart
                   className="w-4 h-4 group-hover/btn:scale-110 transition-transform"
