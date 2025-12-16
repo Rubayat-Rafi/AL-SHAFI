@@ -2,6 +2,7 @@
 
 import AddCartBtn from "@/components/UI/Products/AddCartBtn/AddCartBtn";
 import axios from "axios";
+import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -42,8 +43,7 @@ const QueryProducts = () => {
   if (!query) return null;
 
   return (
-    <div className="mt-3 overflow-hidden">
-
+    <div className="mt-2 overflow-hidden">
       <div className="overflow-y-auto custom-scrollbar">
         {loading && (
           <div className="flex flex-col items-center justify-center py-12">
@@ -54,7 +54,7 @@ const QueryProducts = () => {
           </div>
         )}
         {!loading && products.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-6 px-4">
+          <div className="flex flex-col items-center justify-center mb-6 px-4">
             <svg
               className="w-10 h-10 text-gray-300 mb-3"
               fill="none"
@@ -76,69 +76,138 @@ const QueryProducts = () => {
         )}
 
         {!loading && products.length > 0 && (
-          <div className="divide-y divide-gray-100 border border-gray-100 rounded-md">
+          <div
+            className={`space-y-3 sm:space-y-0 grid ${
+              products.length === 1
+                ? "sm:grid-cols-1 max-w-md mx-auto"
+                : "md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+            } gap-4 md:gap-6`}
+          >
             {products.map((product) => (
               <div
                 key={product._id}
-                className="flex items-stretch hover:bg-gray-50 transition-colors duration-200"
+                className={`transition-all duration-200 ${
+                  products.length === 1 ? "sm:w-full" : ""
+                }`}
               >
-                <Link
-                  href={`/product/product-details/${product.slug}`}
-                  className="flex items-center gap-4 px-5 py-4 flex-1 group"
-                >
-                  <div className="relative shrink-0">
-                    <Image
-                      src={product.thumbnail?.secure_url || "/placeholder.png"}
-                      alt={product.productName}
-                      width={60}
-                      height={60}
-                      className="rounded-lg object-cover ring-1 ring-gray-200 group-hover:ring-primary transition-all duration-200"
-                    />
-                    {product.regularPrice > product.offerPrice && (
-                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                        {Math.round(
-                          ((product.regularPrice - product.offerPrice) /
-                            product.regularPrice) *
-                            100
-                        )}
-                        %
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors duration-200 line-clamp-1 mb-1">
-                      {product.productName}
-                    </h3>
-                    <p className="text-xs text-gray-500 font-medium mb-2">
-                      {product.category}
-                    </p>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-base font-bold text-primary">
-                        ৳{product.offerPrice.toLocaleString()}
-                      </span>
+                {/* Mobile View - Single Row List */}
+                <div className="flex items-center sm:hidden hover:bg-surface transition-colors duration-200">
+                  <Link
+                    href={`/product/product-details/${product.slug}`}
+                    className="flex items-center gap-3 p-3 flex-1 group"
+                  >
+                    <div className="relative shrink-0">
+                      <div className="w-14 h-14 relative rounded overflow-hidden">
+                        <Image
+                          src={
+                            product.thumbnail?.secure_url || "/placeholder.png"
+                          }
+                          alt={product.productName}
+                          fill
+                          sizes="56px"
+                          className="object-cover"
+                        />
+                      </div>
                       {product.regularPrice > product.offerPrice && (
-                        <span className="text-xs line-through text-gray-400">
-                          ৳{product.regularPrice.toLocaleString()}
+                        <span className="absolute -top-1 -left-1 bg-red-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full">
+                          {Math.round(
+                            ((product.regularPrice - product.offerPrice) /
+                              product.regularPrice) *
+                              100
+                          )}
+                          %
                         </span>
                       )}
                     </div>
-                  </div>
-                </Link>
 
-                <div className="flex items-center px-4 border-l border-gray-100">
-                  <AddCartBtn
-                    product={JSON.stringify(product)}
-                    styles="px-4 py-2.5 text-nowrap bg-gradient-to-r from-primary to-primary-dark text-white rounded-lg hover:from-primary-dark hover:to-primary transition-all duration-300 font-semibold text-sm shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn hover:scale-105"
-                  />
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-semibold line-clamp-1 mb-1">
+                        {product.productName}
+                      </h3>
+                      {/* <p className="text-xs text-gray-500 font-medium mb-1">
+                        {product.category}
+                      </p> */}
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-sm font-bold">
+                          ৳{product.offerPrice.toLocaleString()}
+                        </span>
+                        {product.regularPrice > product.offerPrice && (
+                          <span className="text-xs line-through text-gray-400">
+                            ৳{product.regularPrice.toLocaleString()}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+
+                  <div className="pr-3">
+                    <AddCartBtn
+                      product={JSON.stringify(product)}
+                      styles="px-3 py-2 text-nowrap bg-primary text-white rounded hover:bg-primary-dark transition-colors font-medium text-xs shadow-sm"
+                    />
+
+                    <ShoppingCart
+                      className="w-4 h-4 group-hover/btn:scale-110 transition-transform"
+                      strokeWidth={2}
+                    />
+                    <span className="hidden lg:block">Add to Cart</span>
+                  </div>
+                </div>
+
+                {/* Desktop View - Card Grid */}
+                <div className="hidden sm:flex flex-col h-full p-4">
+                  {/* Thumbnail */}
+                  <Link
+                    href={`/product/product-details/${product.slug}`}
+                    className="group mb-3 flex flex-col items-center text-center"
+                  >
+                    <div className="relative w-full max-w-[200px] mx-auto mb-4">
+                      <div className="relative aspect-square w-full  overflow-hidden  transition-all duration-300">
+                        <Image
+                          src={
+                            product.thumbnail?.secure_url || "/placeholder.png"
+                          }
+                          alt={product.productName}
+                          fill
+                          sizes="(max-width: 768px) 160px, (max-width: 1024px) 180px, 200px"
+                          className="object-cover"
+                        />
+                        {product.regularPrice > product.offerPrice && (
+                          <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                            {Math.round(
+                              ((product.regularPrice - product.offerPrice) /
+                                product.regularPrice) *
+                                100
+                            )}
+                            %
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Product Info */}
+                    <div className="space-y-2 w-full">
+                      <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 group-hover:text-primary transition-colors">
+                        {product.productName}
+                      </h3>
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-lg font-bold text-primary">
+                          ৳{product.offerPrice.toLocaleString()}
+                        </span>
+                        {product.regularPrice > product.offerPrice && (
+                          <span className="text-sm line-through text-gray-400">
+                            ৳{product.regularPrice.toLocaleString()}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
-
-
     </div>
   );
 };

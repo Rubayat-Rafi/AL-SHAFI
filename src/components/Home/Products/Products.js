@@ -8,7 +8,7 @@ const Products = async () => {
   const products = await HomeProducts();
 
   return (
-    <section className="bg-background py-12 md:py-16 lg:py-20">
+    <section className="bg-background pt-6 pb-8 md:pb-16 md:pt-8 ">
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-16">
         {/* Section Header */}
         <div className="text-center mb-10 md:mb-14">

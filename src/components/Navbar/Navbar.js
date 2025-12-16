@@ -44,7 +44,6 @@ const Navbar = () => {
     return () => window.removeEventListener("click", handler);
   }, [sidebarFlag]);
 
-
   return (
     <>
       {showSearch && (
@@ -60,15 +59,15 @@ const Navbar = () => {
         } sticky top-0 z-20 bg-background shadow-md`}
       >
         <div
-          className={`absolute left-0 top-full w-full bg-background shadow-md transition-all duration-300 ease-in-out
+          className={`absolute left-0 top-full w-full bg-background  transition-all duration-300 ease-in-out
           ${
             showSearch
               ? "opacity-100 translate-y-0"
               : "opacity-0 -translate-y-4 pointer-events-none"
           }`}
         >
-          <div className="px-6 py-6">
-            <div className="flex items-center mx-auto border border-gray-300 rounded-lg px-4 py-2 max-w-xl">
+          <div className="py-4 bg-surface px-4">
+            <div className="flex items-center mx-auto px-4 py-2 max-w-md border border-border bg-background">
               <MagnifyingGlassIcon className="h-5 w-5 text-gray-500 mr-2" />
               <input
                 type="text"
@@ -79,34 +78,27 @@ const Navbar = () => {
             </div>
 
             {/* Results */}
-            <div className="relative mt-4 max-w-xl mx-auto">
+            <div className="relative mt-2 max-w-[1440px] mx-auto px-4">
               <QueryProducts />
             </div>
           </div>
         </div>
 
+        {/* for big screen  */}
         <Container>
-          <div className="grid grid-cols-3 items-center py-3">
-            <div className="flex items-center">
+          <div className="flex items-center justify-between py-3">
+            <div className="flex items-center max-lg:space-x-3">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  dispatch(addSidebarFlag(!sidebarFlag))
+                  dispatch(addSidebarFlag(!sidebarFlag));
                 }}
                 className="text-primary lg:hidden"
               >
                 {sidebarFlag ? <X strokeWidth={2} /> : <Menu strokeWidth={2} />}
               </button>
 
-              <button
-                onClick={() => setShowSearch((prev) => !prev)}
-                className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
-              >
-                <Search strokeWidth={2} />
-              </button>
-            </div>
-            <div className="flex justify-center">
-              <Link href="/" >
+              <Link href="/" className=" max-w-24 lg:max-w-32">
                 <Image
                   src="/logo.png"
                   alt="logo"
@@ -116,22 +108,22 @@ const Navbar = () => {
                 />
               </Link>
             </div>
-
-            <div className="flex items-center justify-end gap-3">
-              {/* <Link
-                href="/admin-dashboard"
-                className="text-primary bg-primary/10 px-3 py-2 rounded-full max-lg:hidden"
+            {/* icons  */}
+            <div className="flex items-center justify-end space-x-3">
+      
+              <div className="space-x-6 max-lg:hidden mr-6">
+                <Link href={"/"}>Home</Link>
+                <Link href={"/product/collections/all-products"}>Shop Now</Link>
+                <Link href={"/"}>About Us</Link>
+                <Link href={"/"}>Contact Us</Link>
+              
+              </div>
+              <button
+                onClick={() => setShowSearch((prev) => !prev)}
+                className="text-primary rounded-full  hover:scale-105 transition-transform duration-300 ease-in-out"
               >
-                Dashboard
-              </Link> */}
-
-              {/* <Link
-                href="/order/histories"
-                className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
-              >
-                <FolderClock strokeWidth={2} />
-              </Link> */}
-
+                <Search strokeWidth={2} />
+              </button>
               <Link
                 href={user ? "/account/profile" : "/login"}
                 className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
@@ -142,14 +134,6 @@ const Navbar = () => {
                   <UserRound strokeWidth={2} />
                 )}
               </Link>
-
-              <button
-                onClick={() => setShowSearch((prev) => !prev)}
-                className="text-primary rounded-full lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
-              >
-                <Search strokeWidth={2} />
-              </button>
-
               <button
                 onClick={() => dispatch(addCartFlag(!cartFlag))}
                 className="relative text-primary hover:scale-105 transition-transform duration-300 ease-in-out"
@@ -163,7 +147,7 @@ const Navbar = () => {
           </div>
         </Container>
 
-        <div className="py-3 px-8 md:px-8 hidden lg:block">
+        <div className="py-3 px-8 md:px-8 hidden ">
           <Container>
             <div className="flex flex-wrap space-x-6 items-center">
               <Link href={"/product/collections/all-products"}>
@@ -184,38 +168,78 @@ const Navbar = () => {
             </div>
           </Container>
         </div>
-
-        {/* Mobile Sidebar (Overlay + Slide-in Drawer) */}
-        {/* Overlay */}
-        {/* <div
-          className={`fixed inset-0 bg-black/40 z-40 top-30 lg:hidden transition-opacity duration-300 ${
-            openMenu ? "opacity-100 visible" : "opacity-0 invisible"
-          }`}
-          onClick={() => setOpenMenu(false)}
-        ></div> */}
-
-        {/* <div
-          className={`fixed top-30 left-0 h-screen w-64 bg-background shadow-2xl z-50 lg:hidden transform transition-transform duration-300 ease-in-out ${
-            openMenu ? "translate-x-0" : "-translate-x-full"
-          }`}
-        >
-          <div className="flex flex-col space-y-6 items-start p-8">
-            {categories?.map((categ) => (
-              <Link
-                key={categ._id}
-                href={`/product/collections/${categ.slug}`}
-                className="block  text-center transition transform hover:scale-105 duration-200"
-              >
-                <p className="text-gray-700 font-normal font-montserrat">
-                  {categ?.name}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div> */}
       </nav>
     </>
   );
 };
 
 export default Navbar;
+
+// <div className="grid grid-cols-3 items-center py-3">
+//   <div className="flex items-center">
+//     <button
+//       onClick={(e) => {
+//         e.stopPropagation();
+//         dispatch(addSidebarFlag(!sidebarFlag));
+//       }}
+//       className="text-primary lg:hidden"
+//     >
+//       {sidebarFlag ? <X strokeWidth={2} /> : <Menu strokeWidth={2} />}
+//     </button>
+
+//     <div className="space-x-4 max-lg:hidden">
+//       <Link href={'/'}>Home</Link>
+//       <Link href={'/'}>About Us</Link>
+//       <Link href={'/'}>Shop Now</Link>
+//       <Link href={'/'}>Contact Us</Link>
+//     </div>
+
+//     {/* <button
+//       onClick={() => setShowSearch((prev) => !prev)}
+//       className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
+//     >
+//       <Search strokeWidth={2} />
+//     </button> */}
+//   </div>
+//   <div className="flex justify-center">
+//     <Link href="/">
+//       <Image
+//         src="/logo.png"
+//         alt="logo"
+//         width={130}
+//         height={50}
+//         priority
+//       />
+//     </Link>
+//   </div>
+
+//   <div className="flex items-center justify-end gap-3">
+//     <button
+//       onClick={() => setShowSearch((prev) => !prev)}
+//       className="text-primary rounded-full  hover:scale-105 transition-transform duration-300 ease-in-out"
+//     >
+//       <Search strokeWidth={2} />
+//     </button>
+
+//     <Link
+//       href={user ? "/account/profile" : "/login"}
+//       className="text-primary rounded-full max-lg:hidden hover:scale-105 transition-transform duration-300 ease-in-out"
+//     >
+//       {user ? (
+//         <UserRound strokeWidth={2} />
+//       ) : (
+//         <UserRound strokeWidth={2} />
+//       )}
+//     </Link>
+
+//     <button
+//       onClick={() => dispatch(addCartFlag(!cartFlag))}
+//       className="relative text-primary hover:scale-105 transition-transform duration-300 ease-in-out"
+//     >
+//       <ShoppingCart strokeWidth={2} />
+//       <span className="absolute -top-2 -right-3 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+//         {carts?.length || 0}
+//       </span>
+//     </button>
+//   </div>
+// </div>
