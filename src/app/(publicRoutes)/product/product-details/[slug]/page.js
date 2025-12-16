@@ -240,11 +240,9 @@ const ProductDetails = async ({ params }) => {
                   <Share2 className="w-4 h-4" strokeWidth={2} />
                   <span className="hidden sm:inline">Share</span>
                 </button> */}
-
                 <ShareButton />
               </div>
             </div>
-
             {/* Trust Badges */}
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-border">
               <div className="text-center">
