@@ -22,8 +22,6 @@ import SendReviews from "@/components/Products/ReviewSection/SendReviews/SendRev
 import ShowReviews from "@/components/Products/ReviewSection/ShowReviews/ShowReviews";
 import ShareButton from "@/components/ShareButton/ShareButton";
 
-
-
 const ProductDetails = async ({ params }) => {
   const { slug } = await params;
   const product = await FindAProduct(slug);
@@ -229,7 +227,13 @@ const ProductDetails = async ({ params }) => {
               <AddCartBtn
                 product={JSON.stringify(product)}
                 styles="w-full px-4 py-2 md:py-3 bg-primary  text-white hover:bg-primary-dark transition-all duration-300 font-medium text-sm md:text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn"
-              ></AddCartBtn>
+              >
+                <ShoppingCart
+                  className="w-4 h-4 group-hover/btn:scale-110 transition-transform"
+                  strokeWidth={2}
+                />
+                <span className="">Add to Cart</span>
+              </AddCartBtn>
 
               <div className="w-full">
                 {/* <button className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-border hover:border-primary text-text hover:text-primary rounded-xl transition-all duration-200 font-medium hover:bg-primary/5">
