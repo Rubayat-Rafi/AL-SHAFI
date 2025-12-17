@@ -5,7 +5,6 @@ import Product from "@/models/Products/Product/Product";
 import { cookies } from "next/headers";
 import * as jose from "jose";
 import User from "@/models/User/User";
-import { authHelper } from "@/helper/user/authHelper/authHelper";
 import Review from "@/models/Products/Review/Review";
 import Banner from "@/models/Banner/Banner";
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -189,6 +188,35 @@ export const AuthUser = async () => {
       .lean()
       .exec();
     return user || null;
+  } catch (err) {
+    console.error("Token verification failed:", err);
+    return null;
+  }
+};
+export const AllUsers = async () => {
+  try {
+    await dbConnect();
+    const users = await User.find().lean().exec();
+    const formatteUsers = users.map((user) => ({
+      ...user,
+      _id: user._id.toString(),
+    }));
+    return formatteUsers || null;
+  } catch (err) {
+    console.error("Token verification failed:", err);
+    return null;
+  }
+};
+export const UserByRole = async ({ role }) => {
+  try {
+    await dbConnect();
+
+    const users = await User.find({ role }).lean().exec();
+    const formatteUsers = users.map((user) => ({
+      ...user,
+      _id: user._id.toString(),
+    }));
+    return formatteUsers || null;
   } catch (err) {
     console.error("Token verification failed:", err);
     return null;
