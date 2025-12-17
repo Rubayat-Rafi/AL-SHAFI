@@ -29,7 +29,6 @@ const SendReviews = ({ product }) => {
     },
   });
 
-  
   const rating = watch("rating");
   const onSubmit = async (formData) => {
     try {
@@ -43,6 +42,7 @@ const SendReviews = ({ product }) => {
         const existReviews = localStorage.getItem("reviews");
         if (!existReviews) {
           localStorage.setItem("reviews", JSON.stringify([data?.review]));
+          dispatch(addActiveFlag(!activeFlag));
           router.refresh();
           reset();
         } else {
