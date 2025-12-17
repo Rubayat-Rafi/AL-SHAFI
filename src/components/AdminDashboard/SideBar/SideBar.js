@@ -53,10 +53,11 @@ const menuItems = [
     icon: <MessageSquare size={20} />,
   },
   {
-    title: "Settings",
-    href: "/admin-dashboard/settings",
-    icon: <Settings size={20} />,
+    title: "User management",
+    href: "/admin-dashboard/user-management/admin",
+    icon: <MessageSquare size={20} />,
   },
+
 ];
 
 const SideBar = () => {
