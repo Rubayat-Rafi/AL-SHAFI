@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { UserByRole } from "@/actions/actions";
 import UserTable from "@/components/AdminDashboard/User/UserTable/UserTable";
 

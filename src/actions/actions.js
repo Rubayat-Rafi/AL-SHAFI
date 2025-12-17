@@ -196,7 +196,6 @@ export const AuthUser = async () => {
 export const AllUsers = async () => {
   try {
     await dbConnect();
-
     const users = await User.find().lean().exec();
     const formatteUsers = users.map((user) => ({
       ...user,

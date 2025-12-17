@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import UserManagementBtn from "@/components/Ui/User/UserManagementBtn/UserManagementBtn";
 import Link from "next/link";
 const UserTable = async ({ users }) => {
