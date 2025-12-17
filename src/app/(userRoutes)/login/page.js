@@ -15,7 +15,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { activeFlag } = useSelector((state) => state?.slice);
-
   const {
     register,
     handleSubmit,
@@ -23,11 +22,10 @@ const Login = () => {
   } = useForm();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
-  const onSubmit = async (data) => {
+  const onSubmit = async (d) => {
     setLoading(true);
     try {
-      const res = await axios.post("/pages/api/user/login", data);
+      const res = await axios.post("/pages/api/user/login", d);
       if (res?.data?.success) {
         toast.success(res?.data?.message);
         setLoading(false);

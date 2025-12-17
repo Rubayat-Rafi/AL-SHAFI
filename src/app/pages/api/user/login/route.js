@@ -1,4 +1,3 @@
-"use server";
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect/dbConnect";
 import User from "@/models/User/User";
@@ -8,8 +7,8 @@ const JWT_SECRET = process.env.JWT_SECRET || "your_super_secret_key";
 const COOKIE_NAME = "auth_token";
 export async function POST(req) {
   try {
-    const { email, password } = await req.json();
     await dbConnect();
+    const { email, password } = await req.json();
     const user = await User.findOne({ email });
     if (!user) {
       return NextResponse.json({
@@ -26,7 +25,7 @@ export async function POST(req) {
     }
 
     const token = jwt.sign(
-      { id: user._id, name: user.name, email: user.email },
+      { id: user._id, name: user.name, email: user.email, role: user.role },
       JWT_SECRET,
       { expiresIn: "7d" }
     );
@@ -37,6 +36,7 @@ export async function POST(req) {
         id: user._id.toString(),
         name: user.name,
         email: user.email,
+        role: user.role,
       },
     });
 
