@@ -1,13 +1,14 @@
+"use server";
 import dbConnect from "@/lib/dbConnect/dbConnect";
-import UserOrder from "@/models/Order/UserOrder";
-import Category from "@/models/Products/Category/Category";
-import Product from "@/models/Products/Product/Product";
+import UserOrder from "@/models/UserOrder.js";
+import Category from "@/models/Products/Category.js";
+import Product from "@/models/Products/Product.js";
 import { cookies } from "next/headers";
 import * as jose from "jose";
-import User from "@/models/User/User";
-import { authHelper } from "@/helper/user/authHelper/authHelper";
-import Review from "@/models/Products/Review/Review";
-import Banner from "@/models/Banner/Banner";
+import User from "@/models/User.js";
+import Review from "@/models/Products/Review.js";
+import Banner from "@/models/Banner.js";
+import { FreeShippingAmount } from "@/models/Products/FreeShippingAmount";
 const JWT_SECRET = process.env.JWT_SECRET;
 
 export async function AllCategories() {
@@ -194,6 +195,35 @@ export const AuthUser = async () => {
     return null;
   }
 };
+export const AllUsers = async () => {
+  try {
+    await dbConnect();
+    const users = await User.find().lean().exec();
+    const formatteUsers = users.map((user) => ({
+      ...user,
+      _id: user._id.toString(),
+    }));
+    return formatteUsers || null;
+  } catch (err) {
+    console.error("Token verification failed:", err);
+    return null;
+  }
+};
+export const UserByRole = async ({ role }) => {
+  try {
+    await dbConnect();
+
+    const users = await User.find({ role }).lean().exec();
+    const formatteUsers = users.map((user) => ({
+      ...user,
+      _id: user._id.toString(),
+    }));
+    return formatteUsers || null;
+  } catch (err) {
+    console.error("Token verification failed:", err);
+    return null;
+  }
+};
 
 // ======================================================
 // reviews sections
@@ -277,6 +307,19 @@ export async function Banners() {
       _id: banner._id.toString(),
     }));
     return formattedBanners;
+  } catch (error) {
+    throw new Error(error?.message);
+  }
+}
+export async function FreeShippingRange() {
+  try {
+    await dbConnect();
+    const amount = await FreeShippingAmount.find().sort().lean().exec();
+    const formattedAmount = amount.map((am) => ({
+      ...am,
+      _id: am._id.toString(),
+    }));
+    return formattedAmount[0];
   } catch (error) {
     throw new Error(error?.message);
   }

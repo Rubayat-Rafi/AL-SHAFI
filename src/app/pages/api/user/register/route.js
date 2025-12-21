@@ -1,16 +1,14 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect/dbConnect";
-import User from "@/models/User/User";
+import User from "@/models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET || "your_super_secret_key";
 const COOKIE_NAME = "auth_token";
 export async function POST(req) {
   try {
-    const { name, email, password } = await req.json();
-
     await dbConnect();
-
+    const { name, email, password } = await req.json();
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
@@ -28,7 +26,12 @@ export async function POST(req) {
     });
 
     const token = jwt.sign(
-      { id: newUser._id, name: newUser.name, email: newUser.email },
+      {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+      },
       JWT_SECRET,
       { expiresIn: "7d" }
     );
@@ -40,6 +43,7 @@ export async function POST(req) {
         id: newUser._id.toString(),
         name: newUser.name,
         email: newUser.email,
+        role: newUser.role,
       },
     });
 
