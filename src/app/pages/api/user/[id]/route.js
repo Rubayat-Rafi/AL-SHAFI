@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect/dbConnect";
-import User from "@/models/User.js";
+import User from "@/models/User/User";
 export async function PATCH(req, { params }) {
   try {
     await dbConnect();

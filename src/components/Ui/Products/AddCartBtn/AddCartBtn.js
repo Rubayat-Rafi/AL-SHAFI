@@ -7,7 +7,7 @@ import {
   addCommonFlag,
 } from "@/utils/redux/slices/slice";
 import { useDispatch, useSelector } from "react-redux";
-const AddCartBtn = ({ product, styles, children, frbFlag }) => {
+const AddCartBtn = ({ product, styles, children }) => {
   const dispatch = useDispatch();
   const { activeFlag, cartFlag } = useSelector((state) => state?.slice);
   const parseProduct = JSON.parse(product);

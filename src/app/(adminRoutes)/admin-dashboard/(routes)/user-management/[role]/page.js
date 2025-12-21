@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 import { UserByRole } from "@/actions/actions";
-import UserTable from "@/components/AdminDashboard/User/UserTable/UserTable.js";
+import UserTable from "@/components/AdminDashboard/User/UserTable/UserTable";
 
 const UserManagement = async ({ params }) => {
   const { role } = await params;

@@ -5,10 +5,9 @@ import Category from "@/models/Products/Category.js";
 import Product from "@/models/Products/Product.js";
 import { cookies } from "next/headers";
 import * as jose from "jose";
-import User from "@/models/User.js";
-import Review from "@/models/Products/Review.js";
-import Banner from "@/models/Banner.js";
-import { FreeShippingAmount } from "@/models/Products/FreeShippingAmount";
+import User from "@/models/User/User";
+import Review from "@/models/Products/Review/Review";
+import Banner from "@/models/Banner/Banner";
 const JWT_SECRET = process.env.JWT_SECRET;
 
 export async function AllCategories() {

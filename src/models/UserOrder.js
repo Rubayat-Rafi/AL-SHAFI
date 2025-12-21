@@ -21,6 +21,7 @@ const UserOrderSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 const UserOrder =
   mongoose.models.userorders || mongoose.model("userorders", UserOrderSchema);
 export default UserOrder;
